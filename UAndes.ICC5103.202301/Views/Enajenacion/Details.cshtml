@@ -1,0 +1,122 @@
+﻿@model UAndes.ICC5103._202301.Models.Enajenacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Enajenacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CNE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comuna)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comuna)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Manzana)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Manzana)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Predio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Predio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RutEnajenante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RutEnajenante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PorcentajeEnajenante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PorcentajeEnajenante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckEnajenante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckEnajenante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RutAdquiriente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RutAdquiriente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PorcentajeAdquiriente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PorcentajeAdquiriente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckAdquiriente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckAdquiriente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fojas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fojas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInscripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdInscripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

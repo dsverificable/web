@@ -1,0 +1,129 @@
+﻿@model IEnumerable<UAndes.ICC5103._202301.Models.Enajenacion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CNE)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Comuna)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Manzana)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Predio)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.RutEnajenante)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.PorcentajeEnajenante)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CheckEnajenante)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.RutAdquiriente)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.PorcentajeAdquiriente)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CheckAdquiriente)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Fojas)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.IdInscripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNE)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Comuna)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Manzana)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Predio)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.RutEnajenante)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.PorcentajeEnajenante)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckEnajenante)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.RutAdquiriente)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckAdquiriente)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Fojas)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaInscripcion)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.IdInscripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>
