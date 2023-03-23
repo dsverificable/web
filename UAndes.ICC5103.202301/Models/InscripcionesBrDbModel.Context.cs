@@ -14,8 +14,9 @@ namespace UAndes.ICC5103._202301.Models
 {
 
 using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
 
 
 public partial class InscripcionesBrDbEntities : DbContext
@@ -32,13 +33,18 @@ public partial class InscripcionesBrDbEntities : DbContext
     }
 
 
-    public virtual DbSet<Persona> Persona { get; set; }
+    public virtual DbSet<Adquiriente> Adquiriente { get; set; }
+
+    public virtual DbSet<Enajenante> Enajenante { get; set; }
 
     public virtual DbSet<Enajenacion> Enajenacion { get; set; }
 
-    public virtual DbSet<VistaEnajenacion> VistaEnajenacion { get; set; }
-
 }
-
+    public class EnajenacionViewModel
+    {
+        public Enajenacion Enajenacion { get; set; }
+        public List<Enajenante> Enajenantes { get; set; }
+        public List<Adquiriente> Adquirientes { get; set; }
+    }
 }
 

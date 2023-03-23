@@ -5,9 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cf04ce5cfbcf4ae99a8d87d1f0dd710a" Name="Diagram1">
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.Persona" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenacion" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.VistaEnajenacion" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Adquiriente" Width="1.5" PointX="3.125" PointY="1.125" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenante" Width="1.5" PointX="7.125" PointY="1.125" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenacion" Width="1.5" PointX="5.125" PointY="1.125" />
+        <AssociationConnector Association="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" />
+        <AssociationConnector Association="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,18 +15,10 @@ namespace UAndes.ICC5103._202301.Models
 using System;
     using System.Collections.Generic;
     
-public partial class VistaEnajenacion
+public partial class Enajenante
 {
 
     public int Id { get; set; }
-
-    public string CNE { get; set; }
-
-    public string Comuna { get; set; }
-
-    public int Manzana { get; set; }
-
-    public int Predio { get; set; }
 
     public string RutEnajenante { get; set; }
 
@@ -34,17 +26,11 @@ public partial class VistaEnajenacion
 
     public int CheckEnajenante { get; set; }
 
-    public string RutAdquiriente { get; set; }
+    public int IdEnajenacion { get; set; }
 
-    public int PorcentajeAdquiriente { get; set; }
 
-    public int CheckAdquiriente { get; set; }
 
-    public int Fojas { get; set; }
-
-    public System.DateTime FechaInscripcion { get; set; }
-
-    public Nullable<int> IdInscripcion { get; set; }
+    public virtual Enajenacion Enajenacion { get; set; }
 
 }
 

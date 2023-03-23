@@ -131,11 +131,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EnajenacionController.cs" />
-    <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Adquiriente.cs">
+      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enajenacion.cs">
+      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enajenante.cs">
       <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InscripcionesBrDbModel.Context.cs">
@@ -152,12 +157,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InscripcionesBrDbModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Persona.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VistaEnajenacion.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -216,11 +215,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Personas\Create.cshtml" />
-    <Content Include="Views\Personas\Delete.cshtml" />
-    <Content Include="Views\Personas\Details.cshtml" />
-    <Content Include="Views\Personas\Edit.cshtml" />
-    <Content Include="Views\Personas\Index.cshtml" />
     <Content Include="Views\Enajenacion\Create.cshtml" />
     <Content Include="Views\Enajenacion\Delete.cshtml" />
     <Content Include="Views\Enajenacion\Details.cshtml" />

@@ -28,12 +28,31 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
             if (enajenacion == null)
             {
                 return HttpNotFound();
             }
-            return View(enajenacion);
+
+            Adquiriente adquiriente = await db.Adquiriente.FindAsync(id);
+            if (adquiriente == null)
+            {
+                return HttpNotFound();
+            }
+
+            List<Enajenante> enajenantes = await db.Enajenante.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
+            List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == adquiriente.Id).ToListAsync();
+
+
+            EnajenacionViewModel viewModel = new EnajenacionViewModel
+            {
+                Enajenacion = enajenacion,
+                Enajenantes = enajenantes,
+                Adquirientes = adquirientes
+            };
+
+            return View(viewModel);
         }
 
         // GET: Enajenacion/Create
@@ -91,29 +110,61 @@ namespace UAndes.ICC5103._202301.Controllers
         }
 
         // GET: Enajenacion/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id, char option = 'a', int insideId = 0)
         {
-            if (id == null)
+            if (option == 'a')
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
+                if (enajenacion == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(enajenacion);
             }
-            Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (enajenacion == null)
+            else
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
+                if (enajenacion == null)
+                {
+                    return HttpNotFound();
+                }
+
+                Enajenante enajenante = await db.Enajenante.FindAsync(insideId);
+                if (enajenante == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(enajenacion);
             }
-            return View(enajenacion);
         }
 
         // POST: Enajenacion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            db.Enajenacion.Remove(enajenacion);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+        public async Task<ActionResult> DeleteConfirmed(int id, char option, int insideId)
+        {   
+            if (option == 'a')
+            {
+                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
+                db.Enajenacion.Remove(enajenacion);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                Enajenante enajenante = await db.Enajenante.FindAsync(insideId);
+                db.Enajenante.Remove(enajenante);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Details/"+ id.ToString());
+            }
         }
 
         protected override void Dispose(bool disposing)

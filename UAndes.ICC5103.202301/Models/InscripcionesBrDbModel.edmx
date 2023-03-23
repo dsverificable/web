@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InscripcionesBrDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adquiriente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RutAdquiriente" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PorcentajeAdquiriente" Type="int" Nullable="false" />
+          <Property Name="CheckAdquiriente" Type="int" Nullable="false" />
+          <Property Name="IdEnajenacion" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Enajenacion">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,101 +24,96 @@
           <Property Name="Comuna" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Manzana" Type="int" Nullable="false" />
           <Property Name="Predio" Type="int" Nullable="false" />
-          <Property Name="RutEnajenante" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="PorcentajeEnajenante" Type="int" Nullable="false" />
-          <Property Name="CheckEnajenante" Type="int" Nullable="false" />
-          <Property Name="RutAdquiriente" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="PorcentajeAdquiriente" Type="int" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="int" Nullable="false" />
           <Property Name="Fojas" Type="int" Nullable="false" />
           <Property Name="FechaInscripcion" Type="date" Nullable="false" />
-          <Property Name="IdInscripcion" Type="int" />
+          <Property Name="IdInscripcion" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Persona">
+        <EntityType Name="Enajenante">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Rut" Type="nvarchar" MaxLength="10" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
-          <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Dirección" Type="nchar" MaxLength="50" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'InscripcionesBrDb.dbo.VistaEnajenacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="VistaEnajenacion">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Comuna" />
-            <PropertyRef Name="Manzana" />
-            <PropertyRef Name="Predio" />
-            <PropertyRef Name="RutEnajenante" />
-            <PropertyRef Name="PorcentajeEnajenante" />
-            <PropertyRef Name="CheckEnajenante" />
-            <PropertyRef Name="RutAdquiriente" />
-            <PropertyRef Name="PorcentajeAdquiriente" />
-            <PropertyRef Name="CheckAdquiriente" />
-            <PropertyRef Name="Fojas" />
-            <PropertyRef Name="FechaInscripcion" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CNE" Type="nvarchar" MaxLength="28" />
-          <Property Name="Comuna" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Manzana" Type="int" Nullable="false" />
-          <Property Name="Predio" Type="int" Nullable="false" />
           <Property Name="RutEnajenante" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PorcentajeEnajenante" Type="int" Nullable="false" />
           <Property Name="CheckEnajenante" Type="int" Nullable="false" />
-          <Property Name="RutAdquiriente" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="PorcentajeAdquiriente" Type="int" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="int" Nullable="false" />
-          <Property Name="Fojas" Type="int" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="date" Nullable="false" />
-          <Property Name="IdInscripcion" Type="int" />
+          <Property Name="IdEnajenacion" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Adquiriente_Enajenacion">
+          <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="1" />
+          <End Role="Adquiriente" Type="Self.Adquiriente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adquiriente">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enajenante_Enajenacion">
+          <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="1" />
+          <End Role="Enajenante" Type="Self.Enajenante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enajenante">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InscripcionesBrDbModelStoreContainer">
+          <EntitySet Name="Adquiriente" EntityType="Self.Adquiriente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enajenacion" EntityType="Self.Enajenacion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VistaEnajenacion" EntityType="Self.VistaEnajenacion" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [VistaEnajenacion].[Id] AS [Id], 
-    [VistaEnajenacion].[CNE] AS [CNE], 
-    [VistaEnajenacion].[Comuna] AS [Comuna], 
-    [VistaEnajenacion].[Manzana] AS [Manzana], 
-    [VistaEnajenacion].[Predio] AS [Predio], 
-    [VistaEnajenacion].[RutEnajenante] AS [RutEnajenante], 
-    [VistaEnajenacion].[PorcentajeEnajenante] AS [PorcentajeEnajenante], 
-    [VistaEnajenacion].[CheckEnajenante] AS [CheckEnajenante], 
-    [VistaEnajenacion].[RutAdquiriente] AS [RutAdquiriente], 
-    [VistaEnajenacion].[PorcentajeAdquiriente] AS [PorcentajeAdquiriente], 
-    [VistaEnajenacion].[CheckAdquiriente] AS [CheckAdquiriente], 
-    [VistaEnajenacion].[Fojas] AS [Fojas], 
-    [VistaEnajenacion].[FechaInscripcion] AS [FechaInscripcion], 
-    [VistaEnajenacion].[IdInscripcion] AS [IdInscripcion]
-    FROM [dbo].[VistaEnajenacion] AS [VistaEnajenacion]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Enajenante" EntityType="Self.Enajenante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adquiriente_Enajenacion" Association="Self.FK_Adquiriente_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Adquiriente" EntitySet="Adquiriente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enajenante_Enajenacion" Association="Self.FK_Enajenante_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Enajenante" EntitySet="Enajenante" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InscripcionesBrDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Persona">
+        <EntityContainer Name="InscripcionesBrDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adquiriente" EntityType="InscripcionesBrDbModel.Adquiriente" />
+          <EntitySet Name="Enajenante" EntityType="InscripcionesBrDbModel.Enajenante" />
+          <EntitySet Name="Enajenacion" EntityType="InscripcionesBrDbModel.Enajenacion" />
+          <AssociationSet Name="FK_Adquiriente_Enajenacion" Association="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Adquiriente" EntitySet="Adquiriente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enajenante_Enajenacion" Association="InscripcionesBrDbModel.FK_Enajenante_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Enajenante" EntitySet="Enajenante" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Adquiriente">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rut" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Dirección" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="RutAdquiriente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PorcentajeAdquiriente" Type="Int32" Nullable="false" />
+          <Property Name="CheckAdquiriente" Type="Int32" Nullable="false" />
+          <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" FromRole="Adquiriente" ToRole="Enajenacion" />
         </EntityType>
-        <EntityContainer Name="InscripcionesBrDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Persona" EntityType="Self.Persona" />
-          <EntitySet Name="Enajenacion" EntityType="InscripcionesBrDbModel.Enajenacion" />
-          <EntitySet Name="VistaEnajenacion" EntityType="InscripcionesBrDbModel.VistaEnajenacion" />
-        </EntityContainer>
+        <EntityType Name="Enajenante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RutEnajenante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PorcentajeEnajenante" Type="Int32" Nullable="false" />
+          <Property Name="CheckEnajenante" Type="Int32" Nullable="false" />
+          <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenante" ToRole="Enajenacion" />
+        </EntityType>
         <EntityType Name="Enajenacion">
           <Key>
             <PropertyRef Name="Id" />
@@ -118,61 +123,61 @@ warning 6002: The table/view 'InscripcionesBrDb.dbo.VistaEnajenacion' does not h
           <Property Name="Comuna" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Manzana" Type="Int32" Nullable="false" />
           <Property Name="Predio" Type="Int32" Nullable="false" />
-          <Property Name="RutEnajenante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PorcentajeEnajenante" Type="Int32" Nullable="false" />
-          <Property Name="CheckEnajenante" Type="Int32" Nullable="false" />
-          <Property Name="RutAdquiriente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PorcentajeAdquiriente" Type="Int32" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="Int32" Nullable="false" />
           <Property Name="Fojas" Type="Int32" Nullable="false" />
           <Property Name="FechaInscripcion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdInscripcion" Type="Int32" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Adquiriente" Relationship="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" FromRole="Enajenacion" ToRole="Adquiriente" />
+          <NavigationProperty Name="Enajenante" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenacion" ToRole="Enajenante" />
         </EntityType>
-        <EntityType Name="VistaEnajenacion">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Comuna" />
-            <PropertyRef Name="Manzana" />
-            <PropertyRef Name="Predio" />
-            <PropertyRef Name="RutEnajenante" />
-            <PropertyRef Name="PorcentajeEnajenante" />
-            <PropertyRef Name="CheckEnajenante" />
-            <PropertyRef Name="RutAdquiriente" />
-            <PropertyRef Name="PorcentajeAdquiriente" />
-            <PropertyRef Name="CheckAdquiriente" />
-            <PropertyRef Name="Fojas" />
-            <PropertyRef Name="FechaInscripcion" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CNE" Type="String" MaxLength="28" FixedLength="false" Unicode="true" />
-          <Property Name="Comuna" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Manzana" Type="Int32" Nullable="false" />
-          <Property Name="Predio" Type="Int32" Nullable="false" />
-          <Property Name="RutEnajenante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PorcentajeEnajenante" Type="Int32" Nullable="false" />
-          <Property Name="CheckEnajenante" Type="Int32" Nullable="false" />
-          <Property Name="RutAdquiriente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PorcentajeAdquiriente" Type="Int32" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="Int32" Nullable="false" />
-          <Property Name="Fojas" Type="Int32" Nullable="false" />
-          <Property Name="FechaInscripcion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdInscripcion" Type="Int32" />
-        </EntityType>
-      </Schema>
+        <Association Name="FK_Adquiriente_Enajenacion">
+          <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="1" />
+          <End Type="InscripcionesBrDbModel.Adquiriente" Role="Adquiriente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Adquiriente">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enajenante_Enajenacion">
+          <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="1" />
+          <End Type="InscripcionesBrDbModel.Enajenante" Role="Enajenante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enajenante">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InscripcionesBrDbModelStoreContainer" CdmEntityContainer="InscripcionesBrDbEntities">
-          <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="InscripcionesBrDbModel.Persona">
-              <MappingFragment StoreEntitySet="Persona">
+          <EntitySetMapping Name="Adquiriente">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.Adquiriente">
+              <MappingFragment StoreEntitySet="Adquiriente">
+                <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
+                <ScalarProperty Name="CheckAdquiriente" ColumnName="CheckAdquiriente" />
+                <ScalarProperty Name="PorcentajeAdquiriente" ColumnName="PorcentajeAdquiriente" />
+                <ScalarProperty Name="RutAdquiriente" ColumnName="RutAdquiriente" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Rut" ColumnName="Rut" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enajenante">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.Enajenante">
+              <MappingFragment StoreEntitySet="Enajenante">
+                <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
+                <ScalarProperty Name="CheckEnajenante" ColumnName="CheckEnajenante" />
+                <ScalarProperty Name="PorcentajeEnajenante" ColumnName="PorcentajeEnajenante" />
+                <ScalarProperty Name="RutEnajenante" ColumnName="RutEnajenante" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -182,32 +187,6 @@ warning 6002: The table/view 'InscripcionesBrDb.dbo.VistaEnajenacion' does not h
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="Fojas" ColumnName="Fojas" />
-                <ScalarProperty Name="CheckAdquiriente" ColumnName="CheckAdquiriente" />
-                <ScalarProperty Name="PorcentajeAdquiriente" ColumnName="PorcentajeAdquiriente" />
-                <ScalarProperty Name="RutAdquiriente" ColumnName="RutAdquiriente" />
-                <ScalarProperty Name="CheckEnajenante" ColumnName="CheckEnajenante" />
-                <ScalarProperty Name="PorcentajeEnajenante" ColumnName="PorcentajeEnajenante" />
-                <ScalarProperty Name="RutEnajenante" ColumnName="RutEnajenante" />
-                <ScalarProperty Name="Predio" ColumnName="Predio" />
-                <ScalarProperty Name="Manzana" ColumnName="Manzana" />
-                <ScalarProperty Name="Comuna" ColumnName="Comuna" />
-                <ScalarProperty Name="CNE" ColumnName="CNE" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VistaEnajenacion">
-            <EntityTypeMapping TypeName="InscripcionesBrDbModel.VistaEnajenacion">
-              <MappingFragment StoreEntitySet="VistaEnajenacion">
-                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
-                <ScalarProperty Name="Fojas" ColumnName="Fojas" />
-                <ScalarProperty Name="CheckAdquiriente" ColumnName="CheckAdquiriente" />
-                <ScalarProperty Name="PorcentajeAdquiriente" ColumnName="PorcentajeAdquiriente" />
-                <ScalarProperty Name="RutAdquiriente" ColumnName="RutAdquiriente" />
-                <ScalarProperty Name="CheckEnajenante" ColumnName="CheckEnajenante" />
-                <ScalarProperty Name="PorcentajeEnajenante" ColumnName="PorcentajeEnajenante" />
-                <ScalarProperty Name="RutEnajenante" ColumnName="RutEnajenante" />
                 <ScalarProperty Name="Predio" ColumnName="Predio" />
                 <ScalarProperty Name="Manzana" ColumnName="Manzana" />
                 <ScalarProperty Name="Comuna" ColumnName="Comuna" />

@@ -15,20 +15,22 @@ namespace UAndes.ICC5103._202301.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Persona
+public partial class Adquiriente
 {
 
     public int Id { get; set; }
 
-    public string Rut { get; set; }
+    public string RutAdquiriente { get; set; }
 
-    public string Nombre { get; set; }
+    public int PorcentajeAdquiriente { get; set; }
 
-    public System.DateTime FechaNacimiento { get; set; }
+    public int CheckAdquiriente { get; set; }
 
-    public string Email { get; set; }
+    public int IdEnajenacion { get; set; }
 
-    public string Dirección { get; set; }
+
+
+    public virtual Enajenacion Enajenacion { get; set; }
 
 }
 

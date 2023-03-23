@@ -1,4 +1,4 @@
-﻿@model UAndes.ICC5103._202301.Models.Enajenacion
+﻿@model UAndes.ICC5103._202301.Models.EnajenacionViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,112 +11,137 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CNE)
+            CNE
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CNE)
+            @Model.Enajenacion.CNE
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Comuna)
+            Comuna
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Comuna)
+            @Model.Enajenacion.Comuna
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Manzana)
+            Manzana
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Manzana)
+            @Model.Enajenacion.Manzana
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Predio)
+            Predio
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Predio)
+            @Model.Enajenacion.Predio
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RutEnajenante)
+            Fojas
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RutEnajenante)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PorcentajeEnajenante)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PorcentajeEnajenante)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CheckEnajenante)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CheckEnajenante)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RutAdquiriente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RutAdquiriente)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PorcentajeAdquiriente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PorcentajeAdquiriente)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CheckAdquiriente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CheckAdquiriente)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fojas)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fojas)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaInscripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaInscripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdInscripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdInscripcion)
+            @Model.Enajenacion.Fojas
         </dd>
 
     </dl>
+
+    <table class="table">
+        <tr>
+
+            <th>
+                Rut Enajenante
+            </th>
+
+            <th>
+                Porcentaje Enajenante
+            </th>
+
+            <th>
+                Check Enajenante
+            </th>
+
+            <th></th>
+
+        </tr>
+
+        @foreach (var item in Model.Enajenantes)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RutEnajenante)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PorcentajeEnajenante)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CheckEnajenante)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.Enajenacion.Id, option = 'b', insideId = item.Id, })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+    <table class="table">
+        <tr>
+
+            <th>
+                Rut Adquiriente
+            </th>
+
+            <th>
+                Porcentaje Adquiriente
+            </th>
+
+            <th>
+                Check Adquiriente
+            </th>
+
+            <th></th>
+
+        </tr>
+
+        @foreach (var item in Model.Adquirientes)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RutAdquiriente)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CheckAdquiriente)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Enajenacion.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

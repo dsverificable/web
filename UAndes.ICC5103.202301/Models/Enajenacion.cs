@@ -18,6 +18,17 @@ using System;
 public partial class Enajenacion
 {
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Enajenacion()
+    {
+
+        this.Adquiriente = new HashSet<Adquiriente>();
+
+        this.Enajenante = new HashSet<Enajenante>();
+
+    }
+
+
     public int Id { get; set; }
 
     public string CNE { get; set; }
@@ -28,23 +39,21 @@ public partial class Enajenacion
 
     public int Predio { get; set; }
 
-    public string RutEnajenante { get; set; }
-
-    public int PorcentajeEnajenante { get; set; }
-
-    public int CheckEnajenante { get; set; }
-
-    public string RutAdquiriente { get; set; }
-
-    public int PorcentajeAdquiriente { get; set; }
-
-    public int CheckAdquiriente { get; set; }
-
     public int Fojas { get; set; }
 
     public System.DateTime FechaInscripcion { get; set; }
 
-    public Nullable<int> IdInscripcion { get; set; }
+    public int IdInscripcion { get; set; }
+
+
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Adquiriente> Adquiriente { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<Enajenante> Enajenante { get; set; }
 
 }
 
