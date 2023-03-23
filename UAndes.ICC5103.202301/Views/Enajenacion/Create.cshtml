@@ -1,4 +1,4 @@
-﻿@model UAndes.ICC5103._202301.Models.Enajenacion
+﻿@model UAndes.ICC5103._202301.Models.EnajenacionViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -16,60 +16,127 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.CNE, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.CNE, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.CNE, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CNE, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.CNE, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.CNE, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Comuna, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Comuna, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Comuna, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.Comuna, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Manzana, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Manzana, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Manzana, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Predio, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Predio, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Predio, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Fojas, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.Fojas, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Fojas, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Fojas, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.FechaInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.FechaInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.FechaInscripcion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FechaInscripcion, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.FechaInscripcion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.FechaInscripcion, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IdInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Enajenacion.IdInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.IdInscripcion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.IdInscripcion, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Enajenacion.IdInscripcion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <h1>Enajenante/s</h1>
+    <table id="myTableEnajenantes">
+        <thead>
+            <tr>
+                <th>RutEnajenante</th>
+                <th>PorcentajeEnajenante</th>
+                <th>CheckEnajenante</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div onclick="addRowEnajenantes()" class="btn btn-default">Agregar fila</div>
+
+    <h1>Adquiriente/s</h1>
+    <table id="myTableAdquirientes">
+        <thead>
+            <tr>
+                <th>RutAdquiriente</th>
+                <th>PorcentajeAdquiriente</th>
+                <th>CheckAdquiriente</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div onclick="addRowAdquirientes()" class="btn btn-default">Agregar fila</div>
+
+    <script>
+        function addRowEnajenantes() {
+            var table = document.getElementById("myTableEnajenantes");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].PorcentajeEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].CheckEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell4.innerHTML = "<button onclick='deleteThisRow(this)'>X</button>";
+        }
+
+        function addRowAdquirientes() {
+            var table = document.getElementById("myTableAdquirientes");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].RutAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].PorcentajeAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].CheckAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell4.innerHTML = "<button onclick='deleteThisRow(this)'>X</button>";
+        }
+
+        function deleteThisRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

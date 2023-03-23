@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UAndes.ICC5103._202301.Models;
+using System.Drawing.Printing;
 
 namespace UAndes.ICC5103._202301.Controllers
 {
@@ -35,14 +36,8 @@ namespace UAndes.ICC5103._202301.Controllers
                 return HttpNotFound();
             }
 
-            Adquiriente adquiriente = await db.Adquiriente.FindAsync(id);
-            if (adquiriente == null)
-            {
-                return HttpNotFound();
-            }
-
             List<Enajenante> enajenantes = await db.Enajenante.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
-            List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == adquiriente.Id).ToListAsync();
+            List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
 
 
             EnajenacionViewModel viewModel = new EnajenacionViewModel
@@ -66,17 +61,56 @@ namespace UAndes.ICC5103._202301.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, RutEnajenante, PorcentajeEnajenante, CheckEnajenante, RutAdquiriente, PorcentajeAdquiriente, CheckAdquiriente, Fojas, FechaInscripcion, IdInscripcion.")] Enajenacion enajenacion)
+        public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
         {
             if (ModelState.IsValid)
             {
+                //Create([Bind(Include = "RutEnajenante, PorcentajeEnajenante, CheckEnajenante")] Enajenante enajenante)
                 db.Enajenacion.Add(enajenacion);
+
+
+                var enajenante = new Enajenante();
+
+                string rut = Request.Form["Enajenantes[0].RutEnajenante"];
+                int porcentaje = int.Parse(Request.Form["Enajenantes[0].PorcentajeEnajenante"]);
+                int check = int.Parse(Request.Form["Enajenantes[0].CheckEnajenante"]);
+
+                enajenante.RutEnajenante = rut;
+                enajenante.PorcentajeEnajenante = porcentaje;
+                enajenante.CheckEnajenante = check;
+                enajenante.IdEnajenacion = enajenacion.Id;
+
+                db.Enajenante.Add(enajenante);
+
+
+                var adquiriente = new Adquiriente();
+
+                rut = Request.Form["Adquirientes[0].RutAdquiriente"];
+                porcentaje = int.Parse(Request.Form["Adquirientes[0].PorcentajeAdquiriente"]);
+                check = int.Parse(Request.Form["Adquirientes[0].CheckAdquiriente"]);
+
+                adquiriente.RutAdquiriente = rut;
+                adquiriente.PorcentajeAdquiriente = porcentaje;
+                adquiriente.CheckAdquiriente = check;
+                adquiriente.IdEnajenacion = enajenacion.Id;
+
+                db.Adquiriente.Add(adquiriente);
+
+                var a = 1;
+
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             return View(enajenacion);
         }
+
+
+
+
+
+
 
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)
