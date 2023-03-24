@@ -1,4 +1,10 @@
-﻿body {
+﻿:root {
+    --blue: #0e2b45;
+    --white: #ffffff;
+
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -9,6 +15,13 @@
     padding-right: 15px;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5rem;
+    background: var(--blue);
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -23,8 +36,17 @@ textarea {
     max-width: 280px;
 }
 
+.navbar{
+    background: var(--blue);
+}
+.navbar-inverse .navbar-brand {
+    color: var(--white);
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: var(--white);
+}
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
     background-color: #777;
-    border-color: #fff
+    border-color: #fff;
 }
