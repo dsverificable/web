@@ -65,39 +65,47 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Create([Bind(Include = "RutEnajenante, PorcentajeEnajenante, CheckEnajenante")] Enajenante enajenante)
                 db.Enajenacion.Add(enajenacion);
 
+                string rut;
+                int porcentaje;
+                int check;
 
-                var enajenante = new Enajenante();
+                var rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
+                var porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+                var checkList = Request.Form["Enajenantes[0].CheckEnajenante"].Split(',');
+                for (int i = 0; i < rutList.Length; i++)
+                {
+                    var enajenante = new Enajenante();
+                    enajenante.IdEnajenacion = enajenacion.Id;
+                    rut = rutList[i];
+                    porcentaje = int.Parse(porcentajeList[i]);
+                    check = int.Parse(checkList[i]);
 
-                string rut = Request.Form["Enajenantes[0].RutEnajenante"];
-                int porcentaje = int.Parse(Request.Form["Enajenantes[0].PorcentajeEnajenante"]);
-                int check = int.Parse(Request.Form["Enajenantes[0].CheckEnajenante"]);
+                    enajenante.RutEnajenante = rut;
+                    enajenante.PorcentajeEnajenante = porcentaje;
+                    enajenante.CheckEnajenante = check;
 
-                enajenante.RutEnajenante = rut;
-                enajenante.PorcentajeEnajenante = porcentaje;
-                enajenante.CheckEnajenante = check;
-                enajenante.IdEnajenacion = enajenacion.Id;
+                    db.Enajenante.Add(enajenante);
+                }
 
-                db.Enajenante.Add(enajenante);
+                rutList = Request.Form["Adquirientes[0].RutAdquiriente"].Split(',');
+                porcentajeList = Request.Form["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+                checkList = Request.Form["Adquirientes[0].CheckAdquiriente"].Split(',');
+                for (int i = 0; i < rutList.Length; i++)
+                {
+                    var adquiriente = new Adquiriente();
+                    adquiriente.IdEnajenacion = enajenacion.Id;
+                    rut = rutList[i];
+                    porcentaje = int.Parse(porcentajeList[i]);
+                    check = int.Parse(checkList[i]);
 
+                    adquiriente.RutAdquiriente = rut;
+                    adquiriente.PorcentajeAdquiriente = porcentaje;
+                    adquiriente.CheckAdquiriente = check;
 
-                var adquiriente = new Adquiriente();
-
-                rut = Request.Form["Adquirientes[0].RutAdquiriente"];
-                porcentaje = int.Parse(Request.Form["Adquirientes[0].PorcentajeAdquiriente"]);
-                check = int.Parse(Request.Form["Adquirientes[0].CheckAdquiriente"]);
-
-                adquiriente.RutAdquiriente = rut;
-                adquiriente.PorcentajeAdquiriente = porcentaje;
-                adquiriente.CheckAdquiriente = check;
-                adquiriente.IdEnajenacion = enajenacion.Id;
-
-                db.Adquiriente.Add(adquiriente);
-
-                var a = 1;
-
+                    db.Adquiriente.Add(adquiriente);
+                }
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -105,10 +113,6 @@ namespace UAndes.ICC5103._202301.Controllers
 
             return View(enajenacion);
         }
-
-
-
-
 
 
 
