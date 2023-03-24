@@ -116,6 +116,72 @@ namespace UAndes.ICC5103._202301.Controllers
 
 
 
+        // GET: Enajenacion/Consult
+        public ActionResult Consult()
+        {
+            return View();
+        }
+
+        // POST: Enajenacion/Consult
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
+        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Consult([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Enajenacion.Add(enajenacion);
+
+                string rut;
+                int porcentaje;
+                int check;
+
+                var rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
+                var porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+                var checkList = Request.Form["Enajenantes[0].CheckEnajenante"].Split(',');
+                for (int i = 0; i < rutList.Length; i++)
+                {
+                    var enajenante = new Enajenante();
+                    enajenante.IdEnajenacion = enajenacion.Id;
+                    rut = rutList[i];
+                    porcentaje = int.Parse(porcentajeList[i]);
+                    check = int.Parse(checkList[i]);
+
+                    enajenante.RutEnajenante = rut;
+                    enajenante.PorcentajeEnajenante = porcentaje;
+                    enajenante.CheckEnajenante = check;
+
+                    db.Enajenante.Add(enajenante);
+                }
+
+                rutList = Request.Form["Adquirientes[0].RutAdquiriente"].Split(',');
+                porcentajeList = Request.Form["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+                checkList = Request.Form["Adquirientes[0].CheckAdquiriente"].Split(',');
+                for (int i = 0; i < rutList.Length; i++)
+                {
+                    var adquiriente = new Adquiriente();
+                    adquiriente.IdEnajenacion = enajenacion.Id;
+                    rut = rutList[i];
+                    porcentaje = int.Parse(porcentajeList[i]);
+                    check = int.Parse(checkList[i]);
+
+                    adquiriente.RutAdquiriente = rut;
+                    adquiriente.PorcentajeAdquiriente = porcentaje;
+                    adquiriente.CheckAdquiriente = check;
+
+                    db.Adquiriente.Add(adquiriente);
+                }
+
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(enajenacion);
+        }
+
+
+
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {

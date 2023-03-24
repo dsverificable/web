@@ -220,6 +220,7 @@
     <Content Include="Views\Enajenacion\Details.cshtml" />
     <Content Include="Views\Enajenacion\Edit.cshtml" />
     <Content Include="Views\Enajenacion\Index.cshtml" />
+    <Content Include="Views\Enajenacion\Consult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
