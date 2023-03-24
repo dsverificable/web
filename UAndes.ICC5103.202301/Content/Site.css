@@ -15,6 +15,9 @@ body {
     padding-right: 15px;
 }
 
+.btn-custom-class {
+    background: blueviolet;
+}
 .footer {
     position: absolute;
     bottom: 0;
