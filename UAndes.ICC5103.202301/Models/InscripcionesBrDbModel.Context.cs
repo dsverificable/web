@@ -35,9 +35,11 @@ public partial class InscripcionesBrDbEntities : DbContext
 
     public virtual DbSet<Adquiriente> Adquiriente { get; set; }
 
-    public virtual DbSet<Enajenante> Enajenante { get; set; }
+    public virtual DbSet<CNEOptions> CNEOptions { get; set; }
 
     public virtual DbSet<Enajenacion> Enajenacion { get; set; }
+
+    public virtual DbSet<Enajenante> Enajenante { get; set; }
 
 }
     public class EnajenacionViewModel
@@ -45,6 +47,7 @@ public partial class InscripcionesBrDbEntities : DbContext
         public Enajenacion Enajenacion { get; set; }
         public List<Enajenante> Enajenantes { get; set; }
         public List<Adquiriente> Adquirientes { get; set; }
+        public CNEOptions CNEOptions { get; set; }
     }
 }
 

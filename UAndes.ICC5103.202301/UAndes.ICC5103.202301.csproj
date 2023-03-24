@@ -137,6 +137,9 @@
     <Compile Include="Models\Adquiriente.cs">
       <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CNEOptions.cs">
+      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enajenacion.cs">
       <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
     </Compile>

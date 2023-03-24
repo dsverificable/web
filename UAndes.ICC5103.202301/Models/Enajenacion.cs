@@ -31,7 +31,7 @@ public partial class Enajenacion
 
     public int Id { get; set; }
 
-    public string CNE { get; set; }
+    public int CNE { get; set; }
 
     public string Comuna { get; set; }
 
@@ -50,6 +50,8 @@ public partial class Enajenacion
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
     public virtual ICollection<Adquiriente> Adquiriente { get; set; }
+
+    public virtual CNEOptions CNEOptions { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 
