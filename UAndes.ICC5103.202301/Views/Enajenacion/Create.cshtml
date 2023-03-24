@@ -11,99 +11,185 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Enajenacion</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.CNE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.CNE, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.CNE, "", new { @class = "text-danger" })
+    <h3>NUEVA DECLARACIÓN SOBRE ENAJENACIÓN E INSCRIPCIÓN DE BIENES RAÍCES (F2890)</h3>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card">
+        <div style="background: #0e2b45; color: white; padding:5px;">
+            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
+                INFORMACIÓN DE LA ESCRITURA
+            </h4>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
+                <div class="row g-2">
+                    <div class="col-md-6" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.CNE, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.CNE, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.CNE, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="card">
+        <div style="background: #0e2b45; color: white; padding:5px;">
+            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
+                INFORMACIÓN DE LA PROPIEDAD ENAJENADA
+            </h4>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
+                <div class="row g-3">
+                    <div class="col-md-4" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.Comuna, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div style="background: #0e2b45; color: white; padding:5px;">
+            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
+                INFORMACIÓN DE LOS ENAJENANTES(S) O CAUSANTE(S)
+            </h4>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
+                <table id="myTableEnajenantes">
+                    <thead>
+                        <tr>
+                            <th>RutEnajenante</th>
+                            <th>PorcentajeEnajenante</th>
+                            <th>CheckEnajenante</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div onclick="addRowEnajenantes()" class="btn btn-default">Agregar fila</div>
+            </blockquote>
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div style="background: #0e2b45; color: white; padding:5px;">
+            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
+                INFORMACIÓN DE LOS ADQUIRIENTES(S) O HEREDEROS(S)
+            </h4>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
+                <table id="myTableAdquirientes">
+                    <thead>
+                        <tr>
+                            <th>RutAdquiriente</th>
+                            <th>PorcentajeAdquiriente</th>
+                            <th>CheckAdquiriente</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div onclick="addRowAdquirientes()" class="btn btn-default">Agregar fila</div>
+            </blockquote>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div style="background: #0e2b45; color: white; padding:5px;">
+            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
+                INSCRIPCIÓN (Esta sección debe ser llenada exclusivamente por un Conservador o Notario-Conservador)
+            </h4>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
+                <div class="row g-1">
+                    <div class="col-md-6" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.Fojas, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.IdInscripcion, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.IdInscripcion, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0;">
+                        <div class="col-md-4" style="padding:0;">
+                            @Html.LabelFor(model => model.Enajenacion.FechaInscripcion, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                        </div>
+                        <div class="col-md-8" style="padding:0;">
+                            @Html.EditorFor(model => model.Enajenacion.FechaInscripcion, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.ValidationMessageFor(model => model.Enajenacion.FechaInscripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 bg-light text-right">
+                    <button class="btn btn-primary" type="submit" style="margin:20px">Guardar</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.Comuna, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.Fojas, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.FechaInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.FechaInscripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.FechaInscripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enajenacion.IdInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Enajenacion.IdInscripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <h1>Enajenante/s</h1>
-        <table id="myTableEnajenantes">
-            <thead>
-                <tr>
-                    <th>RutEnajenante</th>
-                    <th>PorcentajeEnajenante</th>
-                    <th>CheckEnajenante</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-
-        <div onclick="addRowEnajenantes()" class="btn btn-default">Agregar fila</div>
-
-        <h1>Adquiriente/s</h1>
-        <table id="myTableAdquirientes">
-            <thead>
-                <tr>
-                    <th>RutAdquiriente</th>
-                    <th>PorcentajeAdquiriente</th>
-                    <th>CheckAdquiriente</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-
-        <div onclick="addRowAdquirientes()" class="btn btn-default">Agregar fila</div>
-
-        <script>
+    <script>
             function addRowEnajenantes() {
             var table = document.getElementById("myTableEnajenantes");
             var row = table.insertRow(-1);
@@ -134,16 +220,7 @@
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
-        </script>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    </script>
 }
 
 <div>
