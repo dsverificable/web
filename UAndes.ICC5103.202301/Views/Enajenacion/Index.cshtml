@@ -10,9 +10,6 @@
 
 <h2>INFORMACIÓN GENERAL</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -76,11 +73,9 @@
                 @Html.DisplayFor(modelItem => item.IdInscripcion)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id, option = 'a', insideId = 0 })
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
-        </tr>
-    }
+            </tr>
+        }
 
-</table>
+    </table>
