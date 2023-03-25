@@ -45,9 +45,13 @@ public partial class InscripcionesBrDbEntities : DbContext
     public class EnajenacionViewModel
     {
         public Enajenacion Enajenacion { get; set; }
+        public List<Enajenacion> Enajenacions { get; set; }
         public List<Enajenante> Enajenantes { get; set; }
         public List<Adquiriente> Adquirientes { get; set; }
-        public CNEOptions CNEOptions { get; set; }
+        public List<CNEOptions>CNEOptions { get; set; }
+        public List<String> Descripcion { get; set; }
+        public String SelectDescripcion { get; set; }
+
     }
 }
 

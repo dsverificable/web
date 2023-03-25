@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using UAndes.ICC5103._202301.Models;
 using System.Drawing.Printing;
+using System.Reflection.Emit;
 
 namespace UAndes.ICC5103._202301.Controllers
 {
@@ -19,7 +20,19 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion
         public async Task<ActionResult> Index()
         {
-            return View(await db.Enajenacion.ToListAsync());
+            var model = new EnajenacionViewModel();
+            model.Enajenacions = db.Enajenacion.ToList();
+
+            var cneoptions = db.CNEOptions.ToList();
+            List<String> Descripcion = new List<string>();
+            Descripcion.Add("");
+            for (int i = 0; i<2 ;i++)
+            {
+                Descripcion.Add(cneoptions[i].Descripcion);
+            }
+            model.Descripcion = Descripcion;
+
+            return View(model);
         }
 
         // GET: Enajenacion/Details/5
@@ -47,13 +60,27 @@ namespace UAndes.ICC5103._202301.Controllers
                 Adquirientes = adquirientes
             };
 
+            var model = new EnajenacionViewModel();
+            var cneoptions = db.CNEOptions.ToList();
+            List<String> Descripcion = new List<string>();
+            Descripcion.Add("");
+            for (int i = 0; i < 2; i++)
+            {
+                Descripcion.Add(cneoptions[i].Descripcion);
+            }
+
+            model.Descripcion = Descripcion;
+            viewModel.SelectDescripcion = Descripcion[enajenacion.CNE];
+
             return View(viewModel);
         }
 
         // GET: Enajenacion/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new EnajenacionViewModel();
+            model.CNEOptions = db.CNEOptions.ToList();
+            return View(model);
         }
 
         // POST: Enajenacion/Create
