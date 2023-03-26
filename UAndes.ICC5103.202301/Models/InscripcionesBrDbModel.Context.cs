@@ -37,6 +37,8 @@ public partial class InscripcionesBrDbEntities : DbContext
 
     public virtual DbSet<CNEOptions> CNEOptions { get; set; }
 
+    public virtual DbSet<ComunaOptions> ComunaOptions { get; set; }
+
     public virtual DbSet<Enajenacion> Enajenacion { get; set; }
 
     public virtual DbSet<Enajenante> Enajenante { get; set; }
@@ -49,8 +51,11 @@ public partial class InscripcionesBrDbEntities : DbContext
         public List<Enajenante> Enajenantes { get; set; }
         public List<Adquiriente> Adquirientes { get; set; }
         public List<CNEOptions> CNEOptions { get; set; }
+        public List<ComunaOptions> ComunaOptions { get; set; }
         public List<String> Descripcion { get; set; }
         public String SelectDescripcion { get; set; }
+        public List<String> Comuna { get; set; }
+        public String SelectComuna { get; set; }
 
     }
 }

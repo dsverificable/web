@@ -25,12 +25,19 @@ namespace UAndes.ICC5103._202301.Controllers
 
             var cneoptions = db.CNEOptions.ToList();
             List<String> Descripcion = new List<string>();
-            Descripcion.Add("");
-            for (int i = 0; i<2 ;i++)
+            for (int i = 0; i < 2 ;i++)
             {
                 Descripcion.Add(cneoptions[i].Descripcion);
             }
             model.Descripcion = Descripcion;
+
+            var comunaoptions = db.ComunaOptions.ToList();
+            List<String> Comunas = new List<string>();
+            for (int i = 0; i <= 325; i++)
+            {
+                Comunas.Add(comunaoptions[i].Comuna);
+            }
+            model.Comuna = Comunas;
 
             return View(model);
         }
@@ -60,17 +67,25 @@ namespace UAndes.ICC5103._202301.Controllers
                 Adquirientes = adquirientes
             };
 
-            var model = new EnajenacionViewModel();
             var cneoptions = db.CNEOptions.ToList();
             List<String> Descripcion = new List<string>();
-            Descripcion.Add("");
             for (int i = 0; i < 2; i++)
             {
                 Descripcion.Add(cneoptions[i].Descripcion);
             }
 
-            model.Descripcion = Descripcion;
+            viewModel.Descripcion = Descripcion;
             viewModel.SelectDescripcion = Descripcion[enajenacion.CNE];
+
+            var comunasoptions = db.ComunaOptions.ToList();
+            List<String> Comuna = new List<string>();
+            for (int i = 0; i <= 325; i++)
+            {
+                Comuna.Add(comunasoptions[i].Comuna);
+            }
+
+            viewModel.Comuna = Comuna;
+            viewModel.SelectComuna = Comuna[enajenacion.Comuna];
 
             return View(viewModel);
         }
@@ -80,6 +95,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.CNEOptions = db.CNEOptions.ToList();
+            model.ComunaOptions = db.ComunaOptions.ToList();
             return View(model);
         }
 

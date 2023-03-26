@@ -33,7 +33,7 @@ public partial class Enajenacion
 
     public int CNE { get; set; }
 
-    public string Comuna { get; set; }
+    public int Comuna { get; set; }
 
     public int Manzana { get; set; }
 
@@ -52,6 +52,8 @@ public partial class Enajenacion
     public virtual ICollection<Adquiriente> Adquiriente { get; set; }
 
     public virtual CNEOptions CNEOptions { get; set; }
+
+    public virtual ComunaOptions ComunaOptions { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

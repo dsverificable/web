@@ -22,13 +22,20 @@
           <Property Name="Valor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="ComunaOptions">
+          <Key>
+            <PropertyRef Name="Valor" />
+          </Key>
+          <Property Name="Valor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comuna" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="Enajenacion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CNE" Type="int" Nullable="false" />
-          <Property Name="Comuna" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Comuna" Type="int" Nullable="false" />
           <Property Name="Manzana" Type="int" Nullable="false" />
           <Property Name="Predio" Type="int" Nullable="false" />
           <Property Name="Fojas" Type="int" Nullable="false" />
@@ -69,6 +76,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Enajenacion_ComunaOptions">
+          <End Role="ComunaOptions" Type="Self.ComunaOptions" Multiplicity="1" />
+          <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComunaOptions">
+              <PropertyRef Name="Valor" />
+            </Principal>
+            <Dependent Role="Enajenacion">
+              <PropertyRef Name="Comuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Enajenante_Enajenacion">
           <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="1" />
           <End Role="Enajenante" Type="Self.Enajenante" Multiplicity="*" />
@@ -84,6 +103,7 @@
         <EntityContainer Name="InscripcionesBrDbModelStoreContainer">
           <EntitySet Name="Adquiriente" EntityType="Self.Adquiriente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CNEOptions" EntityType="Self.CNEOptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComunaOptions" EntityType="Self.ComunaOptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enajenacion" EntityType="Self.Enajenacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enajenante" EntityType="Self.Enajenante" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Adquiriente_Enajenacion" Association="Self.FK_Adquiriente_Enajenacion">
@@ -92,6 +112,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Enajenacion_CNEOptions" Association="Self.FK_Enajenacion_CNEOptions">
             <End Role="CNEOptions" EntitySet="CNEOptions" />
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enajenacion_ComunaOptions" Association="Self.FK_Enajenacion_ComunaOptions">
+            <End Role="ComunaOptions" EntitySet="ComunaOptions" />
             <End Role="Enajenacion" EntitySet="Enajenacion" />
           </AssociationSet>
           <AssociationSet Name="FK_Enajenante_Enajenacion" Association="Self.FK_Enajenante_Enajenacion">
@@ -106,6 +130,7 @@
         <EntityContainer Name="InscripcionesBrDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Adquiriente" EntityType="InscripcionesBrDbModel.Adquiriente" />
           <EntitySet Name="CNEOptions" EntityType="InscripcionesBrDbModel.CNEOptions" />
+          <EntitySet Name="ComunaOptions" EntityType="InscripcionesBrDbModel.ComunaOptions" />
           <EntitySet Name="Enajenacion" EntityType="InscripcionesBrDbModel.Enajenacion" />
           <EntitySet Name="Enajenante" EntityType="InscripcionesBrDbModel.Enajenante" />
           <AssociationSet Name="FK_Adquiriente_Enajenacion" Association="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion">
@@ -114,6 +139,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Enajenacion_CNEOptions" Association="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions">
             <End Role="CNEOptions" EntitySet="CNEOptions" />
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enajenacion_ComunaOptions" Association="InscripcionesBrDbModel.FK_Enajenacion_ComunaOptions">
+            <End Role="ComunaOptions" EntitySet="ComunaOptions" />
             <End Role="Enajenacion" EntitySet="Enajenacion" />
           </AssociationSet>
           <AssociationSet Name="FK_Enajenante_Enajenacion" Association="InscripcionesBrDbModel.FK_Enajenante_Enajenacion">
@@ -140,13 +169,21 @@
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions" FromRole="CNEOptions" ToRole="Enajenacion" />
         </EntityType>
+        <EntityType Name="ComunaOptions">
+          <Key>
+            <PropertyRef Name="Valor" />
+          </Key>
+          <Property Name="Valor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comuna" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Enajenacion_ComunaOptions" FromRole="ComunaOptions" ToRole="Enajenacion" />
+        </EntityType>
         <EntityType Name="Enajenacion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CNE" Type="Int32" Nullable="false" />
-          <Property Name="Comuna" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Comuna" Type="Int32" Nullable="false" />
           <Property Name="Manzana" Type="Int32" Nullable="false" />
           <Property Name="Predio" Type="Int32" Nullable="false" />
           <Property Name="Fojas" Type="Int32" Nullable="false" />
@@ -154,6 +191,7 @@
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Adquiriente" Relationship="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" FromRole="Enajenacion" ToRole="Adquiriente" />
           <NavigationProperty Name="CNEOptions" Relationship="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions" FromRole="Enajenacion" ToRole="CNEOptions" />
+          <NavigationProperty Name="ComunaOptions" Relationship="InscripcionesBrDbModel.FK_Enajenacion_ComunaOptions" FromRole="Enajenacion" ToRole="ComunaOptions" />
           <NavigationProperty Name="Enajenante" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenacion" ToRole="Enajenante" />
         </EntityType>
         <EntityType Name="Enajenante">
@@ -191,6 +229,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Enajenacion_ComunaOptions">
+          <End Type="InscripcionesBrDbModel.ComunaOptions" Role="ComunaOptions" Multiplicity="1" />
+          <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ComunaOptions">
+              <PropertyRef Name="Valor" />
+            </Principal>
+            <Dependent Role="Enajenacion">
+              <PropertyRef Name="Comuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Enajenante_Enajenacion">
           <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="1" />
           <End Type="InscripcionesBrDbModel.Enajenante" Role="Enajenante" Multiplicity="*" />
@@ -224,6 +274,14 @@
             <EntityTypeMapping TypeName="InscripcionesBrDbModel.CNEOptions">
               <MappingFragment StoreEntitySet="CNEOptions">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComunaOptions">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.ComunaOptions">
+              <MappingFragment StoreEntitySet="ComunaOptions">
+                <ScalarProperty Name="Comuna" ColumnName="Comuna" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
               </MappingFragment>
             </EntityTypeMapping>
