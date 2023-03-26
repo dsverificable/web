@@ -96,7 +96,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 string rut;
                 int porcentaje;
-                int check;
+                bool check;
 
                 var rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
                 var porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
@@ -107,7 +107,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     enajenante.IdEnajenacion = enajenacion.Id;
                     rut = rutList[i];
                     porcentaje = int.Parse(porcentajeList[i]);
-                    check = int.Parse(checkList[i]);
+                    check = bool.Parse(checkList[i]);
 
                     enajenante.RutEnajenante = rut;
                     enajenante.PorcentajeEnajenante = porcentaje;
@@ -125,7 +125,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     adquiriente.IdEnajenacion = enajenacion.Id;
                     rut = rutList[i];
                     porcentaje = int.Parse(porcentajeList[i]);
-                    check = int.Parse(checkList[i]);
+                    check = bool.Parse(checkList[i]);
 
                     adquiriente.RutAdquiriente = rut;
                     adquiriente.PorcentajeAdquiriente = porcentaje;
@@ -162,7 +162,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 string rut;
                 int porcentaje;
-                int check;
+                bool check;
 
                 var rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
                 var porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
@@ -173,7 +173,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     enajenante.IdEnajenacion = enajenacion.Id;
                     rut = rutList[i];
                     porcentaje = int.Parse(porcentajeList[i]);
-                    check = int.Parse(checkList[i]);
+                    check = bool.Parse(checkList[i]);
 
                     enajenante.RutEnajenante = rut;
                     enajenante.PorcentajeEnajenante = porcentaje;
@@ -191,7 +191,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     adquiriente.IdEnajenacion = enajenacion.Id;
                     rut = rutList[i];
                     porcentaje = int.Parse(porcentajeList[i]);
-                    check = int.Parse(checkList[i]);
+                    check = bool.Parse(checkList[i]);
 
                     adquiriente.RutAdquiriente = rut;
                     adquiriente.PorcentajeAdquiriente = porcentaje;

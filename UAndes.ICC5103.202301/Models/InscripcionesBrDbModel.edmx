@@ -12,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RutAdquiriente" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PorcentajeAdquiriente" Type="int" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="int" Nullable="false" />
+          <Property Name="CheckAdquiriente" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CNEOptions">
@@ -42,7 +42,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RutEnajenante" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PorcentajeEnajenante" Type="int" Nullable="false" />
-          <Property Name="CheckEnajenante" Type="int" Nullable="false" />
+          <Property Name="CheckEnajenante" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Adquiriente_Enajenacion">
@@ -128,7 +128,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RutAdquiriente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PorcentajeAdquiriente" Type="Int32" Nullable="false" />
-          <Property Name="CheckAdquiriente" Type="Int32" Nullable="false" />
+          <Property Name="CheckAdquiriente" Type="Boolean" Nullable="false" />
           <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" FromRole="Adquiriente" ToRole="Enajenacion" />
         </EntityType>
@@ -163,7 +163,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RutEnajenante" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PorcentajeEnajenante" Type="Int32" Nullable="false" />
-          <Property Name="CheckEnajenante" Type="Int32" Nullable="false" />
+          <Property Name="CheckEnajenante" Type="Boolean" Nullable="false" />
           <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenante" ToRole="Enajenacion" />
         </EntityType>

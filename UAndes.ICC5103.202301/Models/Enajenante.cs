@@ -24,7 +24,7 @@ public partial class Enajenante
 
     public int PorcentajeEnajenante { get; set; }
 
-    public int CheckEnajenante { get; set; }
+    public bool CheckEnajenante { get; set; }
 
     public int IdEnajenacion { get; set; }
 

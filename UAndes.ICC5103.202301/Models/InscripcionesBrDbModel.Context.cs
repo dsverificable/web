@@ -14,9 +14,9 @@ namespace UAndes.ICC5103._202301.Models
 {
 
 using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 
 public partial class InscripcionesBrDbEntities : DbContext
@@ -48,7 +48,7 @@ public partial class InscripcionesBrDbEntities : DbContext
         public List<Enajenacion> Enajenacions { get; set; }
         public List<Enajenante> Enajenantes { get; set; }
         public List<Adquiriente> Adquirientes { get; set; }
-        public List<CNEOptions>CNEOptions { get; set; }
+        public List<CNEOptions> CNEOptions { get; set; }
         public List<String> Descripcion { get; set; }
         public String SelectDescripcion { get; set; }
 
