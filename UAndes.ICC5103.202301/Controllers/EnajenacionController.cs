@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using UAndes.ICC5103._202301.Models;
 using System.Drawing.Printing;
 using System.Reflection.Emit;
+using System.Globalization;
 
 namespace UAndes.ICC5103._202301.Controllers
 {
@@ -170,58 +171,72 @@ namespace UAndes.ICC5103._202301.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Consult([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
+        public async Task<ActionResult> Consult(int? manzana, int? predio, string comuna, int? year)
         {
-            if (ModelState.IsValid)
+            var viewModel = new EnajenacionViewModel();
+
+            // Exact year
+            List<Enajenacion> enajenaciones = await db.Enajenacion
+                .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year == year && e.ComunaOptions.Comuna == comuna)
+                .ToListAsync();
+
+            if (enajenaciones == null || enajenaciones.Count == 0)
             {
-                db.Enajenacion.Add(enajenacion);
+                // Not exact year
+                List<Enajenacion> enajenaciones2 = await db.Enajenacion
+                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year < year && e.ComunaOptions.Comuna == comuna)
+                   .ToListAsync();
 
-                string rut;
-                int porcentaje;
-                bool check;
-
-                var rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
-                var porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-                var checkList = Request.Form["Enajenantes[0].CheckEnajenante"].Split(',');
-                for (int i = 0; i < rutList.Length; i++)
+                if (enajenaciones2 == null || enajenaciones2.Count == 0)
                 {
-                    var enajenante = new Enajenante();
-                    enajenante.IdEnajenacion = enajenacion.Id;
-                    rut = rutList[i];
-                    porcentaje = int.Parse(porcentajeList[i]);
-                    check = bool.Parse(checkList[i]);
+                    return View();
+                }
+                else
+                {
+                    int maxYear = enajenaciones2.Max(e => e.FechaInscripcion.Year);
+                    List<Adquiriente> adquirientes = new List<Adquiriente>();
+                    foreach (var enajenacion in enajenaciones2)
+                    {
+                        var filteredAdquirientes = await db.Adquiriente
+                            .Where(a => a.IdEnajenacion == enajenacion.Id)
+                            .ToListAsync();
 
-                    enajenante.RutEnajenante = rut;
-                    enajenante.PorcentajeEnajenante = porcentaje;
-                    enajenante.CheckEnajenante = check;
+                        adquirientes.AddRange(filteredAdquirientes);
+                    }
 
-                    db.Enajenante.Add(enajenante);
+                    viewModel.Adquirientes = adquirientes;
+                    viewModel.Enajenacions = enajenaciones2;
+                    viewModel.Year = year;
+
+                    return View(viewModel);
+                }
+               
+            }
+            else
+            {
+                // Exact year
+                List<Adquiriente> adquirientes = new List<Adquiriente>();
+                foreach (var enajenacion in enajenaciones)
+                {
+                    var filteredAdquirientes = await db.Adquiriente
+                        .Where(a => a.IdEnajenacion == enajenacion.Id)
+                        .ToListAsync();
+
+                    adquirientes.AddRange(filteredAdquirientes);
                 }
 
-                rutList = Request.Form["Adquirientes[0].RutAdquiriente"].Split(',');
-                porcentajeList = Request.Form["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-                checkList = Request.Form["Adquirientes[0].CheckAdquiriente"].Split(',');
-                for (int i = 0; i < rutList.Length; i++)
-                {
-                    var adquiriente = new Adquiriente();
-                    adquiriente.IdEnajenacion = enajenacion.Id;
-                    rut = rutList[i];
-                    porcentaje = int.Parse(porcentajeList[i]);
-                    check = bool.Parse(checkList[i]);
+                viewModel.Adquirientes = adquirientes;
+                viewModel.Enajenacions = enajenaciones;
+                viewModel.Year = year;
 
-                    adquiriente.RutAdquiriente = rut;
-                    adquiriente.PorcentajeAdquiriente = porcentaje;
-                    adquiriente.CheckAdquiriente = check;
-
-                    db.Adquiriente.Add(adquiriente);
-                }
-
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return View(viewModel);
             }
 
-            return View(enajenacion);
         }
+
+
+
+
 
 
 
