@@ -4,7 +4,11 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css">
+
+</head>
 
 
 @using (Html.BeginForm())
@@ -23,13 +27,13 @@
         </div>
         <div class="card-body">
             <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
-                <div class="row g-2">
-                    <div class="col-md-6" style="padding:0;">
+                <div class="row g-1">
+                    <div class="col-md-8" style="padding:0;">
                         <div class="col-md-4" style="padding:0;">
-                            @Html.LabelFor(model => model.Enajenacion.CNE, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                            @Html.LabelFor(model => model.Enajenacion.CNE, "Código Naturleza Escritura",htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.DropDownListFor(model => model.Enajenacion.CNE, new SelectList(@Model.CNEOptions, "Valor", "Descripcion"), "-- Seleccione una opción --", new { @class = "form-control", @style = "border-radius:0; max-width:100%;" })
+                            @Html.DropDownListFor(model => model.Enajenacion.CNE, new SelectList(@Model.CNEOptions, "Valor", "Descripcion"), "Seleccione Código Naturaleza Escritura", new { @class = "form-control", @style = "border-radius:0; max-width:100%;" })
                             @Html.ValidationMessageFor(model => model.Enajenacion.CNE, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -52,7 +56,7 @@
                             @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "-- Seleccione una opción --", new { @class = "form-control", @style = "border-radius:0; max-width:100%;" })
+                            @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "Selecione la comuna", new { @class = "form-control", @style = "border-radius:0; max-width:100%;" })
                             @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -61,7 +65,7 @@
                             @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;", placeholder = "Manzana" } })
                             @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -70,7 +74,7 @@
                             @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;", placeholder = "Predio" } })
                             @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -88,19 +92,20 @@
         </div>
         <div class="card-body">
             <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
-                <table id="myTableEnajenantes">
-                    <thead>
+                <table id="myTableEnajenantes" class="table">
+                   
                         <tr>
-                            <th>RutEnajenante</th>
-                            <th>PorcentajeEnajenante</th>
-                            <th>CheckEnajenante</th>
+                            <th> Rut </th>
+                            <th> % Derechos </th>
+                            <th> % Derechos No Acreditados</th>
                             <th></th>
                         </tr>
-                    </thead>
+                   
                     <tbody>
+
                     </tbody>
                 </table>
-                <button type="button" onclick="addRowEnajenantes()" class="btn btn-primary" style="background: #d95b2a; border-color: #d95b2a; margin-top: 5px;">Agregar</button>
+                <button type="button" onclick="addRowEnajenantes(true)" class="btn btn-primary" style="background: #d95b2a; border-color: #d95b2a; margin-top: 5px;">Agregar</button>
             </blockquote>
         </div>
     </div>
@@ -115,19 +120,20 @@
         </div>
         <div class="card-body">
             <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
-                <table id="myTableAdquirientes">
-                    <thead>
+                <table id="myTableAdquirientes" class="table">
+                    
                         <tr>
-                            <th scope="col">RutAdquiriente</th>
-                            <th scope="col">PorcentajeAdquiriente</th>
-                            <th scope="col">CheckAdquiriente</th>
+                            <th> Rut </th>
+                            <th> % Derechos </th>
+                            <th> % Derechos No Acreditados</th>
                             <th></th>
                         </tr>
-                    </thead>
+                    
                     <tbody>
+
                     </tbody>
                 </table>
-                <button type="button" onclick="addRowAdquirientes()" class="btn btn-primary" style="background:#d95b2a; border-color:#d95b2a; margin-top:5px;">Agregar</button>
+                <button type="button" onclick="addRowAdquirientes(true)" class="btn btn-primary" style="background:#d95b2a; border-color:#d95b2a; margin-top:5px;">Agregar</button>
             </blockquote>
         </div>
     </div>
@@ -147,7 +153,7 @@
                             @Html.LabelFor(model => model.Enajenacion.Fojas, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;", placeholder = "Ingrese Fojas" } })
                             @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -156,16 +162,16 @@
                 <div class="row g-2">
                     <div class="col-md-6" style="padding:0;">
                         <div class="col-md-4" style="padding:0;">
-                            @Html.LabelFor(model => model.Enajenacion.IdInscripcion, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                            @Html.LabelFor(model => model.Enajenacion.IdInscripcion, "Número", htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
-                            @Html.EditorFor(model => model.Enajenacion.IdInscripcion, new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;" } })
+                            @Html.EditorFor(model => model.Enajenacion.IdInscripcion,new { htmlAttributes = new { @class = "form-control", @style = "border-radius:0; max-width:100%;", placeholder = "Ingrese Número" } })
                             @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0;">
                         <div class="col-md-4" style="padding:0;">
-                            @Html.LabelFor(model => model.Enajenacion.FechaInscripcion, htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
+                            @Html.LabelFor(model => model.Enajenacion.FechaInscripcion,"Fecha de Inscripción" ,htmlAttributes: new { @class = "form-control", @style = "background: #ededed; border-radius:0; padding-left: 5%; color:#0e2b45;" })
                         </div>
                         <div class="col-md-8" style="padding:0;">
                             @Html.EditorFor(model => model.Enajenacion.FechaInscripcion, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
@@ -190,7 +196,7 @@
 
 
     <script>
-            function addRowEnajenantes() {
+        function addRowEnajenantes(withTrash) {
             var table = document.getElementById("myTableEnajenantes");
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
@@ -200,7 +206,12 @@
             cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';;
             cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].PorcentajeEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
             cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].CheckEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
-            cell4.innerHTML = "<button onclick='deleteThisRow(this)'>X</button>";
+
+            if (withTrash) {
+                cell4.innerHTML = "<button onclick='deleteThisRow(this)' style='background-color: transparent; border: none;'><i class='fas fa-trash'></i></button>";
+
+                }
+
         }
 
         function addRowAdquirientes() {
@@ -213,13 +224,20 @@
             cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].RutAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
             cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].PorcentajeAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
             cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].CheckAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
-            cell4.innerHTML = "<button onclick='deleteThisRow(this)'>X</button>";
+
+            if (withTrash) {
+                cell4.innerHTML = "<button onclick='deleteThisRow(this)' style='background-color: transparent; border: none;'><i class='fas fa-trash'></i></button>";
+
+            }
         }
 
         function deleteThisRow(btn) {
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         }
+
+        addRowEnajenantes(false);
+        addRowAdquirientes(false);
     </script>
 }
 

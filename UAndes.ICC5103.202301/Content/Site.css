@@ -18,6 +18,14 @@ body {
 .btn-custom-class {
     background: blueviolet;
 }
+
+.form-control {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: none;
+}
+
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -37,6 +45,10 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 0; 
 }
 
 .navbar{
