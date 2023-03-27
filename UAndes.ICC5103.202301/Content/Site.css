@@ -1,7 +1,8 @@
 ﻿:root {
     --blue: #0e2b45;
     --white: #ffffff;
-
+    --grey: #0e2b45;
+    --orange: #d95b2a;
 }
 
 body {
@@ -19,12 +20,59 @@ body {
     background: blueviolet;
 }
 
+#btn-primary {
+    margin: 20px;
+}
+
+#btn-secondary {
+    background: var(--orange);
+    border-color: var(--orange);
+    margin-top: 5px;
+}
+
+#btn-delete {
+    background-color: transparent;
+    border: none;
+}
+
+#card-body blockquote {
+    border-left: 2.5px solid #eeeeee;
+    border-right: 2.5px solid #eeeeee;
+    border-bottom: 2.5px solid #eeeeee;
+}
+
+#card-body-col {
+    padding: 0;
+}
+
 .form-control {
     -webkit-box-shadow: none;
     box-shadow: none;
     border-color: none;
 }
 
+#form-editor {
+    border-radius: 0;
+    max-width: 100%;
+}
+
+#form-label {
+    background: #ededed;
+    border-radius: 0;
+    padding-left: 5%;
+    color: var(--grey);
+}
+#form-card {
+    background: #0e2b45;
+    color: white;
+    padding: 5px;
+}
+
+#form-card h4{
+    padding: 0.5%; 
+    padding-left: 1%;
+    margin:0;
+}
 
 .footer {
     position: absolute;
@@ -65,3 +113,8 @@ input[type="radio"], input[type="checkbox"] {
     background-color: #777;
     border-color: #fff;
 }
+
+#myTableAdquirientes #myTableEnajenantes th {
+    color: var(--blue);
+}
+
