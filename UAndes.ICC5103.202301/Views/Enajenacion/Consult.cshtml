@@ -5,6 +5,8 @@
 }
 
 <head>
+    <link rel="stylesheet" href="~/Content/Site.css">
+
     <script>
         $(document).ready(function () {
             $('form').submit(function () {
@@ -61,76 +63,47 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    <div class="card">
-        <div style="background: #0e2b45; color: white; padding:5px;">
-            <h4 style="padding: 0.5%; padding-left: 1%; margin:0;">
-                INFORMACIÓN DE LA PROPIEDAD ENAJENADA
-            </h4>
-        </div>
-        <div class="card-body">
-            <blockquote class="blockquote" style="border-left: 2.5px solid #eeeeee; border-right: 2.5px solid #eeeeee; border-bottom: 2.5px solid #eeeeee; ">
-                <div class="row g-4">
-
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Comuna:</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control comuna-validate" name="comuna" placeholder="Ingrese Comuna">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Manzana:</label>
-                        <div class="col-md-10">
-                            <input type="number" class="form-control manzana-validate" name="manzana" placeholder="Ingrese Manzana">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Predio:</label>
-                        <div class="col-md-10">
-                            <input type="number" class="form-control predio-validate" name="predio" placeholder="Ingrese Predio">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Año:</label>
-                        <div class="col-md-10">
-                            <input type="number" class="form-control year-validate" name="year" placeholder="Ingrese Año">
-                        </div>
-                    </div>
-
-
-
-
-
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-                        </div>
-                    </div>
-
-                </div>
-            </blockquote>
-        </div>
-    </div>
-
-
-
-
     <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 bg-light text-right">
-                    <button class="btn btn-primary" type="submit" style="margin:20px">Guardar</button>
+        <div class="row g-4">
+            <div class="form-group">
+                <label class="control-label col-md-2">Comuna:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control comuna-validate" name="comuna" placeholder="Ingrese Comuna">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Manzana:</label>
+                <div class="col-md-10">
+                     <input type="number" class="form-control manzana-validate" name="manzana" placeholder="Ingrese Manzana">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Predio:</label>
+                <div class="col-md-10">
+                   <input type="number" class="form-control predio-validate" name="predio" placeholder="Ingrese Predio">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Año:</label>
+                <div class="col-md-10">
+                   <input type="number" class="form-control year-validate" name="year" placeholder="Ingrese Año">
                 </div>
             </div>
         </div>
     </div>
 
-
-
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 bg-light text-right">
+                    <button class="btn btn-primary" type="submit" id="btn-primary">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 
@@ -146,25 +119,13 @@
             <th>Fecha de Inscripción</th>
         </tr>
 
-
-
-
-
-
-
-
-
-
-
         @foreach (var enaje in Model.Enajenacions)
         {
 
             foreach (var item in Model.Adquirientes)
             {
-
                 if (enaje.Id == item.IdEnajenacion)
                 {
-
                     <tr>
                         <td>@item.RutAdquiriente</td>
                         <td>@item.PorcentajeAdquiriente</td>
@@ -178,26 +139,11 @@
             }
         }
     </table>
-
-
-
-
-
-
-
-
 }
 else
 {
     <p>No hay datos disponibles.</p>
 }
-
-
-
-
-
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

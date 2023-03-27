@@ -95,6 +95,10 @@ textarea {
     max-width: 280px;
 }
 
+.table {
+    margin-top: 15px;
+}
+
 input[type="radio"], input[type="checkbox"] {
     margin: 0; 
 }
