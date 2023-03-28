@@ -194,17 +194,25 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     int maxYear = enajenaciones2.Max(e => e.FechaInscripcion.Year);
                     List<Adquiriente> adquirientes = new List<Adquiriente>();
+                    List<Enajenante> enajenante = new List<Enajenante>();
+
                     foreach (var enajenacion in enajenaciones2)
                     {
                         var filteredAdquirientes = await db.Adquiriente
                             .Where(a => a.IdEnajenacion == enajenacion.Id)
                             .ToListAsync();
 
+                        var filteredEnanjenante = await db.Enajenante
+                            .Where(a => a.IdEnajenacion == enajenacion.Id)
+                            .ToListAsync();
+
                         adquirientes.AddRange(filteredAdquirientes);
+                        enajenante.AddRange(filteredEnanjenante);
                     }
 
                     viewModel.Adquirientes = adquirientes;
                     viewModel.Enajenacions = enajenaciones2;
+                    viewModel.Enajenantes = enajenante;
                     viewModel.Year = year;
 
                     return View(viewModel);
@@ -215,17 +223,25 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 // Exact year
                 List<Adquiriente> adquirientes = new List<Adquiriente>();
+                List<Enajenante> enajenante = new List<Enajenante>();
+
                 foreach (var enajenacion in enajenaciones)
                 {
                     var filteredAdquirientes = await db.Adquiriente
                         .Where(a => a.IdEnajenacion == enajenacion.Id)
                         .ToListAsync();
 
+                    var filteredEnanjenante = await db.Enajenante
+                            .Where(a => a.IdEnajenacion == enajenacion.Id)
+                            .ToListAsync();
+
                     adquirientes.AddRange(filteredAdquirientes);
+                    enajenante.AddRange(filteredEnanjenante);
                 }
 
                 viewModel.Adquirientes = adquirientes;
                 viewModel.Enajenacions = enajenaciones;
+                viewModel.Enajenantes = enajenante;
                 viewModel.Year = year;
 
                 return View(viewModel);

@@ -99,6 +99,10 @@ textarea {
     margin-top: 15px;
 }
 
+input:focus {
+    outline: none !important;
+}
+
 input[type="radio"], input[type="checkbox"] {
     margin: 0; 
 }

@@ -75,21 +75,21 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Manzana:</label>
                 <div class="col-md-10">
-                     <input type="number" class="form-control manzana-validate" name="manzana" placeholder="Ingrese Manzana">
+                    <input type="number" class="form-control manzana-validate" name="manzana" placeholder="Ingrese Manzana">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-2">Predio:</label>
                 <div class="col-md-10">
-                   <input type="number" class="form-control predio-validate" name="predio" placeholder="Ingrese Predio">
+                    <input type="number" class="form-control predio-validate" name="predio" placeholder="Ingrese Predio">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-2">Año:</label>
                 <div class="col-md-10">
-                   <input type="number" class="form-control year-validate" name="year" placeholder="Ingrese Año">
+                    <input type="number" class="form-control year-validate" name="year" placeholder="Ingrese Año">
                 </div>
             </div>
         </div>
@@ -107,8 +107,45 @@
 }
 
 
+
 @if (Model != null && Model.Adquirientes.Count > 0)
 {
+    <h4>Enajenates</h4>
+
+    <table class="table">
+        <tr>
+            <th>Rut</th>
+            <th>% Derechos</th>
+            <th>Fojas</th>
+            <th>Nro.</th>
+            <th>Año</th>
+            <th>Fecha de Inscripción</th>
+        </tr>
+
+        @foreach (var enaje in Model.Enajenacions)
+        {
+
+            foreach (var item in Model.Enajenantes)
+            {
+                if (enaje.Id == item.IdEnajenacion)
+                {
+                    <tr>
+                        <td>@item.RutEnajenante</td>
+                        <td>@item.PorcentajeEnajenante</td>
+                        <td>@enaje.Fojas</td>
+                        <td>@enaje.IdInscripcion</td>
+                        <td>@Model.Year</td>
+                        <td>@enaje.FechaInscripcion</td>
+
+                    </tr>
+                }
+            }
+        }
+    </table>
+}
+@if (Model != null && Model.Adquirientes.Count > 0)
+{
+    <h4>Adquirientes</h4>
     <table class="table">
         <tr>
             <th>Rut</th>
@@ -140,10 +177,7 @@
         }
     </table>
 }
-else
-{
-    <p>No hay datos disponibles.</p>
-}
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
