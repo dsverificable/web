@@ -1,4 +1,7 @@
-﻿USE [InscripcionesBrDb];
+﻿Create Database Grupo10ConchaMunozBrDb
+GO
+
+USE [Grupo10ConchaMunozBrDb];
 GO
 
 CREATE TABLE [dbo].[CNEOptions](

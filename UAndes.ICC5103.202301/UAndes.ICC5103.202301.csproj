@@ -135,34 +135,34 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Adquiriente.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CNEOptions.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ComunaOptions.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enajenacion.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enajenante.cs">
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InscripcionesBrDbModel.Context.cs">
+    <Compile Include="Models\Grupo10ConchaMunozBrDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InscripcionesBrDbModel.Context.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InscripcionesBrDbModel.cs">
+    <Compile Include="Models\Grupo10ConchaMunozBrDb.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InscripcionesBrDbModel.Designer.cs">
+    <Compile Include="Models\Grupo10ConchaMunozBrDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InscripcionesBrDbModel.edmx</DependentUpon>
+      <DependentUpon>Grupo10ConchaMunozBrDb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,26 +175,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\InscripcionesBrDbModel.Context.tt">
+    <Content Include="Models\Grupo10ConchaMunozBrDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InscripcionesBrDbModel.Context.cs</LastGenOutput>
-      <DependentUpon>InscripcionesBrDbModel.edmx</DependentUpon>
+      <LastGenOutput>Grupo10ConchaMunozBrDb.Context.cs</LastGenOutput>
+      <DependentUpon>Grupo10ConchaMunozBrDb.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\InscripcionesBrDbModel.tt">
+    <Content Include="Models\Grupo10ConchaMunozBrDb.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InscripcionesBrDbModel.edmx</DependentUpon>
-      <LastGenOutput>InscripcionesBrDbModel.cs</LastGenOutput>
+      <LastGenOutput>Grupo10ConchaMunozBrDb.cs</LastGenOutput>
+      <DependentUpon>Grupo10ConchaMunozBrDb.edmx</DependentUpon>
     </Content>
     <Content Include="Screenshots\Screenshot1.JPG" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\InscripcionesBrDbModel.edmx">
+    <EntityDeploy Include="Models\Grupo10ConchaMunozBrDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>InscripcionesBrDbModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Grupo10ConchaMunozBrDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\InscripcionesBrDbModel.edmx.diagram">
-      <DependentUpon>InscripcionesBrDbModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

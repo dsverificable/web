@@ -14,10 +14,10 @@ namespace UAndes.ICC5103._202301.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class InscripcionesBrDbEntities : DbContext
+    public partial class Grupo10ConchaMunozBrDbEntities : DbContext
     {
-        public InscripcionesBrDbEntities()
-            : base("name=InscripcionesBrDbEntities")
+        public Grupo10ConchaMunozBrDbEntities()
+            : base("name=Grupo10ConchaMunozBrDbEntities")
         {
         }
     

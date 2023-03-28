@@ -15,7 +15,7 @@ namespace UAndes.ICC5103._202301.Controllers
 {
     public class EnajenacionController : Controller
     {
-        private InscripcionesBrDbEntities db = new InscripcionesBrDbEntities();
+        private Grupo10ConchaMunozBrDbEntities db = new Grupo10ConchaMunozBrDbEntities();
 
         // GET: Enajenacion
         public async Task<ActionResult> Index()
