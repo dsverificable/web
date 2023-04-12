@@ -84,6 +84,7 @@
 
 @if (Model.Adquirientes != null)
 {
+
     <h4>Enajenates</h4>
 
     <table class="table">
@@ -119,6 +120,7 @@
 }
 @if (Model.Adquirientes != null)
 {
+
     <h4>Adquirientes</h4>
     <table class="table">
         <tr>
@@ -150,10 +152,9 @@
             }
         }
     </table>
-}
+ }
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 

@@ -96,7 +96,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.CNEOptions = db.CNEOptions.ToList();
-            model.ComunaOptions = db.ComunaOptions.ToList();
+            model.ComunaOptions = db.ComunaOptions.ToList();     
             return View(model);
         }
 
@@ -259,7 +259,6 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 return View(model);
             }
-
         }
 
 
