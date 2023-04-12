@@ -95,7 +95,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.CNEOptions = db.CNEOptions.ToList();
-            model.ComunaOptions = db.ComunaOptions.ToList();
+            model.ComunaOptions = db.ComunaOptions.ToList();     
             return View(model);
         }
 
@@ -162,7 +162,11 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Consult
         public ActionResult Consult()
         {
-            return View();
+            var model = new EnajenacionViewModel();
+            model.ComunaOptions = db.ComunaOptions.ToList();
+            
+
+            return View(model);
         }
 
         // POST: Enajenacion/Consult
@@ -170,13 +174,20 @@ namespace UAndes.ICC5103._202301.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Consult(int? manzana, int? predio, string comuna, int? year)
+        public async Task<ActionResult> Consult([Bind(Include = "Comuna, Manzana, Predio")] Enajenacion enajenacion)
         {
-            var viewModel = new EnajenacionViewModel();
+            var model = new EnajenacionViewModel();
+            model.ComunaOptions = db.ComunaOptions.ToList();
+            model.Enajenacion = new Enajenacion();
+
+            int manzana = enajenacion.Manzana;
+            int predio = enajenacion.Predio;
+            int comuna = enajenacion.Comuna;
+            int year = 2023;
 
             // Exact year
             List<Enajenacion> enajenaciones = await db.Enajenacion
-                .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year == year && e.ComunaOptions.Comuna == comuna)
+                .Where(e =>  e.FechaInscripcion.Year == year)
                 .ToListAsync();
 
             if (enajenaciones == null || enajenaciones.Count == 0)
@@ -188,7 +199,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 if (enajenaciones2 == null || enajenaciones2.Count == 0)
                 {
-                    return View();
+                    return View(model);
                 }
                 else
                 {
@@ -210,12 +221,12 @@ namespace UAndes.ICC5103._202301.Controllers
                         enajenante.AddRange(filteredEnanjenante);
                     }
 
-                    viewModel.Adquirientes = adquirientes;
-                    viewModel.Enajenacions = enajenaciones2;
-                    viewModel.Enajenantes = enajenante;
-                    viewModel.Year = year;
+                    model.Adquirientes = adquirientes;
+                    model.Enajenacions = enajenaciones2;
+                    model.Enajenantes = enajenante;
+                    model.Year = year;
 
-                    return View(viewModel);
+                    return View(model);
                 }
 
             }
@@ -239,14 +250,13 @@ namespace UAndes.ICC5103._202301.Controllers
                     enajenante.AddRange(filteredEnanjenante);
                 }
 
-                viewModel.Adquirientes = adquirientes;
-                viewModel.Enajenacions = enajenaciones;
-                viewModel.Enajenantes = enajenante;
-                viewModel.Year = year;
+                model.Adquirientes = adquirientes;
+                model.Enajenacions = enajenaciones;
+                model.Enajenantes = enajenante;
+                model.Year = year;
 
-                return View(viewModel);
+                return View(model);
             }
-
         }
 
 

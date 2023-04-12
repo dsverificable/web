@@ -6,50 +6,6 @@
 
 <head>
     <link rel="stylesheet" href="~/Content/Site.css">
-
-    <script>
-        $(document).ready(function () {
-            $('form').submit(function () {
-                var comuna = $('.comuna-validate').val();
-                var manzana = $('.manzana-validate').val();
-                var predio = $('.predio-validate').val();
-                var year = $('.year-validate').val();
-                var isValid = true;
-
-                if (comuna === '') {
-                    isValid = false;
-                    $('.comuna-error').text('Este campo es obligatorio');
-                } else {
-                    $('.comuna-error').text('');
-                }
-
-                if (manzana === '') {
-                    isValid = false;
-                    $('.manzana-error').text('Este campo es obligatorio');
-                } else {
-                    $('.manzana-error').text('');
-                }
-
-                if (predio === '') {
-                    isValid = false;
-                    $('.predio-error').text('Este campo es obligatorio');
-                } else {
-                    $('.predio-error').text('');
-                }
-
-                if (year === '') {
-                    isValid = false;
-                    $('.year-error').text('Este campo es obligatorio');
-                } else {
-                    $('.year-error').text('');
-                }
-
-                return isValid;
-            });
-        });
-
-
-    </script>
 </head>
 
 
@@ -64,35 +20,57 @@
 
 
     <div>
-        <div class="row g-4">
-            <div class="form-group">
-                <label class="control-label col-md-2">Comuna:</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control comuna-validate" name="comuna" placeholder="Ingrese Comuna">
+        <div class="row">
+
+            <div class="col-md-4" id="card-body-col">
+                <div class="col-md-4" id="card-body-col">
+                    @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "form-control", @id = "form-label" })
+                </div>
+                <div class="col-md-8" id="card-body-col">
+                    @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "Selecione la Comuna", new { @class = "form-control", @id = "form-editor" })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="control-label col-md-2">Manzana:</label>
-                <div class="col-md-10">
-                    <input type="number" class="form-control manzana-validate" name="manzana" placeholder="Ingrese Manzana">
-                </div>
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label class="control-label col-md-2">Predio:</label>
-                <div class="col-md-10">
-                    <input type="number" class="form-control predio-validate" name="predio" placeholder="Ingrese Predio">
-                </div>
-            </div>
+        <div class="row">
 
-            <div class="form-group">
-                <label class="control-label col-md-2">Año:</label>
-                <div class="col-md-10">
-                    <input type="number" class="form-control year-validate" name="year" placeholder="Ingrese Año">
+            <div class="col-md-4" id="card-body-col">
+                <div class="col-md-4" id="card-body-col">
+                    @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "form-control", @id = "form-label" })
+                </div>
+                <div class="col-md-8" id="card-body-col">
+                    @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Manzana" } })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-4" id="card-body-col">
+                <div class="col-md-4" id="card-body-col">
+                    @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "form-control", @id = "form-label" })
+                </div>
+                <div class="col-md-8" id="card-body-col">
+                    @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Predio" } })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4" id="card-body-col">
+                <div class="col-md-4" id="card-body-col">
+                    @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "form-control", @id = "form-label" })
+                </div>
+                <div class="col-md-8" id="card-body-col">
+                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Año" } })
+                    @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div>
@@ -107,9 +85,9 @@
 }
 
 
-
-@if (Model != null && Model.Adquirientes.Count > 0)
+@if (Model.Enajenantes != null)
 {
+
     <h4>Enajenates</h4>
 
     <table class="table">
@@ -143,8 +121,9 @@
         }
     </table>
 }
-@if (Model != null && Model.Adquirientes.Count > 0)
+@if (Model.Adquirientes != null)
 {
+
     <h4>Adquirientes</h4>
     <table class="table">
         <tr>
@@ -176,10 +155,9 @@
             }
         }
     </table>
-}
+ }
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 
