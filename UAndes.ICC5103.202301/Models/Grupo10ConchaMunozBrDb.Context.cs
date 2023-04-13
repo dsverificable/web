@@ -44,7 +44,6 @@ namespace UAndes.ICC5103._202301.Models
         public String SelectDescripcion { get; set; }
         public List<String> Comuna { get; set; }
         public String SelectComuna { get; set; }
-
         public int Year { get; set; }
     }
 }

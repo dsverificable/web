@@ -99,6 +99,11 @@ textarea {
     margin-top: 15px;
 }
 
+.text-padding{
+    padding-left: 4px;
+    font-size: 13px;
+}
+
 input:focus {
     outline: none !important;
 }
@@ -125,4 +130,3 @@ input[type="radio"], input[type="checkbox"] {
 #myTableAdquirientes #myTableEnajenantes th {
     color: var(--blue);
 }
-
