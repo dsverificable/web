@@ -11,6 +11,7 @@ using UAndes.ICC5103._202301.Models;
 using System.Drawing.Printing;
 using System.Reflection.Emit;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using Microsoft.Ajax.Utilities;
 
 namespace UAndes.ICC5103._202301.Controllers
 {
@@ -169,6 +170,23 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
+        private Enajenacion getLastInformationOfTheEnajenaciones(List<Enajenacion> enajenaciones, int year)
+        {
+            int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
+            enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
+
+            if (enajenaciones.Count == 1)
+            {
+                return enajenaciones.FirstOrDefault();
+            }
+            else
+            {
+                DateTime maxDate = enajenaciones.Max(e => e.FechaInscripcion);
+                enajenaciones = enajenaciones.Where(e => e.FechaInscripcion == maxDate).ToList();
+                return enajenaciones.LastOrDefault();
+            }
+        }
+
         // POST: Enajenacion/Consult
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -176,7 +194,6 @@ namespace UAndes.ICC5103._202301.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Consult(EnajenacionViewModel viewModel)
         {
-
             // Data from query
             int comuna = viewModel.Enajenacion.Comuna;
             int manzana = viewModel.Enajenacion.Manzana;
@@ -187,87 +204,27 @@ namespace UAndes.ICC5103._202301.Controllers
             var model = new EnajenacionViewModel();
             model.ComunaOptions = db.ComunaOptions.ToList();
 
-            // Exact year
-            List<Enajenacion> enajenaciones = await db.Enajenacion
-                .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year == year && e.ComunaOptions.Valor == comuna)
-                .ToListAsync();
 
-            if (enajenaciones == null || enajenaciones.Count == 0)
-            {
-                // Not exact year
-                List<Enajenacion> enajenaciones2 = await db.Enajenacion
+            List<Enajenacion> enajenaciones = await db.Enajenacion
                    .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year < year && e.ComunaOptions.Valor == comuna)
                    .ToListAsync();
 
-                if (enajenaciones2 == null || enajenaciones2.Count == 0)
-                {
-                    return View(model);
-                }
-                else
-                {
-                    int maxYear = enajenaciones2.Max(e => e.FechaInscripcion.Year);
-                    List<Adquiriente> adquirientes = new List<Adquiriente>();
-                    List<Enajenante> enajenante = new List<Enajenante>();
-
-                    foreach (var enaj in enajenaciones2)
-                    {
-                        var filteredAdquirientes = await db.Adquiriente
-                            .Where(a => a.IdEnajenacion == enaj.Id)
-                            .ToListAsync();
-
-                        var filteredEnanjenante = await db.Enajenante
-                            .Where(a => a.IdEnajenacion == enaj.Id)
-                            .ToListAsync();
-
-                        adquirientes.AddRange(filteredAdquirientes);
-                        enajenante.AddRange(filteredEnanjenante);
-                    }
-
-                    model.Adquirientes = adquirientes;
-                    model.Enajenacions = enajenaciones2;
-                    model.Enajenantes = enajenante;
-                    //viewModel.Year = year;
-
-                    return View(model);
-                }
-
+            if (enajenaciones.Count == 0)
+            {
+                return View(model);
             }
             else
             {
-                // Exact year
-                List<Adquiriente> adquirientes = new List<Adquiriente>();
-                List<Enajenante> enajenante = new List<Enajenante>();
-
-                foreach (var enaj in enajenaciones)
-                {
-                    var filteredAdquirientes = await db.Adquiriente
-                        .Where(a => a.IdEnajenacion == enaj.Id)
-                        .ToListAsync();
-
-                    var filteredEnanjenante = await db.Enajenante
-                            .Where(a => a.IdEnajenacion == enaj.Id)
+                Enajenacion enajenacion = getLastInformationOfTheEnajenaciones(enajenaciones, year);
+                List<Adquiriente> adquirientes = await db.Adquiriente
+                            .Where(a => a.IdEnajenacion == enajenacion.Id)
                             .ToListAsync();
 
-                    adquirientes.AddRange(filteredAdquirientes);
-                    enajenante.AddRange(filteredEnanjenante);
-                }
-
                 model.Adquirientes = adquirientes;
-                model.Enajenacions = enajenaciones;
-                model.Enajenantes = enajenante;
-                //viewModel.Year = year;
-
+                model.Enajenacion = enajenacion;
                 return View(model);
             }
         }
-
-
-
-
-
-
-
-
 
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)

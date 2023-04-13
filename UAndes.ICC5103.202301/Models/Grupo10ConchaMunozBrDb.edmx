@@ -333,7 +333,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="c32ce243f8634340a0329b173bfe63ce" Name="Diagram1">
+      <Diagram DiagramId="c32ce243f8634340a0329b173bfe63ce" Name="Diagram1" ZoomLevel="131">
         <EntityTypeShape EntityType="InscripcionesBrDbModel.Adquiriente" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="InscripcionesBrDbModel.CNEOptions" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InscripcionesBrDbModel.ComunaOptions" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
