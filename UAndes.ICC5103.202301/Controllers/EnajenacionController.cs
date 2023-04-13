@@ -205,7 +205,7 @@ namespace UAndes.ICC5103._202301.Controllers
             model.ComunaOptions = db.ComunaOptions.ToList();
 
             List<Enajenacion> enajenaciones = await db.Enajenacion
-                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year < year && e.ComunaOptions.Valor == comuna)
+                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year <= year && e.ComunaOptions.Valor == comuna)
                    .ToListAsync();
 
             if (enajenaciones.Count == 0)
