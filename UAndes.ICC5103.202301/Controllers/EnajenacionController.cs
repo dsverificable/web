@@ -170,7 +170,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
-        private Enajenacion getLastInformationOfTheEnajenaciones(List<Enajenacion> enajenaciones, int year)
+        private Enajenacion getLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones, int year)
         {
             int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
             enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
@@ -204,7 +204,6 @@ namespace UAndes.ICC5103._202301.Controllers
             var model = new EnajenacionViewModel();
             model.ComunaOptions = db.ComunaOptions.ToList();
 
-
             List<Enajenacion> enajenaciones = await db.Enajenacion
                    .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year < year && e.ComunaOptions.Valor == comuna)
                    .ToListAsync();
@@ -215,7 +214,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             else
             {
-                Enajenacion enajenacion = getLastInformationOfTheEnajenaciones(enajenaciones, year);
+                Enajenacion enajenacion = getLastUpdateOfAndSpecificEnajenacion(enajenaciones, year);
                 List<Adquiriente> adquirientes = await db.Adquiriente
                             .Where(a => a.IdEnajenacion == enajenacion.Id)
                             .ToListAsync();
