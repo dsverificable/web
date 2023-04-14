@@ -265,16 +265,18 @@
         var elementosInput = document.getElementsByClassName("form-control-input")
         var btnGuardar = document.getElementById("btn-primaryy");
         btnGuardar.addEventListener("click", function (event) {
-            var onlyAcreditados = 1;
+            var negativeValue = 0;
             var sumaPorcentual = 0;
             var checkAdquirientes = document.getElementsByClassName("checkAdquirientes")
             var porcentajeAdquirientes = document.getElementsByClassName("porcentajeAdquirientes")
             for (var i = 0; i < checkAdquirientes.length; i++) {
                 console.log(checkAdquirientes[i].value, porcentajeAdquirientes[i].value)
                 if (checkAdquirientes[i].value != "false") {
-                    onlyAcreditados = 0
                     porcentajeAdquirientes[i].value = 0
                 } else {
+                    if (parseInt(porcentajeAdquirientes[i].value)<0) {
+                        negativeValue = 1;
+                    }
                     sumaPorcentual += parseInt(porcentajeAdquirientes[i].value)
                 }
             }
@@ -290,11 +292,9 @@
                 alert("La suma de porcentajes entre los usuarios acreditados es mayor al 100%.")
                 event.preventDefault();
             } else {
-                if (onlyAcreditados == 1) {
-                    if (sumaPorcentual < 100) {
-                        alert("La suma de porcentajes entre los usuarios acreditados es menor al 100%. Agregue un usuario no acreditado, o corrija el porcentaje.")
-                        event.preventDefault();
-                    }
+                if (negativeValue == 1) {
+                    alert("Hay un porcentaje que es negativo, esto no es posible.")
+                    event.preventDefault();
                 }
             }
         });

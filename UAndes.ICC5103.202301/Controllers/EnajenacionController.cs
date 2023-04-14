@@ -108,6 +108,12 @@ namespace UAndes.ICC5103._202301.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
         {
+
+            var model = new EnajenacionViewModel();
+            model.Enajenacion = enajenacion;
+            model.CNEOptions = db.CNEOptions.ToList();
+            model.ComunaOptions = db.ComunaOptions.ToList();
+
             if (ModelState.IsValid)
             {
                 db.Enajenacion.Add(enajenacion);
@@ -163,7 +169,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(enajenacion);
+            return View(model);
         }
 
 
