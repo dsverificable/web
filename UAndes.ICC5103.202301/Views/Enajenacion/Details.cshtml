@@ -53,81 +53,86 @@
         </dd>
 
     </dl>
-
-    <table class="table">
-        <tr>
-
-            <th>
-                Rut Enajenante
-            </th>
-
-            <th>
-                Porcentaje Enajenante
-            </th>
-
-            <th>
-                Check Enajenante
-            </th>
-
-        </tr>
-
-        @foreach (var item in Model.Enajenantes)
-        {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.RutEnajenante)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.PorcentajeEnajenante)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.CheckEnajenante)
-                </td>
-
-            </tr>
-        }
-
-    </table>
-
-    <table class="table">
-        <tr>
-
-            <th>
-                Rut Adquiriente
-            </th>
-
-            <th>
-                Porcentaje Adquiriente
-            </th>
-
-            <th>
-                Check Adquiriente
-            </th>
-
-        </tr>
-
-        @foreach (var item in Model.Adquirientes)
-        {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.RutAdquiriente)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.CheckAdquiriente)
-                </td>
-
-            </tr>
-        }
-
-    </table>
-
 </div>
+
+@if (Model.Enajenantes.Count != 0)
+{
+        <table class="table">
+            <tr>
+
+                <th>
+                    Rut Enajenante
+                </th>
+
+                <th>
+                    Porcentaje Enajenante
+                </th>
+
+                <th>
+                    Check Enajenante
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.Enajenantes)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RutEnajenante)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PorcentajeEnajenante)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckEnajenante)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+ }
+
+@if (Model.Adquirientes.Count != 0)
+{
+        <table class="table">
+            <tr>
+
+                <th>
+                    Rut Adquiriente
+                </th>
+
+                <th>
+                    Porcentaje Adquiriente
+                </th>
+
+                <th>
+                    Check Adquiriente
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.Adquirientes)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RutAdquiriente)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckAdquiriente)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+}
