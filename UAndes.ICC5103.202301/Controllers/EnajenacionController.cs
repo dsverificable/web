@@ -138,19 +138,9 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             else
             {
-                DateTime maxDate = enajenaciones.Max(e => e.FechaInscripcion);
-                enajenaciones = enajenaciones.Where(e => e.FechaInscripcion == maxDate).ToList();
-
-                if (enajenaciones.Count == 1)
-                {
-                    return enajenaciones.LastOrDefault();
-                }
-                else 
-                {
-                    int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
-                    enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
-                    return enajenaciones.LastOrDefault();
-                }
+                int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
+                enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
+                return enajenaciones.LastOrDefault();
             }
         }
 
