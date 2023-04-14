@@ -120,46 +120,47 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 string rut;
                 int porcentaje;
-                bool check;
 
                 var rutList = Request.Form["Adquirientes[0].RutAdquiriente"].Split(',');
                 var porcentajeList = Request.Form["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
                 for (int i = 0; i < rutList.Length; i++)
                 {
-
                     var adquiriente = new Adquiriente();
                     adquiriente.IdEnajenacion = enajenacion.Id;
                     rut = rutList[i];
                     porcentaje = int.Parse(porcentajeList[i]);
-                    check = true;
-                    if (porcentaje == 0)
-                    {
-                        check = false;
-                    }
 
                     adquiriente.RutAdquiriente = rut;
                     adquiriente.PorcentajeAdquiriente = porcentaje;
-                    adquiriente.CheckAdquiriente = check;
-
+                    if (porcentaje == 0)
+                    {
+                        adquiriente.CheckAdquiriente = false;
+                    }   else
+                        {
+                            adquiriente.CheckAdquiriente = true;
+                        }
                     db.Adquiriente.Add(adquiriente);
                 }
                 if (enajenacion.CNE == 0)
                 {
                     rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
                     porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-                    var checkList = Request.Form["Enajenantes[0].CheckEnajenante"].Split(',');
                     for (int i = 0; i < rutList.Length; i++)
                     {
                         var enajenante = new Enajenante();
                         enajenante.IdEnajenacion = enajenacion.Id;
                         rut = rutList[i];
                         porcentaje = int.Parse(porcentajeList[i]);
-                        check = bool.Parse(checkList[i]);
 
                         enajenante.RutEnajenante = rut;
                         enajenante.PorcentajeEnajenante = porcentaje;
-                        enajenante.CheckEnajenante = check;
-
+                        if (porcentaje == 0)
+                        {
+                            enajenante.CheckEnajenante = false;
+                        }   else
+                            {
+                                enajenante.CheckEnajenante = true;
+                            }
                         db.Enajenante.Add(enajenante);
                     }
                 }
