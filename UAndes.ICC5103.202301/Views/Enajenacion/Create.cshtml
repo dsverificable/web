@@ -192,7 +192,7 @@
         </div>
     </div>
     <script>
-        
+
         let inputValue = document.getElementById("form-editor");
         let details = document.getElementById("details")
         inputValue.value = "";
@@ -221,11 +221,14 @@
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
+            cell2.style.paddingRight = "120px";
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';;
-            cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].CheckEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
-            cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].PorcentajeEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+            cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].CheckEnajenante, new { htmlAttributes = new { @class = "form-control checkEnajenantes", @onclick = "display(this)" } }).ToHtmlString())';
+            cell2.value = "false"
+            cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].PorcentajeEnajenante, new { htmlAttributes = new { @class = "form-control porcentajeEnajenantes", @style = "visibility: hidden"  } }).ToHtmlString())';
+            cell3.value = "0"
 
             if (withTrash) {
                 cell4.innerHTML = "<button onclick='deleteThisRow(this)' id='btn-delete'><i class='fas fa-trash'></i></button>";
@@ -274,29 +277,47 @@
                 if (checkAdquirientes[i].value != "false") {
                     porcentajeAdquirientes[i].value = 0
                 } else {
-                    if (parseInt(porcentajeAdquirientes[i].value)<0) {
+                    if (parseInt(porcentajeAdquirientes[i].value)<=0) {
                         negativeValue = 1;
                     }
                     sumaPorcentual += parseInt(porcentajeAdquirientes[i].value)
                 }
             }
-            for (var i = 0; i < elementos.length; i++) {
-                if (elementosInput[i].value != "") {
-                    elementos[i].style.display = "none";
-                } else {
-                    elementos[i].style.display = "block";
-                }
-            }
-
             if (sumaPorcentual > 100) {
-                alert("La suma de porcentajes entre los usuarios acreditados es mayor al 100%.")
+                alert("La suma de porcentajes de adquirientes entre los usuarios acreditados es mayor al 100%.")
                 event.preventDefault();
             } else {
                 if (negativeValue == 1) {
-                    alert("Hay un porcentaje que es negativo, esto no es posible.")
+                    alert("Hay un porcentaje de adquirientes que es negativo o es igual a 0, esto no es posible.")
                     event.preventDefault();
                 }
             }
+
+            negativeValue = 0;
+            sumaPorcentual = 0;
+            checkEnajenantes = document.getElementsByClassName("checkEnajenantes")
+            porcentajeEnajenantes = document.getElementsByClassName("porcentajeEnajenantes")
+            for (var i = 0; i < checkEnajenantes.length; i++) {
+                console.log(checkEnajenantes[i].value, porcentajeEnajenantes[i].value)
+                if (checkEnajenantes[i].value != "false") {
+                    porcentajeEnajenantes[i].value = 0
+                } else {
+                    if (parseInt(porcentajeEnajenantes[i].value) <= 0) {
+                        negativeValue = 1;
+                    }
+                    sumaPorcentual += parseInt(porcentajeEnajenantes[i].value)
+                }
+            }
+            if (sumaPorcentual > 100) {
+                alert("La suma de porcentajes de enajenantes entre los usuarios acreditados es mayor al 100%.")
+                event.preventDefault();
+            } else {
+                if (negativeValue == 1) {
+                    alert("Hay un porcentajes de enajenantes que es negativo o es igual a 0, esto no es posible.")
+                    event.preventDefault();
+                }
+            }
+
         });
 
         for (var i = 0; i < elementos.length; i++) {
