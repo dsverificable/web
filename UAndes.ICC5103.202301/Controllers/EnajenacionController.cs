@@ -101,6 +101,72 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
+
+        private bool checkIfIsRdp(int cne)
+        {
+            //  1 = Regularizacion De Patrimonio
+            if (cne == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool GetValueOfTheCheck(int porcentaje)
+        {
+            //  1 = Regularizacion De Patrimonio
+            if (porcentaje == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId)
+        {
+            var rutList = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var porcentajeList = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            
+            for (int i = 0; i < rutList.Length; i++)
+            {
+                var enajenante = new Enajenante();
+                string rut = rutList[i];
+                int porcentaje = int.Parse(porcentajeList[i]);
+
+                enajenante.IdEnajenacion = enajenacionId;
+                enajenante.RutEnajenante = rut;
+                enajenante.PorcentajeEnajenante = porcentaje;
+                enajenante.CheckEnajenante = GetValueOfTheCheck(porcentaje);
+
+                db.Enajenante.Add(enajenante);
+            }
+        }
+
+        private void AddAdquirientesToDb(FormCollection formCollection, int enajenacionId)
+        {
+            var rutList = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            var porcentajeList = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+
+            for (int i = 0; i < rutList.Length; i++)
+            {
+                var adquiriente = new Adquiriente();
+                string rut = rutList[i];
+                int porcentaje = int.Parse(porcentajeList[i]);
+
+                adquiriente.IdEnajenacion = enajenacionId;
+                adquiriente.RutAdquiriente = rut;
+                adquiriente.PorcentajeAdquiriente = porcentaje;
+                adquiriente.CheckAdquiriente = GetValueOfTheCheck(porcentaje);
+
+                db.Adquiriente.Add(adquiriente);
+            }
+        }
+
         // POST: Enajenacion/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -116,61 +182,27 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Enajenacion.Add(enajenacion);
+                FormCollection formCollection = new FormCollection(Request.Form);
 
-                string rut;
-                int porcentaje;
-
-                var rutList = Request.Form["Adquirientes[0].RutAdquiriente"].Split(',');
-                var porcentajeList = Request.Form["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-                for (int i = 0; i < rutList.Length; i++)
+                if (checkIfIsRdp(enajenacion.CNE))
                 {
-                    var adquiriente = new Adquiriente();
-                    adquiriente.IdEnajenacion = enajenacion.Id;
-                    rut = rutList[i];
-                    porcentaje = int.Parse(porcentajeList[i]);
-
-                    adquiriente.RutAdquiriente = rut;
-                    adquiriente.PorcentajeAdquiriente = porcentaje;
-                    if (porcentaje == 0)
-                    {
-                        adquiriente.CheckAdquiriente = false;
-                    }   else
-                        {
-                            adquiriente.CheckAdquiriente = true;
-                        }
-                    db.Adquiriente.Add(adquiriente);
+                    AddAdquirientesToDb(formCollection, enajenacion.Id);
+                    db.Enajenacion.Add(enajenacion);
                 }
-                if (enajenacion.CNE == 0)
+                else
                 {
-                    rutList = Request.Form["Enajenantes[0].RutEnajenante"].Split(',');
-                    porcentajeList = Request.Form["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-                    for (int i = 0; i < rutList.Length; i++)
-                    {
-                        var enajenante = new Enajenante();
-                        enajenante.IdEnajenacion = enajenacion.Id;
-                        rut = rutList[i];
-                        porcentaje = int.Parse(porcentajeList[i]);
-
-                        enajenante.RutEnajenante = rut;
-                        enajenante.PorcentajeEnajenante = porcentaje;
-                        if (porcentaje == 0)
-                        {
-                            enajenante.CheckEnajenante = false;
-                        }   else
-                            {
-                                enajenante.CheckEnajenante = true;
-                            }
-                        db.Enajenante.Add(enajenante);
-                    }
+                    // Add Logic
+                    //AddEnajenanteToDb(formCollection, enajenacion.Id);
+                    //db.Enajenacion.Add(enajenacion);
                 }
-               
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            return View(model);
+            else
+            {
+                return View(model);
+            }
         }
 
 
