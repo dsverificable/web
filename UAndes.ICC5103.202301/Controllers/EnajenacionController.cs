@@ -17,154 +17,18 @@ namespace UAndes.ICC5103._202301.Controllers
 {
     public class EnajenacionController : Controller
     {
+        #region Contansts
         private Grupo10ConchaMunozBrDbEntities db = new Grupo10ConchaMunozBrDbEntities();
+        #endregion
 
-        private bool checkIfIsRdp(int cne)
-        {
-            //  1 = Regularizacion De Patrimonio
-            if (cne == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool GetValueOfTheCheck(int percentage)
-        {
-            //  1 = Regularizacion De Patrimonio
-            if (percentage == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private int GetDifferencePorcentageOfNotAcredited(string[] percentages)
-        {
-            int totalSum = 0;
-            int peopleWithoutPorcentage = 0;
-            int difference = 0;
-
-
-            foreach (var percentage in percentages)
-            {
-                int intPercentage = int.Parse(percentage);
-                totalSum += intPercentage;
-
-                if(intPercentage == 0)
-                {
-                    peopleWithoutPorcentage++;
-                }
-            }
-
-            if (peopleWithoutPorcentage > 0)
-            {
-               difference = (100 - totalSum) / peopleWithoutPorcentage;
-            }
-
-            return difference;
-        }
-
-        private int GetValuePorcentage(int percentage, int differencePercentage)
-        {
-            
-            if (percentage > 0)
-            {
-                return percentage;
-            }
-            else
-            {
-                return differencePercentage;
-            }
-
-        }
-
-        private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId)
-        {
-            var rutList = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
-            var porcentajeList = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-            int differencePorcentage = GetDifferencePorcentageOfNotAcredited(porcentajeList);
-
-            for (int i = 0; i < rutList.Length; i++)
-            {
-                var enajenante = new Enajenante();
-                string rut = rutList[i];
-                int percentage = int.Parse(porcentajeList[i]);
-
-                enajenante.IdEnajenacion = enajenacionId;
-                enajenante.RutEnajenante = rut;
-                enajenante.PorcentajeEnajenante = GetValuePorcentage(percentage, differencePorcentage);
-                enajenante.CheckEnajenante = GetValueOfTheCheck(percentage);
-
-                db.Enajenante.Add(enajenante);
-            }
-        }
-
-        private void AddAdquirientesToDb(FormCollection formCollection, int enajenacionId)
-        {
-            var rutList = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
-            var porcentajeList = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-            int differencePorcentage = GetDifferencePorcentageOfNotAcredited(porcentajeList);
-
-            for (int i = 0; i < rutList.Length; i++)
-            {
-                var adquiriente = new Adquiriente();
-                string rut = rutList[i];
-                int percentage = int.Parse(porcentajeList[i]);
-
-                adquiriente.IdEnajenacion = enajenacionId;
-                adquiriente.RutAdquiriente = rut;
-                adquiriente.PorcentajeAdquiriente = GetValuePorcentage(percentage, differencePorcentage);
-                adquiriente.CheckAdquiriente = GetValueOfTheCheck(percentage);
-
-                db.Adquiriente.Add(adquiriente);
-            }
-        }
-
-        private Enajenacion getLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones, int year)
-        {
-            int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
-            enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
-
-            if (enajenaciones.Count == 1)
-            {
-                return enajenaciones.FirstOrDefault();
-            }
-            else
-            {
-                int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
-                enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
-                return enajenaciones.LastOrDefault();
-            }
-        }
-
+        #region Public Methods
         // GET: Enajenacion
         public async Task<ActionResult> Index()
         {
-            var model = new EnajenacionViewModel();
+            EnajenacionViewModel model = new EnajenacionViewModel();
             model.Enajenacions = db.Enajenacion.ToList();
-
-            var cneoptions = db.CNEOptions.ToList();
-            List<String> Descripcion = new List<string>();
-            for (int i = 0; i < 2 ;i++)
-            {
-                Descripcion.Add(cneoptions[i].Descripcion);
-            }
-            model.Descripcion = Descripcion;
-
-            var comunaoptions = db.ComunaOptions.ToList();
-            List<String> Comunas = new List<string>();
-            for (int i = 0; i <= 325; i++)
-            {
-                Comunas.Add(comunaoptions[i].Comuna);
-            }
-            model.Comuna = Comunas;
+            model.Descripcion = db.CNEOptions.Select(c => c.Descripcion).ToList();
+            model.Comuna = db.ComunaOptions.Select(c => c.Comuna).ToList();
 
             return View(model);
         }
@@ -172,13 +36,13 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
+            if (!isValidId(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (enajenacion == null)
+            if (!isValidEnajenacion(enajenacion))
             {
                 return HttpNotFound();
             }
@@ -186,35 +50,16 @@ namespace UAndes.ICC5103._202301.Controllers
             List<Enajenante> enajenantes = await db.Enajenante.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
             List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
 
+            EnajenacionViewModel model = new EnajenacionViewModel();
+            model.Adquirientes = adquirientes;
+            model.Enajenacion = enajenacion;
+            model.Enajenantes = enajenantes;
+            model.Descripcion = db.CNEOptions.Select(c => c.Descripcion).ToList();
+            model.Comuna = db.ComunaOptions.Select(c => c.Comuna).ToList();
+            model.SelectDescripcion = model.Descripcion[0];
+            model.SelectComuna = model.Comuna[enajenacion.Comuna];
 
-            EnajenacionViewModel viewModel = new EnajenacionViewModel
-            {
-                Enajenacion = enajenacion,
-                Enajenantes = enajenantes,
-                Adquirientes = adquirientes
-            };
-
-            var cneoptions = db.CNEOptions.ToList();
-            List<String> Descripcion = new List<string>();
-            for (int i = 0; i < 2; i++)
-            {
-                Descripcion.Add(cneoptions[i].Descripcion);
-            }
-
-            viewModel.Descripcion = Descripcion;
-            viewModel.SelectDescripcion = Descripcion[enajenacion.CNE];
-
-            var comunasoptions = db.ComunaOptions.ToList();
-            List<String> Comuna = new List<string>();
-            for (int i = 0; i <= 325; i++)
-            {
-                Comuna.Add(comunasoptions[i].Comuna);
-            }
-
-            viewModel.Comuna = Comuna;
-            viewModel.SelectComuna = Comuna[enajenacion.Comuna];
-
-            return View(viewModel);
+            return View(model);
         }
 
         // GET: Enajenacion/Create
@@ -242,7 +87,7 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 FormCollection formCollection = new FormCollection(Request.Form);
 
-                if (checkIfIsRdp(enajenacion.CNE))
+                if (isRdp(enajenacion.CNE))
                 {
                     AddAdquirientesToDb(formCollection, enajenacion.Id);
                     db.Enajenacion.Add(enajenacion);
@@ -399,7 +244,9 @@ namespace UAndes.ICC5103._202301.Controllers
                 return RedirectToAction("Details/"+ id.ToString());
             }
         }
+        #endregion
 
+        #region Protected Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -408,5 +255,156 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
+
+        #region Private Methods
+        private bool isRdp(int cne)
+        {
+            //  1 = Regularizacion De Patrimonio
+            if (cne == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool isValidId(int? id)
+        {
+            if (id != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool isValidEnajenacion(Enajenacion enajenacion)
+        {
+            if (enajenacion != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool GetCheckValue(int percentage)
+        {
+            //  1 = Regularizacion De Patrimonio
+            if (percentage == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        } // change get
+
+        private int GetDifferencePorcentageOfNotAcredited(string[] percentages)
+        {
+            int percentageSum = 0;
+            int peopleWithoutPorcentage = 0;
+            int difference = 0;
+
+            foreach (var percentage in percentages)
+            {
+                int intPercentage = int.Parse(percentage);
+                percentageSum += intPercentage;
+
+                if (intPercentage == 0)
+                {
+                    peopleWithoutPorcentage++;
+                }
+            }
+
+            if (peopleWithoutPorcentage > 0)
+            {
+                difference = (100 - percentageSum) / peopleWithoutPorcentage;
+            }
+
+            return difference;
+        }// change get
+
+        private int GetValuePorcentage(int percentage, int differencePercentage)
+        {
+
+            if (percentage > 0)
+            {
+                return percentage;
+            }
+            else
+            {
+                return differencePercentage;
+            }
+
+        } // change get
+
+        private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId)
+        {
+            var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            int differencePercentage = GetDifferencePorcentageOfNotAcredited(percentages);
+
+            for (int i = 0; i < ruts.Length; i++)
+            {
+                var enajenante = new Enajenante();
+                string rut = ruts[i];
+                int percentage = int.Parse(percentages[i]);
+
+                enajenante.IdEnajenacion = enajenacionId;
+                enajenante.RutEnajenante = rut;
+                enajenante.PorcentajeEnajenante = GetValuePorcentage(percentage, differencePercentage);
+                enajenante.CheckEnajenante = GetCheckValue(percentage);
+
+                db.Enajenante.Add(enajenante);
+            }
+        }
+
+        private void AddAdquirientesToDb(FormCollection formCollection, int enajenacionId)
+        {
+            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            int differencePercentage = GetDifferencePorcentageOfNotAcredited(percentages);
+
+            for (int i = 0; i < ruts.Length; i++)
+            {
+                var adquiriente = new Adquiriente();
+                string rut = ruts[i];
+                int percentage = int.Parse(percentages[i]);
+
+                adquiriente.IdEnajenacion = enajenacionId;
+                adquiriente.RutAdquiriente = rut;
+                adquiriente.PorcentajeAdquiriente = GetValuePorcentage(percentage, differencePercentage);
+                adquiriente.CheckAdquiriente = GetCheckValue(percentage);
+
+                db.Adquiriente.Add(adquiriente);
+            }
+        }
+
+        private Enajenacion getLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones, int year)
+        {
+            int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
+            enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
+
+            if (enajenaciones.Count == 1)
+            {
+                return enajenaciones.FirstOrDefault();
+            }
+            else
+            {
+                int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
+                enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
+                return enajenaciones.LastOrDefault();
+            }
+        }
+        #endregion
     }
 }
