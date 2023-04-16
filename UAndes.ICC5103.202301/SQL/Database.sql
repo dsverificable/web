@@ -65,7 +65,6 @@ GO
 
 SET IDENTITY_INSERT [dbo].[CNEOptions] ON;
 GO
-INSERT [dbo].[CNEOptions] ([Valor], [Descripcion]) VALUES (0, 'Compraventa');
 INSERT [dbo].[CNEOptions] ([Valor], [Descripcion]) VALUES (1, 'Regularizacion De Patrimonio');
 GO
 SET IDENTITY_INSERT [dbo].[CNEOptions] OFF;
@@ -410,23 +409,10 @@ GO
 SET IDENTITY_INSERT [dbo].[Enajenacion] OFF;
 GO
 
-SET IDENTITY_INSERT [dbo].[Enajenante] ON;
-GO
-INSERT [dbo].[Enajenante] ([Id], [RutEnajenante], [PorcentajeEnajenante], [CheckEnajenante], [IdEnajenacion]) VALUES (1, N'12345678-9', 20, 0, 1)
-GO
-SET IDENTITY_INSERT [dbo].[Enajenante] OFF;
-GO
 
 SET IDENTITY_INSERT [dbo].[Adquiriente] ON;
 GO
 INSERT [dbo].[Adquiriente] ([Id], [RutAdquiriente], [PorcentajeAdquiriente], [CheckAdquiriente], [IdEnajenacion]) VALUES (1, N'19876543-2', 30, 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Adquiriente] OFF;
-GO
-
-SET IDENTITY_INSERT [dbo].[Enajenante] ON;
-GO
-INSERT [dbo].[Enajenante] ([Id], [RutEnajenante], [PorcentajeEnajenante], [CheckEnajenante], [IdEnajenacion]) VALUES (2, N'13345123-k', 80, 1, 1)
-GO
-SET IDENTITY_INSERT [dbo].[Enajenante] OFF;
 GO
