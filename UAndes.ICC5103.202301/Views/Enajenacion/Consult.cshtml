@@ -8,16 +8,14 @@
     <link rel="stylesheet" href="~/Content/Site.css">
 </head>
 
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <h3>Consulta de Propietarios de un Predio</h3>
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div>
         <div class="row">
@@ -112,37 +110,40 @@
     <h4>No hay Datos</h4>
 }
 
-    <script>
+<script>
 
-        var elementos = document.getElementsByClassName("text-padding");
-        for (var i = 0; i < elementos.length; i++) {
-            elementos[i].style.display = "none";
+    var elements = document.getElementsByClassName("text-padding");
+    for (var i = 0; i < elements.length; i++)
+    {
+        elements[i].style.display = "none";
+    }
+
+    var btnSave = document.getElementById("btn-primaryy");
+    btnSave.addEventListener("click", function (event) {
+
+        var elementsInput = document.getElementsByClassName("form-control-input")
+        for (var i = 0; i < elementsInput.length; i++)
+        {
+            if (elementsInput[i].value.length == 0)
+            {
+                elements[i].style.display = "block";
+            }
+            else
+            {
+                elements[i].style.display = "none";
+            }
         }
 
-        var btnGuardar = document.getElementById("btn-primaryy");
-        btnGuardar.addEventListener("click", function (event) {
+        var year = parseInt(document.getElementById("validatorYear").value);
+        if (year < 2019)
+        {
+            alert("El año tiene que ser superior/igual al 2019.")
+            event.preventDefault();
+        }
+    });
 
-            var elementosInput = document.getElementsByClassName("form-control-input")
-            for (var i = 0; i < elementosInput.length; i++) {
-                console.log(elementosInput[i].value.length)
-                if (elementosInput[i].value.length == 0) {
-                    elementos[i].style.display = "block";
-                } else {
-                    elementos[i].style.display = "none";
-                }
-            }
-
-            var year = parseInt(document.getElementById("validatorYear").value);
-            if (year < 2019) {
-                alert("El año tiene que ser superior/igual al 2019.")
-                event.preventDefault();
-            }
-
-        });
-
-    </script>
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
