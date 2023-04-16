@@ -36,13 +36,13 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (!isValidId(id))
+            if (!isId(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (!isValidEnajenacion(enajenacion))
+            if (!isEnajenacion(enajenacion))
             {
                 return HttpNotFound();
             }
@@ -149,13 +149,13 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (!isValidId(id))
+            if (!isId(id))     
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (!isValidEnajenacion(enajenacion))
+            if (!isEnajenacion(enajenacion))
             {
                 return HttpNotFound();
             }
@@ -184,13 +184,13 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             if (option == 'a')
             {
-                if (!isValidId(id))
+                if (!isId(id))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (!isValidEnajenacion(enajenacion))
+                if (!isEnajenacion(enajenacion))
                 {
                     return HttpNotFound();
                 }
@@ -198,13 +198,13 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             else
             {
-                if (!isValidId(id))
+                if (!isId(id))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (!isValidEnajenacion(enajenacion))
+                if (!isEnajenacion(enajenacion))
                 {
                     return HttpNotFound();
                 }
@@ -268,7 +268,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool isValidId(int? id)
+        private bool isId(int? id)
         {
             if (id != null)
             {
@@ -280,7 +280,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool isValidEnajenacion(Enajenacion enajenacion)
+        private bool isEnajenacion(Enajenacion enajenacion)
         {
             if (enajenacion != null)
             {
@@ -292,9 +292,8 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool GetCheckValue(int percentage)
+        private bool CheckValue(int percentage)
         {
-            //  1 = Regularizacion De Patrimonio
             if (percentage == 0)
             {
                 return false;
@@ -303,9 +302,9 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 return true;
             }
-        } // change get
+        } 
 
-        private int GetDifferencePorcentageOfNotAcredited(string[] percentages)
+        private int DifferencePercentage(string[] percentages)
         {
             int percentageSum = 0;
             int peopleWithoutPorcentage = 0;
@@ -328,11 +327,10 @@ namespace UAndes.ICC5103._202301.Controllers
             }
 
             return difference;
-        }// change get
+        }
 
-        private int GetValuePorcentage(int percentage, int differencePercentage)
+        private int PercentageValue(int percentage, int differencePercentage)
         {
-
             if (percentage > 0)
             {
                 return percentage;
@@ -341,14 +339,13 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 return differencePercentage;
             }
-
-        } // change get
+        }
 
         private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId)
         {
             var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-            int differencePercentage = GetDifferencePorcentageOfNotAcredited(percentages);
+            int differencePercentage = DifferencePercentage(percentages);
 
             for (int i = 0; i < ruts.Length; i++)
             {
@@ -358,8 +355,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 enajenante.IdEnajenacion = enajenacionId;
                 enajenante.RutEnajenante = rut;
-                enajenante.PorcentajeEnajenante = GetValuePorcentage(percentage, differencePercentage);
-                enajenante.CheckEnajenante = GetCheckValue(percentage);
+                enajenante.PorcentajeEnajenante = PercentageValue(percentage, differencePercentage);
+                enajenante.CheckEnajenante = CheckValue(percentage);
 
                 db.Enajenante.Add(enajenante);
             }
@@ -369,7 +366,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
             var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-            int differencePercentage = GetDifferencePorcentageOfNotAcredited(percentages);
+            int differencePercentage = DifferencePercentage(percentages);
 
             for (int i = 0; i < ruts.Length; i++)
             {
@@ -379,8 +376,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 adquiriente.IdEnajenacion = enajenacionId;
                 adquiriente.RutAdquiriente = rut;
-                adquiriente.PorcentajeAdquiriente = GetValuePorcentage(percentage, differencePercentage);
-                adquiriente.CheckAdquiriente = GetCheckValue(percentage);
+                adquiriente.PorcentajeAdquiriente = PercentageValue(percentage, differencePercentage);
+                adquiriente.CheckAdquiriente = CheckValue(percentage);
 
                 db.Adquiriente.Add(adquiriente);
             }
@@ -399,6 +396,7 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
                 enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
+
                 return enajenaciones.LastOrDefault();
             }
         }
