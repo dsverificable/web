@@ -72,6 +72,7 @@
         </div>
     </div>
 }
+
 @if (Model.Adquirientes != null)
 {
     <table class="table">
@@ -101,12 +102,14 @@
                 {
                     <td>@Model.Enajenacion.FechaInscripcion.Year</td>
                 }
+
                 <td>@Model.Enajenacion.FechaInscripcion</td>
             </tr>
          }
         
     </table>
 }
+
 @if (Model.Adquirientes == null)
 {
     <h4>No hay Datos</h4>
