@@ -96,7 +96,7 @@
 
                         <tr>
                             <th> Rut </th>
-                            <th> ¿% Acreditado?</th>
+                            <th> ¿El % esta acreditado?</th>
                             <th> % Derechos </th>
                             <th></th>
                         </tr>
@@ -123,7 +123,7 @@
 
                         <tr>
                             <th> Rut </th>
-                            <th> ¿% Acreditado?</th>
+                            <th> ¿El % esta acreditado?</th>
                             <th> % Derechos</th>
                             <th></th>
                         </tr>
@@ -221,7 +221,7 @@
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
-            cell2.style.paddingRight = "120px";
+            cell2.style.paddingRight = "150px";
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';;
@@ -241,7 +241,7 @@
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
-            cell2.style.paddingRight = "120px";
+            cell2.style.paddingRight = "150px";
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].RutAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
