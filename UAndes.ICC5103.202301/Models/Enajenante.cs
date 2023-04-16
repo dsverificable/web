@@ -16,7 +16,7 @@ namespace UAndes.ICC5103._202301.Models
     {
         public int Id { get; set; }
         public string RutEnajenante { get; set; }
-        public int PorcentajeEnajenante { get; set; }
+        public double PorcentajeEnajenante { get; set; }
         public bool CheckEnajenante { get; set; }
         public int IdEnajenacion { get; set; }
     

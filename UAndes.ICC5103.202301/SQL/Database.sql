@@ -38,7 +38,7 @@ GO
 CREATE TABLE [dbo].[Enajenante](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[RutEnajenante] nvarchar(10) NOT NULL,
-	[PorcentajeEnajenante] [int] NOT NULL,
+	[PorcentajeEnajenante] [float] NOT NULL,
 	[CheckEnajenante] [bit] NOT NULL,
 	[IdEnajenacion] [int] NOT NULL,
 	CONSTRAINT [PK_Enajenante] PRIMARY KEY CLUSTERED(
@@ -52,7 +52,7 @@ GO
 CREATE TABLE [dbo].[Adquiriente](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[RutAdquiriente] nvarchar(10) NOT NULL,
-	[PorcentajeAdquiriente] [int] NOT NULL,
+	[PorcentajeAdquiriente] [float] NOT NULL,
 	[CheckAdquiriente] [bit] NOT NULL,
 	[IdEnajenacion] [int] NOT NULL,
 	CONSTRAINT [PK_Adquiriente] PRIMARY KEY CLUSTERED(

@@ -292,7 +292,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool CheckValue(int percentage)
+        private bool CheckValue(float percentage)
         {
             if (percentage == 0)
             {
@@ -304,18 +304,18 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         } 
 
-        private int DifferencePercentage(string[] percentages)
+        private float DifferencePercentage(string[] percentages)
         {
-            int percentageSum = 0;
             int peopleWithoutPorcentage = 0;
-            int difference = 0;
+            float percentageSum = 0;
+            float difference = 0;
 
             foreach (var percentage in percentages)
             {
-                int intPercentage = int.Parse(percentage);
-                percentageSum += intPercentage;
+                float floatPercentage = float.Parse(percentage);
+                percentageSum += floatPercentage;
 
-                if (intPercentage == 0)
+                if (floatPercentage == 0)
                 {
                     peopleWithoutPorcentage++;
                 }
@@ -329,7 +329,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return difference;
         }
 
-        private int PercentageValue(int percentage, int differencePercentage)
+        private float PercentageValue(float percentage, float differencePercentage)
         {
             if (percentage > 0)
             {
@@ -345,13 +345,13 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-            int differencePercentage = DifferencePercentage(percentages);
+            float differencePercentage = DifferencePercentage(percentages);
 
             for (int i = 0; i < ruts.Length; i++)
             {
                 var enajenante = new Enajenante();
                 string rut = ruts[i];
-                int percentage = int.Parse(percentages[i]);
+                float percentage = float.Parse(percentages[i]);
 
                 enajenante.IdEnajenacion = enajenacionId;
                 enajenante.RutEnajenante = rut;
@@ -366,13 +366,13 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
             var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-            int differencePercentage = DifferencePercentage(percentages);
+            float differencePercentage = DifferencePercentage(percentages);
 
             for (int i = 0; i < ruts.Length; i++)
             {
                 var adquiriente = new Adquiriente();
                 string rut = ruts[i];
-                int percentage = int.Parse(percentages[i]);
+                float percentage = float.Parse(percentages[i]);
 
                 adquiriente.IdEnajenacion = enajenacionId;
                 adquiriente.RutAdquiriente = rut;

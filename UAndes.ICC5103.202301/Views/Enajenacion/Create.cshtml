@@ -265,9 +265,10 @@
     {
         var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
-     }
+    }
 
-    function display(element) {
+    function display(element)
+    {
         var row = element.parentNode.parentNode.children[2].children[0];
 
         if (element.value == "false") {
@@ -300,12 +301,12 @@
             }
             else
             {
-                if (parseInt(percentageAdquirientes[i].value) <= 0)
+                if (parseFloat(percentageAdquirientes[i].value) <= 0)
                 {
                     negativeValue = 1;
                 }
 
-                totalPercentage += parseInt(percentageAdquirientes[i].value);
+                totalPercentage += parseFloat(percentageAdquirientes[i].value);
             }
          }
 
@@ -336,12 +337,12 @@
             }
             else
             {
-                if (parseInt(percentageEnajenantes[i].value) <= 0)
+                if (parseFloat(percentageEnajenantes[i].value) <= 0)
                 {
                     negativeValue = 1;
                 }
 
-                totalPercentage += parseInt(percentageEnajenantes[i].value);
+                totalPercentage += parseFloat(percentageEnajenantes[i].value);
             }
         }
 
