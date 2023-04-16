@@ -67,13 +67,12 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.CNEOptions = db.CNEOptions.ToList();
-            model.ComunaOptions = db.ComunaOptions.ToList();     
+            model.ComunaOptions = db.ComunaOptions.ToList();   
+            
             return View(model);
         }
 
         // POST: Enajenacion/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
@@ -92,15 +91,9 @@ namespace UAndes.ICC5103._202301.Controllers
                     AddAdquirientesToDb(formCollection, enajenacion.Id);
                     db.Enajenacion.Add(enajenacion);
                 }
-                else
-                {
-                    // Add Logic
-                    //AddAdquirientesToDb(formCollection, enajenacion.Id);
-                    //AddEnajenanteToDb(formCollection, enajenacion.Id);
-                    //db.Enajenacion.Add(enajenacion);
-                }
-
+                
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             else
@@ -119,24 +112,20 @@ namespace UAndes.ICC5103._202301.Controllers
         }
 
         // POST: Enajenacion/Consult
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Consult(EnajenacionViewModel viewModel)
         {
-            // Data from query
-            int comuna = viewModel.Enajenacion.Comuna;
+            var model = new EnajenacionViewModel();
+            model.ComunaOptions = db.ComunaOptions.ToList();
+
+            int comunaId = viewModel.Enajenacion.Comuna;
             int manzana = viewModel.Enajenacion.Manzana;
             int predio = viewModel.Enajenacion.Predio;
             int year = viewModel.Year;
 
-            // New Model
-            var model = new EnajenacionViewModel();
-            model.ComunaOptions = db.ComunaOptions.ToList();
-
             List<Enajenacion> enajenaciones = await db.Enajenacion
-                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year <= year && e.ComunaOptions.Valor == comuna)
+                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year <= year && e.ComunaOptions.Valor == comunaId)
                    .ToListAsync();
 
             if (enajenaciones.Count == 0)
@@ -152,6 +141,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 model.Adquirientes = adquirientes;
                 model.Enajenacion = enajenacion;
+
                 return View(model);
             }
         }
@@ -159,21 +149,21 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (!isValidId(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (enajenacion == null)
+            if (!isValidEnajenacion(enajenacion))
             {
                 return HttpNotFound();
             }
+
             return View(enajenacion);
         }
 
         // POST: Enajenacion/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, RutEnajenante, PorcentajeEnajenante, CheckEnajenante, RutAdquiriente, PorcentajeAdquiriente, CheckAdquiriente, Fojas, FechaInscripcion, IdInscripcion.")] Enajenacion enajenacion)
@@ -182,8 +172,10 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 db.Entry(enajenacion).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
+
             return View(enajenacion);
         }
 
@@ -192,12 +184,13 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             if (option == 'a')
             {
-                if (id == null)
+                if (!isValidId(id))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (enajenacion == null)
+                if (!isValidEnajenacion(enajenacion))
                 {
                     return HttpNotFound();
                 }
@@ -205,12 +198,13 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             else
             {
-                if (id == null)
+                if (!isValidId(id))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (enajenacion == null)
+                if (!isValidEnajenacion(enajenacion))
                 {
                     return HttpNotFound();
                 }
@@ -220,6 +214,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     return HttpNotFound();
                 }
+
                 return View(enajenacion);
             }
         }
@@ -234,6 +229,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
                 db.Enajenacion.Remove(enajenacion);
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             else
@@ -241,6 +237,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 Enajenante enajenante = await db.Enajenante.FindAsync(insideId);
                 db.Enajenante.Remove(enajenante);
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Details/"+ id.ToString());
             }
         }
