@@ -26,8 +26,8 @@
                     @Html.LabelFor(model => model.Enajenacion.Comuna, htmlAttributes: new { @class = "form-control", @id = "form-label" })
                 </div>
                 <div class="col-md-8" id="card-body-col">
-                    @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "Selecione la comuna", new { @class = "form-control", @id = "form-editor" })
-                    @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "Selecione la comuna", new { @class = "form-control  form-control-input", @id = "form-editor" })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
                 </div>
             </div>
         </div>
@@ -37,8 +37,8 @@
                     @Html.LabelFor(model => model.Enajenacion.Manzana, htmlAttributes: new { @class = "form-control", @id = "form-label" })
                 </div>
                 <div class="col-md-8" id="card-body-col">
-                    @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Manzana" } })
-                    @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control  form-control-input", @id = "form-editor", placeholder = "Ingrese Manzana" } })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
                 </div>
             </div>
         </div>
@@ -48,8 +48,8 @@
                     @Html.LabelFor(model => model.Enajenacion.Predio, htmlAttributes: new { @class = "form-control", @id = "form-label" })
                 </div>
                 <div class="col-md-8" id="card-body-col">
-                    @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Predio" } })
-                    @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control  form-control-input", @id = "form-editor", placeholder = "Ingrese Predio" } })
+                    @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
                 </div>
             </div>
         </div>
@@ -59,15 +59,14 @@
                     @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "form-control", @id = "form-label" })
                 </div>
                 <div class="col-md-8" id="card-body-col">
-                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", @id = "form-editor", placeholder = "Ingrese Año" } })
-                    @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", @id = "validatorYear", placeholder = "Ingrese Año" } })
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12 bg-light text-right">
-                    <button class="btn btn-primary" type="submit" id="btn-primary">Buscar</button>
+                    <button class="btn btn-primary" type="submit" id="btn-primaryy">Buscar</button>
                 </div>
             </div>
         </div>
@@ -112,6 +111,36 @@
 {
     <h4>No hay Datos</h4>
 }
+
+    <script>
+
+        var elementos = document.getElementsByClassName("text-padding");
+        for (var i = 0; i < elementos.length; i++) {
+            elementos[i].style.display = "none";
+        }
+
+        var btnGuardar = document.getElementById("btn-primaryy");
+        btnGuardar.addEventListener("click", function (event) {
+
+            var elementosInput = document.getElementsByClassName("form-control-input")
+            for (var i = 0; i < elementosInput.length; i++) {
+                console.log(elementosInput[i].value.length)
+                if (elementosInput[i].value.length == 0) {
+                    elementos[i].style.display = "block";
+                } else {
+                    elementos[i].style.display = "none";
+                }
+            }
+
+            var year = parseInt(document.getElementById("validatorYear").value);
+            if (year < 2019) {
+                alert("El año tiene que ser superior/igual al 2019.")
+                event.preventDefault();
+            }
+
+        });
+
+    </script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
