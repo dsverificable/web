@@ -6,14 +6,15 @@
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
+
     <h4>Enajenacion</h4>
     <hr />
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
 
@@ -24,7 +25,6 @@
             @Html.ValidationMessageFor(model => model.CNE, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Comuna, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -32,7 +32,6 @@
             @Html.ValidationMessageFor(model => model.Comuna, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Manzana, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -40,7 +39,6 @@
             @Html.ValidationMessageFor(model => model.Manzana, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Predio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -48,7 +46,6 @@
             @Html.ValidationMessageFor(model => model.Predio, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Fojas, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -56,7 +53,6 @@
             @Html.ValidationMessageFor(model => model.Fojas, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.FechaInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -64,7 +60,6 @@
             @Html.ValidationMessageFor(model => model.FechaInscripcion, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.IdInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -72,7 +67,6 @@
             @Html.ValidationMessageFor(model => model.IdInscripcion, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
