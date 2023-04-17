@@ -72,332 +72,355 @@ GO
 
 SET IDENTITY_INSERT [dbo].[ComunaOptions] ON;
 GO
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (0, 'Arica');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (1, 'Alto del Carmen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (2, 'Alto Hospicio');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (3, 'Ancud');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (4, 'Andacollo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (5, 'Angol');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (6, 'Antofagasta');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (7, 'Antuco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (8, 'Arauco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (9, 'Arica');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (10, 'Aysen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (11, 'Buin');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (12, 'Bulnes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (13, 'Cabildo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (14, 'Cabo de Hornos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (15, 'Cabrero');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (16, 'Calama');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (17, 'Calbuco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (18, 'Caldera');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (19, 'Calera de Tango');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (20, 'Calle Larga');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (21, 'Camarones');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (22, 'Camina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (23, 'Canela');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (24, 'Carahue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (25, 'Cartagena');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (26, 'Casablanca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (27, 'Castro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (28, 'Catemu');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (29, 'Cauquenes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (30, 'Cerrillos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (31, 'Cerro Navia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (32, 'Chaitén');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (33, 'Chanco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (34, 'Chañaral');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (35, 'Chépica');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (36, 'Chiguayante');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (37, 'Chile Chico');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (38, 'Chillán');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (39, 'Chillán Viejo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (40, 'Chimbarongo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (41, 'Cholchol');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (42, 'Chonchi');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (43, 'Cisnes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (44, 'Cobquecura');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (45, 'Cochamó');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (46, 'Cochrane');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (47, 'Codegua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (48, 'Coelemu');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (49, 'Coihueco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (50, 'Coinco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (51, 'Colbun');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (52, 'Colina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (53, 'Collipulli');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (54, 'Coltauco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (55, 'Combarbala');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (56, 'Concepcion');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (57, 'Conchali');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (58, 'Concon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (59, 'Constitucion');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (60, 'Contulmo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (61, 'Copiapo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (62, 'Coquimbo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (63, 'Coronel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (64, 'Corral');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (65, 'Coyhaique');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (66, 'Cunco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (67, 'Curacautin');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (68, 'Curacavi');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (69, 'Curaco de Velez');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (70, 'Curanilahue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (71, 'Curarrehue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (72, 'Curepto');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (73, 'Curico');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (74, 'Dalcahue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (75, 'Diego de Almagro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (76, 'Donihue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (77, 'El Bosque');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (78, 'El Carmen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (79, 'El Monte');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (80, 'El Quisco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (81, 'El Tabo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (82, 'Empedrado');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (83, 'Ercilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (84, 'Estacion Central');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (85, 'Florida');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (86, 'Freire');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (87, 'Freirina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (88, 'Frutillar');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (89, 'Fresia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (90, 'Futrono');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (91, 'Galvarino');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (92, 'General Lagos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (93, 'Gorbea');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (94, 'Graneros');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (95, 'Guaitecas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (96, 'Hijuelas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (97, 'Hualaihue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (98, 'Hualane');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (99, 'Hualpen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (100, 'Hualqui');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (101, 'Huara');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (102, 'Huasco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (103, 'Huechuraba');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (104, 'Illapel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (105, 'Independencia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (106, 'Iquique');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (107, 'Isla de Maipo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (108, 'Isla de Pascua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (109, 'Juan Fernandez');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (110, 'La Calera');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (111, 'La Cisterna');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (112, 'La Cruz');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (113, 'La Estrella');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (114, 'La Florida');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (115, 'La Granja');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (116, 'La Higuera');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (117, 'La Ligua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (118, 'La Pintana');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (119, 'La Reina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (120, 'La Serena');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (121, 'Lago Ranco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (122, 'Lago Verde');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (123, 'Laguna Blanca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (124, 'Laja');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (125, 'Lampa');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (126, 'Lanco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (127, 'Las Cabras');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (128, 'Las Condes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (129, 'Lautaro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (130, 'Lebu');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (131, 'Licanten');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (132, 'Limache');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (133, 'Linares');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (134, 'Litueche');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (135, 'Llanquihue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (136, 'Lo Barnechea');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (137, 'Lo Espejo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (138, 'Lo Prado');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (139, 'Lolol');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (140, 'Loncoche');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (141, 'Longavi');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (142, 'Lonquimay');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (143, 'Los Alamos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (144, 'Los Andes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (145, 'Los Angeles');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (146, 'Los Lagos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (147, 'Los Muermos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (148, 'Los Sauces');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (149, 'Los Vilos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (150, 'Lota');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (151, 'Lumaco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (152, 'Machali');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (153, 'Macul');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (154, 'Mafil');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (155, 'Maipu');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (156, 'Malloa');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (157, 'Marchihue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (158, 'Maria Elena');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (159, 'Maria Pinto');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (160, 'Mariquina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (161, 'Maule');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (162, 'Maullin');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (163, 'Mejillones');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (164, 'Melipeuco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (165, 'Melipilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (166, 'Molina');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (167, 'Monte Patria');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (168, 'Mostazal');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (169, 'Mulchen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (170, 'Nacimiento');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (171, 'Nancagua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (172, 'Natales');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (173, 'Navidad');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (174, 'Negrete');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (175, 'Ninhue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (176, 'Nogales');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (177, 'Nueva Imperial');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (178, 'Niquen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (179, 'Nunoa');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (180, 'Olivar');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (181, 'Ollagüe');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (182, 'Olmue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (183, 'Osorno');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (184, 'Otra Banda');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (185, 'Ovalle');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (186, 'Padre Hurtado');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (187, 'Padre Las Casas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (188, 'Paihuano');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (189, 'Paillaco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (190, 'Paipote');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (191, 'Palena');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (192, 'Palmilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (193, 'Panguipulli');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (194, 'Panquehue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (195, 'Papudo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (196, 'Paredones');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (197, 'Parral');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (198, 'Pedro Aguirre Cerda');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (199, 'Pelarco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (200, 'Pelluhue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (201, 'Pemuco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (202, 'Pencahue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (203, 'Penco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (204, 'Penaflor');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (205, 'Penalolen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (206, 'Perquenco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (207, 'Petorca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (208, 'Peumo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (209, 'Pica');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (210, 'Pichidegua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (211, 'Pichilemu');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (212, 'Pinto');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (213, 'Pirque');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (214, 'Pitrufquen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (215, 'Placilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (216, 'Portezuelo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (217, 'Porvenir');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (218, 'Pozo Almonte');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (219, 'Primavera');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (220, 'Providencia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (221, 'Puchuncavi');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (222, 'Pucon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (223, 'Pudahuel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (224, 'Puente Alto');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (225, 'Puerto Montt');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (226, 'Puerto Octay');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (227, 'Puerto Varas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (228, 'Pumanque');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (229, 'Punta Arenas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (230, 'Puqueldon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (231, 'Puren');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (232, 'Purranque');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (233, 'Puyehue');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (234, 'Queilen');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (235, 'Quellon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (236, 'Quemchi');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (237, 'Quilaco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (238, 'Quilicura');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (239, 'Quilleco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (240, 'Quillon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (241, 'Quillota');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (242, 'Quinta de Tilcoco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (243, 'Quintero');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (244, 'Rancagua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (245, 'Ranquil');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (246, 'Rauco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (247, 'Recoleta');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (248, 'Renaico');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (249, 'Renca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (250, 'Rengo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (251, 'Requinoa');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (252, 'Retiro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (253, 'Rinconada de Los Andes');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (254, 'Rio Bueno');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (255, 'Rio Claro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (256, 'Rio Hurtado');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (257, 'Rio Ibanez');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (258, 'Rio Negro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (259, 'Rio Verde');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (260, 'Romeral');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (261, 'Saavedra');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (262, 'Sagrada Familia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (263, 'Salamanca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (264, 'San Antonio');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (265, 'San Bernardo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (266, 'San Carlos');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (267, 'San Clemente');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (268, 'San Esteban');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (269, 'San Fabian');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (270, 'San Felipe');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (271, 'San Fernando');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (272, 'San Gregorio');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (273, 'San Ignacio');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (274, 'San Javier');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (275, 'San Joaquin');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (276, 'San Jose de Maipo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (277, 'San Juan de la Costa');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (278, 'San Miguel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (279, 'San Nicolas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (280, 'San Pablo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (281, 'San Pedro');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (282, 'San Pedro de Atacama');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (283, 'San Pedro de la Paz');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (284, 'San Rafael');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (285, 'San Ramon');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (286, 'San Rosendo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (287, 'San Vicente de Tagua Tagua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (288, 'Santa Barbara');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (289, 'Santa Cruz');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (290, 'Santa Juana');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (291, 'Santa Maria');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (292, 'Santiago');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (293, 'Santo Domingo');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (294, 'Sierra Gorda');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (295, 'Talagante');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (296, 'Talca');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (297, 'Talcahuano');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (298, 'Taltal');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (299, 'Temuco');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (300, 'Teno');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (301, 'Teodoro Schmidt');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (302, 'Tierra Amarilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (303, 'Tiltil');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (304, 'Timaukel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (305, 'Tirua');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (306, 'Tocopilla');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (307, 'Toltén');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (308, 'Tomé');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (309, 'Torres del Paine');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (310, 'Tortel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (311, 'Tucapel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (312, 'Valdivia');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (313, 'Vallenar');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (314, 'Valparaíso');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (315, 'Vichuquén');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (316, 'Victoria');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (317, 'Vicuña');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (318, 'Vilcún');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (319, 'Villa Alegre');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (320, 'Villarrica');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (321, 'Viña del Mar');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (322, 'Vitacura');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (323, 'Yerbas Buenas');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (324, 'Yumbel');
-INSERT [dbo].[ComunaOptions] ([Valor], [Comuna]) VALUES (325, 'Yungay');
+
+INSERT INTO [dbo].[ComunaOptions] ([Valor], [Comuna])
+VALUES (1, 'Algarrobo'),
+       (2, 'Alhué'),
+       (3, 'Alto Biobío'),
+       (4, 'Alto del Carmen'),
+       (5, 'Alto Hospicio'),
+       (6, 'Ancud'),
+       (7, 'Andacollo'),
+       (8, 'Angol'),
+       (9, 'Antártica'),
+       (10, 'Antofagasta'),
+       (11, 'Antuco'),
+       (12, 'Arauco'),
+       (13, 'Arica'),
+       (14, 'Aysén'),
+		 (15, 'Buin'),
+       (16, 'Bulnes'),
+		 (17, 'Cabildo'),
+       (18, 'Cabo de Hornos'),
+       (19, 'Cabrero'),
+       (20, 'Calama'),
+       (21, 'Calbuco'),
+       (22, 'Caldera'),
+       (23, 'Calera'),
+       (24, 'Calera de Tango'),
+       (25, 'Calle Larga'),
+       (26, 'Camarones'),
+       (27, 'Camiña'),
+       (28, 'Canela'),
+       (29, 'Cañete'),
+       (30, 'Carahue'),
+       (31, 'Cartagena'),
+       (32, 'Casablanca'),
+       (33, 'Castro'),
+       (34, 'Catemu'),
+       (35, 'Cauquenes'),
+       (36, 'Cerrillos'),
+       (37, 'Cerro Navia'),
+       (38, 'Chaitén'),
+       (39, 'Chañaral'),
+       (40, 'Chanco'),
+       (41, 'Chépica'),
+       (42, 'Chiguayante'),
+       (43, 'Chile Chico'),
+       (44, 'Chillán'),
+       (45, 'Chillán Viejo'),
+       (46, 'Chimbarongo'),
+       (47, 'Cholchol'),
+       (48, 'Chonchi'),
+       (49, 'Cisnes'),
+       (50, 'Cobquecura'),
+       (51, 'Cochamó'),
+       (52, 'Cochrane'),
+       (53, 'Codegua'),
+       (54, 'Coelemu'),
+       (55, 'Coihueco'),
+       (56, 'Coínco'),
+       (57, 'Colbún'),
+       (58, 'Colchane'),
+       (59, 'Colina'),
+       (60, 'Collipulli'),
+       (61, 'Coltauco'),
+       (62, 'Combarbalá'),
+       (63, 'Concepción'),
+       (64, 'Conchalí'),
+       (65, 'Concón'),
+       (66, 'Constitución'),
+       (67, 'Contulmo'),
+       (68, 'Copiapó'),
+       (69, 'Coquimbo'),
+       (70, 'Coronel'),
+       (71, 'Corral'),
+       (72, 'Coyhaique'),
+       (73, 'Cunco'),
+       (74, 'Curacautín'),
+       (75, 'Curacaví'),
+       (76, 'Curaco de Vélez'),
+       (77, 'Curanilahue'),
+       (78, 'Curarrehue'),
+       (79, 'Curepto'),
+       (80, 'Curicó'),
+		 (81, 'Dalcahue'),
+       (82, 'Diego de Almagro'),
+       (83, 'Doñihue'),
+		 (84, 'El Bosque'),
+       (85, 'El Carmen'),
+       (86, 'El Monte'),
+       (87, 'El Quisco'),
+       (88, 'El Tabo'),
+       (89, 'Empedrado'),
+       (90, 'Ercilla'),
+       (91, 'Estación Central'),
+		 (92, 'Florida'),
+       (93, 'Freire'),
+       (94, 'Freirina'),
+       (95, 'Fresia'),
+       (96, 'Frutillar'),
+       (97, 'Futaleufú'),
+       (98, 'Futrono'),
+		 (99, 'Galvarino'),
+       (100, 'General Lagos'),
+       (101, 'Gorbea'),
+       (102, 'Graneros'),
+       (103, 'Guaitecas'),
+		 (104, 'Hijuelas'),
+       (105, 'Hualaihué'),
+       (106, 'Hualañé'),
+       (107, 'Hualpén'),
+       (108, 'Hualqui'),
+       (109, 'Huara'),
+       (110, 'Huasco'),
+       (111, 'Huechuraba'),
+		 (112, 'Illapel'),
+       (113, 'Independencia'),
+       (114, 'Iquique'),
+       (115, 'Isla de Maipo'),
+       (116, 'Isla de Pascua'),
+		 (117, 'Juan Fernández'),
+		 (118, 'La Cisterna'),
+		 (119, 'La Cruz'),
+		 (120, 'La Estrella'),
+		 (121, 'La Florida'),
+		 (122, 'Lago Ranco'),
+		 (123, 'Lago Verde'),
+		 (124, 'La Granja'),
+		 (125, 'Laguna Blanca'),
+		 (126, 'La Higuera'),
+		 (127, 'Laja'),
+		 (128, 'La Ligua'),
+		 (129, 'Lampa'),
+		 (130, 'Lanco'),
+		 (131, 'La Pintana'),
+		 (132, 'La Reina'),
+		 (133, 'Las Cabras'),
+		 (134, 'Las Condes'),
+		 (135, 'La Serena'),
+		 (136, 'La Unión'),
+		 (137, 'Lautaro'),
+		 (138, 'Lebu'),
+		 (139, 'Licantén'),
+		 (140, 'Limache'),
+		 (141, 'Linares'),
+		 (142, 'Litueche'),
+		 (143, 'Llaillay'),
+		 (144, 'Llanquihue'),
+		 (145, 'Lo Barnechea'),
+		 (146, 'Lo Espejo'),
+		 (147, 'Lolol'),
+		 (148, 'Loncoche'),
+		 (149, 'Longaví'),
+		 (150, 'Lonquimay'),
+		 (151, 'Lo Prado'),
+		 (152, 'Los Alamos'),
+		 (153, 'Los Andes'),
+		 (154, 'Los Angeles'),
+		 (155, 'Los Lagos'),
+		 (156, 'Los Muermos'),
+		 (157, 'Los Sauces'),
+		 (158, 'Los Vilos'),
+		 (159, 'Lota'),
+		 (160, 'Lumaco'),
+		 (161, 'Machalí'),
+		 (162, 'Macul'),
+		 (163, 'Máfil'),
+		 (164, 'Maipú'),
+		 (165, 'Malloa'),
+		 (166, 'Marchihue'),
+		 (167, 'María Elena'),
+		 (168, 'María Pinto'),
+		 (169, 'Mariquina'),
+		 (170, 'Maule'),
+		 (171, 'Maullín'),
+		 (172, 'Mejillones'),
+		 (173, 'Melipeuco'),
+		 (174, 'Melipilla'),
+		 (175, 'Molina'),
+		 (176, 'Monte Patria'),
+		 (177, 'Mostazal'),
+		 (178, 'Mulchén'),
+		 (179, 'Nacimiento'),
+		 (180, 'Nancagua'),
+		 (181, 'Natales'),
+		 (182, 'Navidad'),
+		 (183, 'Negrete'),
+		 (184, 'Ninhue'),
+		 (185, 'Nogales'),
+		 (186, 'Nueva Imperial'),
+		 (187, 'Ñiquén'),
+		 (188, 'Ñuñoa'),
+		 (189, 'OHiggins'),
+		 (190, 'Olivar'),
+		 (191, 'Ollagüe'),
+		 (192, 'Olmué'),
+		 (193, 'Osorno'),
+		 (194, 'Ovalle'),
+		 (195, 'Padre Hurtado'),
+		 (196, 'Padre Las Casas'),
+		 (197, 'Paihuano'),
+		 (198, 'Paillaco'),
+		 (199, 'Paine'),
+		 (200, 'Palena'),
+		 (201, 'Palmilla'),
+		 (202, 'Panguipulli'),
+		 (203, 'Panquehue'),
+		 (204, 'Papudo'),
+		 (205, 'Paredones'),
+		 (206, 'Parral'),
+		 (207, 'Pedro Aguirre Cerda'),
+		 (208, 'Pelarco'),
+		 (209, 'Pelluhue'),
+		 (210, 'Pemuco'),
+		 (211, 'Peñaflor'),
+		 (212, 'Peñalolén'),
+		 (213, 'Pencahue'),
+		 (214, 'Penco'),
+		 (215, 'Peralillo'),
+		 (216, 'Perquenco'),
+		 (217, 'Petorca'),
+		 (218, 'Peumo'),
+		 (219, 'Pica'),
+		 (220, 'Pichidegua'),
+		 (221, 'Pichilemu'),
+		 (222, 'Pinto'),
+		 (223, 'Pirque'),
+		 (224, 'Pitrufquén'),
+		 (225, 'Placilla'),
+		 (226, 'Portezuelo'),
+		 (227, 'Porvenir'),
+		 (228, 'Pozo Almonte'),
+		 (229, 'Primavera'),
+		 (230, 'Providencia'),
+		 (231, 'Puchuncaví'),
+		 (232, 'Pucón'),
+		 (233, 'Pudahuel'),
+		 (234, 'Puente Alto'),
+		 (235, 'Puerto Montt'),
+		 (236, 'Puerto Octay'),
+		 (237, 'Puerto Varas'),
+		 (238, 'Pumanque'),
+		 (239, 'Punitaqui'),
+		 (240, 'Punta Arenas'),
+		 (241, 'Puqueldón'),
+		 (242, 'Purén'),
+		 (243, 'Purranque'),
+		 (244, 'Putaendo'),
+		 (245, 'Putre'),
+		 (246, 'Puyehue'),
+		 (247, 'Queilén'),
+		 (248, 'Quellón'),
+		 (249, 'Quemchi'),
+		 (250, 'Quilaco'),
+		 (251, 'Quilicura'),
+		 (252, 'Quilleco'),
+		 (253, 'Quillón'),
+		 (254, 'Quillota'),
+		 (255, 'Quilpué'),
+		 (256, 'Quinchao'),
+		 (257, 'Quinta de Tilcoco'),
+		 (258, 'Quinta Normal'),
+		 (259, 'Quintero'),
+		 (260, 'Quirihue'),
+		 (261, 'Rancagua'),
+		 (262, 'Ránquil'),
+		 (263, 'Rauco'),
+		 (264, 'Recoleta'),
+		 (265, 'Renaico'),
+		 (266, 'Renca'),
+		 (267, 'Rengo'),
+		 (268, 'Requínoa'),
+		 (269, 'Retiro'),
+		 (270, 'Rinconada'),
+		 (271, 'Río Bueno'),
+		 (272, 'Río Claro'),
+		 (273, 'Río Hurtado'),
+		 (274, 'Río Ibáñez'),
+		 (275, 'Río Negro'),
+		 (276, 'Río Verde'),
+		 (277, 'Romeral'),
+		 (278, 'Saavedra'),
+		(279, 'Sagrada Familia'),
+		(280, 'Salamanca'),
+		(281, 'San Antonio'),
+		(282, 'San Bernardo'),
+		(283, 'San Carlos'),
+		(284, 'San Clemente'),
+		(285, 'San Esteban'),
+		(286, 'San Fabián'),
+		(287, 'San Felipe'),
+		(288, 'San Fernando'),
+		(289, 'San Gregorio'),
+		(290, 'San Ignacio'),
+		(291, 'San Javier'),
+		(292, 'San Joaquín'),
+		(293, 'San José de Maipo'),
+		(294, 'San Juan de la Costa'),
+		(295, 'San Miguel'),
+		(296, 'San Nicolás'),
+		(297, 'San Pablo'),
+		(298, 'San Pedro'),
+		(299, 'San Pedro de Atacama'),
+		(300, 'San Pedro de la Paz'),
+		(301, 'San Rafael'),
+		(302, 'San Ramón'),
+		(303, 'San Rosendo'),
+		(304, 'Santa Bárbara'),
+		(305, 'Santa Cruz'),
+		(306, 'Santa Juana'),
+		(307, 'Santa María'),
+		(308, 'Santiago'),
+		(309, 'Santo Domingo'),
+		(310, 'San Vicente'),
+		(311, 'Sierra Gorda'),
+		(312, 'Talagante'),
+		(313, 'Talca'),
+		(314, 'Talcahuano'),
+		(315, 'Taltal'),
+		(316, 'Temuco'),
+		(317, 'Teno'),
+		(318, 'Teodoro Schmidt'),
+		(319, 'Tierra Amarilla'),
+		(320, 'Tiltil'),
+		(321, 'Timaukel'),
+		(322, 'Tirúa'),
+		(323, 'Tocopilla'),
+		(324, 'Toltén'),
+		(325, 'Tomé'),
+		(326, 'Torres del Paine'),
+		(327, 'Tortel'),
+		(328, 'Traiguén'),
+		(329, 'Treguaco'),
+		(330, 'Tucapel'),
+		(331, 'Valdivia'),
+		(332, 'Vallenar'),
+		(333, 'Valparaíso'),
+		(334, 'Vichuquén'),
+		(335, 'Victoria'),
+		(336, 'Vicuña'),
+		(337, 'Vilcún'),
+		(338, 'Villa Alegre'),
+		(339, 'Villa Alemana'),
+		(340, 'Villarrica'),
+		(341, 'Viña del Mar'),
+		(342, 'Vitacura'),
+		(343, 'Yerbas Buenas'),
+		(344, 'Yumbel'),
+		(345, 'Yungay'),
+		(346, 'Zapallar');
+
 GO
 SET IDENTITY_INSERT [dbo].[ComunaOptions] OFF;
 
