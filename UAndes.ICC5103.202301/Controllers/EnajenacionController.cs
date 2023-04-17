@@ -312,10 +312,10 @@ namespace UAndes.ICC5103._202301.Controllers
 
             foreach (var percentage in percentages)
             {
-                float floatPercentage = float.Parse(percentage);
-                percentageSum += floatPercentage;
+                float parsePercentage = float.Parse(percentage);
+                percentageSum += parsePercentage;
 
-                if (floatPercentage == 0)
+                if (parsePercentage == 0)
                 {
                     peopleWithoutPorcentage++;
                 }
