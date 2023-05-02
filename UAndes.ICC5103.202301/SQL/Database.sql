@@ -65,6 +65,7 @@ GO
 
 SET IDENTITY_INSERT [dbo].[CNEOptions] ON;
 GO
+INSERT [dbo].[CNEOptions] ([Valor], [Descripcion]) VALUES (0, 'Compraventa');
 INSERT [dbo].[CNEOptions] ([Valor], [Descripcion]) VALUES (1, 'Regularizacion De Patrimonio');
 GO
 SET IDENTITY_INSERT [dbo].[CNEOptions] OFF;
