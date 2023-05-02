@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using UAndes.ICC5103._202301.Models;
-using System.Drawing.Printing;
-using System.Reflection.Emit;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using Microsoft.Ajax.Utilities;
 
 namespace UAndes.ICC5103._202301.Controllers
 {
@@ -67,8 +62,8 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.CNEOptions = db.CNEOptions.ToList();
-            model.ComunaOptions = db.ComunaOptions.ToList();   
-            
+            model.ComunaOptions = db.ComunaOptions.ToList();
+
             return View(model);
         }
 
@@ -91,7 +86,11 @@ namespace UAndes.ICC5103._202301.Controllers
                     AddAdquirientesToDb(formCollection, enajenacion.Id);
                     db.Enajenacion.Add(enajenacion);
                 }
-                
+                else
+                {
+                    CompraventaLogic(enajenacion, formCollection);
+                }
+
                 await db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
@@ -107,7 +106,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             var model = new EnajenacionViewModel();
             model.ComunaOptions = db.ComunaOptions.ToList();
-            
+
             return View(model);
         }
 
@@ -149,7 +148,7 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (!isId(id))     
+            if (!isId(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -223,7 +222,7 @@ namespace UAndes.ICC5103._202301.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id, char option, int insideId)
-        {   
+        {
             if (option == 'a')
             {
                 Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
@@ -238,7 +237,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 db.Enajenante.Remove(enajenante);
                 await db.SaveChangesAsync();
 
-                return RedirectToAction("Details/"+ id.ToString());
+                return RedirectToAction("Details/" + id.ToString());
             }
         }
         #endregion
@@ -292,6 +291,51 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
+        private bool isSumAcquirerEqual100(FormCollection formCollection)
+        {
+            var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            float sumPercentage = SumPercentage(percentages);
+
+            if(sumPercentage == 100)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool isOnlyOneAquirerAndAlienating(FormCollection formCollection)
+        {
+            var enajenantes = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var adquirientes = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+
+            if(adquirientes.Length == 1 && enajenantes.Length == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void CompraventaLogic(Enajenacion enajenacion, FormCollection formCollection)
+        { 
+            if (isSumAcquirerEqual100(formCollection))
+            {
+
+            }
+            else if (isOnlyOneAquirerAndAlienating(formCollection))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
         private bool CheckValue(float percentage)
         {
             if (percentage == 0)
@@ -302,7 +346,21 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 return true;
             }
-        } 
+        }
+
+        private float SumPercentage(string[] percentages)
+        {
+            float percentageSum = 0;
+            float differencePercentage = DifferencePercentage(percentages);
+
+            for (int i = 0; i < percentages.Length; i++)
+            {
+                float percentage = float.Parse(percentages[i]);
+                percentageSum += PercentageValue(percentage, differencePercentage);
+            }
+
+            return percentageSum;
+        }
 
         private float DifferencePercentage(string[] percentages)
         {
