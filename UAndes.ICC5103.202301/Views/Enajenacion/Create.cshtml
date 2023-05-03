@@ -299,6 +299,8 @@
             }
         }
         var negativeValue = 0;
+        var overValue = 0;
+        var noneValue = 0;
         var totalPercentage = 0;
         var checkAdquirientes = document.getElementsByClassName("checkAdquirientes");
         var percentageAdquirientes = document.getElementsByClassName("porcentajeAdquirientes");
@@ -311,62 +313,83 @@
             }
             else
             {
-                if (parseFloat(percentageAdquirientes[i].value) <= 0)
-                {
+                if (percentageAdquirientes[i].value == '') {
+                    noneValue = 1;
+                }
+                if (parseFloat(percentageAdquirientes[i].value) <= 0){
                     negativeValue = 1;
                 }
-
+                if (parseFloat(percentageAdquirientes[i].value) > 100) {
+                    overValue = 1;
+                }
                 totalPercentage += parseFloat(percentageAdquirientes[i].value);
             }
          }
 
-        if (totalPercentage > 100) 
-        {
-            alert("La suma de porcentajes de adquirientes entre los usuarios acreditados es mayor al 100%.");
+        if (noneValue == 1) {
+            alert("Hay un valor de porcentaje en adquiriente/s que esta vacio, esto no es posible.");
             event.preventDefault();
         }
-        else
-        {
-            if (negativeValue == 1)
-            {
-                alert("Hay un porcentaje de adquirientes que es negativo o es igual a 0, esto no es posible.");
+        else {
+            if (overValue == 1) {
+                alert("Hay un porcentaje de adquiriente/s que es mayor a 100, esto no es posible.");
                 event.preventDefault();
+            }
+            else
+            {
+                if (negativeValue == 1) {
+                    alert("Hay un porcentaje de adquiriente/s que es negativo o es igual a 0, esto no es posible.");
+                    event.preventDefault();
+                }
+                else {
+                    if (totalPercentage > 100) {
+                        alert("La suma de porcentajes de adquirientes entre los usuarios acreditados es mayor al 100%.");
+                        event.preventDefault();
+                    }
+                }
             }
         }
 
         negativeValue = 0;
+        overValue = 0;
+        noneValue = 0;
         totalPercentage = 0;
-        checkEnajenantes = document.getElementsByClassName("checkEnajenantes");
         percentageEnajenantes = document.getElementsByClassName("porcentajeEnajenantes");
 
-        for (var i = 0; i < checkEnajenantes.length; i++) 
+        for (var i = 0; i < percentageEnajenantes.length; i++) 
         {
-            if (checkEnajenantes[i].value != "false")
-            {
-                percentageEnajenantes[i].value = 0;
+            if (percentageEnajenantes[i].value == ''){
+                noneValue = 1;
+            }
+            if (parseFloat(percentageEnajenantes[i].value) <= 0){
+                negativeValue = 1;
+            }
+            if (parseFloat(percentageEnajenantes[i].value) > 100){
+                overValue = 1;
+            }
+            totalPercentage += parseFloat(percentageEnajenantes[i].value);
+        }
+        if (noneValue == 1) {
+            alert("Hay un valor de porcentaje en enajenante/s que esta vacio, esto no es posible.");
+            event.preventDefault();
+        }
+        else {
+            if (overValue == 1) {
+                alert("Hay un porcentaje de enajenante/s que es mayor a 100, esto no es posible.");
+                event.preventDefault();
             }
             else
             {
-                if (parseFloat(percentageEnajenantes[i].value) <= 0)
-                {
-                    negativeValue = 1;
+                if (negativeValue == 1) {
+                    alert("Hay un porcentajes de enajenante/s que es negativo o es igual a 0, esto no es posible.");
+                    event.preventDefault();
                 }
-
-                totalPercentage += parseFloat(percentageEnajenantes[i].value);
-            }
-        }
-
-        if (totalPercentage > 100) 
-        {
-            alert("La suma de porcentajes de enajenantes entre los usuarios acreditados es mayor al 100%.");
-            event.preventDefault();
-        }
-        else
-        {
-            if (negativeValue == 1)
-            {
-                alert("Hay un porcentajes de enajenantes que es negativo o es igual a 0, esto no es posible.");
-                event.preventDefault();
+                else {
+                    if (totalPercentage > 100) {
+                        alert("La suma de porcentajes de enajenantes entre los usuarios acreditados es mayor al 100%.");
+                        event.preventDefault();
+                    }
+                }
             }
         }
     });
