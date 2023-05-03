@@ -77,18 +77,24 @@ namespace UAndes.ICC5103._202301.Controllers
             model.CNEOptions = db.CNEOptions.ToList();
             model.ComunaOptions = db.ComunaOptions.ToList();
 
+            List<Enajenacion> enajenaciones = await db.Enajenacion
+                   .Where(e => e.Manzana == enajenacion.Manzana && e.Predio == enajenacion.Predio && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year && e.Comuna == enajenacion.Comuna)
+                   .ToListAsync();
+            Enajenacion last_enajenacion = getLastUpdateOfAndSpecificEnajenacion(enajenaciones, enajenacion.FechaInscripcion.Year);
+
             if (ModelState.IsValid)
             {
                 FormCollection formCollection = new FormCollection(Request.Form);
 
                 if (isRdp(enajenacion.CNE))
                 {
-                    AddAdquirientesToDb(formCollection, enajenacion.Id);
+                    var percentages = PercentagesToList(formCollection);
+                    AddAdquirientesToDb(formCollection, enajenacion, percentages);
                     db.Enajenacion.Add(enajenacion);
                 }
                 else
                 {
-                    CompraventaLogic(enajenacion, formCollection);
+                    CompraventaLogic(enajenacion, formCollection, last_enajenacion);
                 }
 
                 await db.SaveChangesAsync();
@@ -321,20 +327,40 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private void CompraventaLogic(Enajenacion enajenacion, FormCollection formCollection)
-        { 
+        
+        private async void CompraventaLogic(Enajenacion enajenacion, FormCollection formCollection, Enajenacion last_enajenacion)
+        {
+            float percentageSum = 0;    
+            var percentagesEnajenantes = PercentagesToList(formCollection);
+            List<Enajenante> currentEnajenantes = await db.Enajenante
+                            .Where(a => a.IdEnajenacion == last_enajenacion.Id)
+                            .ToListAsync();
+
             if (isSumAcquirerEqual100(formCollection))
             {
+                percentageSum = (float)currentEnajenantes.Sum(e => e.PorcentajeEnajenante);
+                percentagesEnajenantes = percentagesEnajenantes.Select(p => RatioPercentage(p, percentageSum)).ToList();
 
+                // update percentage enejanenate
+                // delete enejenante of the table
             }
             else if (isOnlyOneAquirerAndAlienating(formCollection))
             {
-
+                percentageSum = (float)currentEnajenantes.Sum(e => e.PorcentajeEnajenante);
+                percentagesEnajenantes = percentagesEnajenantes.Select(p => RatioPercentage(p, percentageSum)).ToList();
+                
+                // update percentage enejanenate
+                // update enajenante in the table add discount the percentage
             }
             else
             {
-
+                // update percentage enejanenate
+                // update enajenante in the table add discount the percentage
             }
+
+            // check if percentage is negative and if the sum is greater than 100
+     
+            //AddAdquirientesToDb(formCollection, enajenacion, percentagesEnajenantes); // Corroborate if adquiriente exist or if is new
         }
         private bool CheckValue(float percentage)
         {
@@ -399,7 +425,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId)
+        private void AddEnajenanteToDb(FormCollection formCollection, int enajenacionId) // change structure
         {
             var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
@@ -419,23 +445,37 @@ namespace UAndes.ICC5103._202301.Controllers
                 db.Enajenante.Add(enajenante);
             }
         }
-
-        private void AddAdquirientesToDb(FormCollection formCollection, int enajenacionId)
+        
+        private float RatioPercentage(float userPercentage, float totalPercentage)
         {
-            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            float percentage = (100 / totalPercentage) * userPercentage;
+            return percentage;
+        }
+
+        private List<float> PercentagesToList(FormCollection formCollection)
+        {
             var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
             float differencePercentage = DifferencePercentage(percentages);
+            var floatPercentages = percentages.Select(p => float.Parse(p)).ToList();
+            var newPercentages = floatPercentages.Select(p => PercentageValue(p, differencePercentage)).ToList();
+
+            return newPercentages;
+        }
+
+        private void AddAdquirientesToDb(FormCollection formCollection, Enajenacion enajenacion, List<float> percentages) 
+        {
+            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            var percentageCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
 
             for (int i = 0; i < ruts.Length; i++)
             {
                 var adquiriente = new Adquiriente();
                 string rut = ruts[i];
-                float percentage = float.Parse(percentages[i]);
-
-                adquiriente.IdEnajenacion = enajenacionId;
+   
+                adquiriente.IdEnajenacion = enajenacion.Id;
                 adquiriente.RutAdquiriente = rut;
-                adquiriente.PorcentajeAdquiriente = PercentageValue(percentage, differencePercentage);
-                adquiriente.CheckAdquiriente = CheckValue(percentage);
+                adquiriente.CheckAdquiriente = CheckValue(float.Parse(percentageCheck[i]));
+                adquiriente.PorcentajeAdquiriente = percentages[i];
 
                 db.Adquiriente.Add(adquiriente);
             }
