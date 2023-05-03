@@ -330,31 +330,37 @@ namespace UAndes.ICC5103._202301.Controllers
         
         private async void CompraventaLogic(Enajenacion enajenacion, FormCollection formCollection, Enajenacion last_enajenacion)
         {
-            var percentages = PercentagesToList(formCollection);
-
-            if (isSumAcquirerEqual100(formCollection))
-            {
-                List<Enajenante> currentEnajenantes = await db.Enajenante
+            float percentageSum = 0;    
+            var percentagesEnajenantes = PercentagesToList(formCollection);
+            List<Enajenante> currentEnajenantes = await db.Enajenante
                             .Where(a => a.IdEnajenacion == last_enajenacion.Id)
                             .ToListAsync();
 
-                float percentageSum = (float)currentEnajenantes.Sum(e => e.PorcentajeEnajenante);
-                percentages = percentages.Select(p => RatioPercentage(p, percentageSum)).ToList();
+            if (isSumAcquirerEqual100(formCollection))
+            {
+                percentageSum = (float)currentEnajenantes.Sum(e => e.PorcentajeEnajenante);
+                percentagesEnajenantes = percentagesEnajenantes.Select(p => RatioPercentage(p, percentageSum)).ToList();
 
-
+                // update percentage enejanenate
                 // delete enejenante of the table
-
-                AddAdquirientesToDb(formCollection, enajenacion, percentages);  // Corroborate if adquiriente exist or if is new
-
             }
             else if (isOnlyOneAquirerAndAlienating(formCollection))
             {
-
+                percentageSum = (float)currentEnajenantes.Sum(e => e.PorcentajeEnajenante);
+                percentagesEnajenantes = percentagesEnajenantes.Select(p => RatioPercentage(p, percentageSum)).ToList();
+                
+                // update percentage enejanenate
+                // update enajenante in the table add discount the percentage
             }
             else
             {
-
+                // update percentage enejanenate
+                // update enajenante in the table add discount the percentage
             }
+
+            // check if percentage is negative and if the sum is greater than 100
+     
+            //AddAdquirientesToDb(formCollection, enajenacion, percentagesEnajenantes); // Corroborate if adquiriente exist or if is new
         }
         private bool CheckValue(float percentage)
         {
