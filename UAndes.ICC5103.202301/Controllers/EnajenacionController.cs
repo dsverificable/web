@@ -504,7 +504,25 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> UpdateEnajenatePercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, int option)
+        private List<Adquiriente> UpdateEnajenatePercentageTotalTransfer(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        {
+            float transferValue = 0;
+            foreach (var enajenante in enajenantes)
+            {
+                foreach (var currentEnajenante in currentEnajenantes)
+                {
+                    if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
+                    {
+                        enajenante.PorcentajeAdquiriente = transferValue;
+                      
+                    }
+                }
+            }
+
+            return enajenantes;
+        }
+
+        private List<Adquiriente> UpdateEnajenatePercentageByRights(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             foreach (var enajenante in enajenantes)
             {
@@ -512,18 +530,24 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
                     {
-                        if (option == 1)
-                        {
-                            enajenante.PorcentajeAdquiriente = 0;
-                        }
-                        else if (option == 2)
-                        {
-                            enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - RatioPercentage((float)enajenante.PorcentajeAdquiriente, (float)currentEnajenante.PorcentajeAdquiriente);
-                        }
-                        else if (option == 3)
-                        {
-                            enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - enajenante.PorcentajeAdquiriente;
-                        }
+                        float ratioPercentage = RatioPercentage((float)enajenante.PorcentajeAdquiriente, (float)currentEnajenante.PorcentajeAdquiriente);
+                        enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - ratioPercentage;
+                    }
+                }
+            }
+
+            return enajenantes;
+        }
+
+        private List<Adquiriente> UpdateEnajenatePercentageByDomain(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        {
+            foreach (var enajenante in enajenantes)
+            {
+                foreach (var currentEnajenante in currentEnajenantes)
+                {
+                    if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
+                    {
+                        enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - enajenante.PorcentajeAdquiriente;
                     }
                 }
             }
@@ -603,7 +627,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
                 adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
                 adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
-                enajenantes = UpdateEnajenatePercentage(currentEnajenantes, enajenantes, 1);
+                enajenantes = UpdateEnajenatePercentageTotalTransfer(currentEnajenantes, enajenantes);
                 enajenantes = DeleteEnajenanteWithoutPercentage(enajenantes);    
             }
             else if (isOnlyOneAquirerAndAlienating(adquirientes, enajenantes))
@@ -611,12 +635,12 @@ namespace UAndes.ICC5103._202301.Controllers
                 totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
                 adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
                 adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
-                enajenantes = UpdateEnajenatePercentage(currentEnajenantes, enajenantes, 2);
+                enajenantes = UpdateEnajenatePercentageByRights(currentEnajenantes, enajenantes);
             }
             else
             {
                 adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
-                enajenantes = UpdateEnajenatePercentage(currentEnajenantes, enajenantes, 3);
+                enajenantes = UpdateEnajenatePercentageByDomain(currentEnajenantes, enajenantes);
             }
 
             List<Adquiriente> newEnajenatesOfEnajenacion = CombineListsForNewData(currentEnajenantes, adquirientes, enajenantes);
