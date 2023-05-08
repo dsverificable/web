@@ -580,6 +580,15 @@ namespace UAndes.ICC5103._202301.Controllers
             return combinedList;
         }
 
+        private List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
+        {
+            List<Adquiriente> newEnajenates = enajenantes
+                            .Where(e => e.PorcentajeAdquiriente > 0)
+                            .ToList();
+
+            return newEnajenates;
+        }
+
         private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion last_enajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             float totalPercentagesEnajenantes;    
@@ -595,8 +604,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
                 adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
                 enajenantes = UpdateEnajenatePercentage(currentEnajenantes, enajenantes, 1);
-
-                // TODO: delete enejenante of the table
+                enajenantes = DeleteEnajenanteWithoutPercentage(enajenantes);    
             }
             else if (isOnlyOneAquirerAndAlienating(adquirientes, enajenantes))
             {
