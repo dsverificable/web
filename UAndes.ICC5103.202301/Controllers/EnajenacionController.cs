@@ -94,19 +94,19 @@ namespace UAndes.ICC5103._202301.Controllers
                 if (isRdp(enajenacion.CNE))
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
-                    PastAdquirienteFormToHistorial(formCollection, enajenacion);
+                    AddAdquirientesToHistory(adquirientes, enajenacion);
                     AddAdquirientesToDb(adquirientes);
                     db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
                 }
                 else
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
-                    PastAdquirienteFormToHistorial(formCollection, enajenacion);
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
-                    PastEnajenanteFormToHistorial(formCollection, enajenacion);
-                    db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
                     //List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
                     //AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                    AddAdquirientesToHistory(adquirientes, enajenacion);
+                    AddEnajenantesToHistory(enajenantes, enajenacion);
+                    db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
                 }
 
                 //UpdateHistoricalInformation(enajenacion);
@@ -490,15 +490,10 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private void PastAdquirienteFormToHistorial(FormCollection formCollection, Enajenacion enajenacion)
+        private void AddAdquirientesToHistory(List<Adquiriente> adquirientes, Enajenacion enajenacion)
         {
 
-            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
-            var percentagesCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-            var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
-            List<float> percentagesParce = PercentagesToListAdquiriente(percentages);
-
-            for (int i = 0; i < ruts.Length; i++)
+            for (int i = 0; i < adquirientes.Count; i++)
             {
                 var historico = new Historial();
 
@@ -509,11 +504,10 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                string rut = ruts[i];
-                historico.Rut = rut;
-                historico.Porcentaje = percentagesParce[i];
+                historico.Rut = adquirientes[i].RutAdquiriente;
+                historico.Porcentaje = adquirientes[i].PorcentajeAdquiriente;
                 historico.CNE = enajenacion.CNE;
-                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
+                historico.Check = adquirientes[i].CheckAdquiriente;
                 historico.Participante = "adquiriente";
 
                 db.Historial.Add(historico);
@@ -544,15 +538,10 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private void PastEnajenanteFormToHistorial(FormCollection formCollection, Enajenacion enajenacion)
+        private void AddEnajenantesToHistory(List<Adquiriente> enajenanates, Enajenacion enajenacion)
         {
 
-            var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
-            var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-            var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
-            List<float> percentagesParce = PercentagesToListEnajenante(percentages);
-
-            for (int i = 0; i < ruts.Length; i++)
+            for (int i = 0; i < enajenanates.Count; i++)
             {
                 var historico = new Historial();
 
@@ -563,11 +552,10 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                string rut = ruts[i];
-                historico.Rut = rut;
-                historico.Porcentaje = percentagesParce[i];
+                historico.Rut = enajenanates[i].RutAdquiriente;
+                historico.Porcentaje = enajenanates[i].PorcentajeAdquiriente;
                 historico.CNE = enajenacion.CNE;
-                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
+                historico.Check = enajenanates[i].CheckAdquiriente;
                 historico.Participante = "enajenante";
 
                 db.Historial.Add(historico);
