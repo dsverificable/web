@@ -56,7 +56,7 @@ namespace UAndes.ICC5103._202301.Controllers
             model.Enajenantes = enajenantes;
             model.Descripcion = db.CNEOptions.Select(c => c.Descripcion).ToList();
             model.Comuna = db.ComunaOptions.Select(c => c.Comuna).ToList();
-            model.SelectDescripcion = model.Descripcion[0];
+            model.SelectDescripcion = model.Descripcion[enajenacion.CNE];
             model.SelectComuna = model.Comuna[enajenacion.Comuna];
 
             return View(model);
@@ -94,15 +94,19 @@ namespace UAndes.ICC5103._202301.Controllers
                 if (isRdp(enajenacion.CNE))
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
+                    PastAdquirienteFormToHistorial(formCollection, enajenacion);
                     AddAdquirientesToDb(adquirientes);
                     db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
                 }
                 else
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
+                    PastAdquirienteFormToHistorial(formCollection, enajenacion);
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
-                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
-                    AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                    PastEnajenanteFormToHistorial(formCollection, enajenacion);
+                    db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
+                    //List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
+                    //AddAdquirientesToDb(newEnajenatesOfEnajenacion);
                 }
 
                 //UpdateHistoricalInformation(enajenacion);
@@ -486,12 +490,42 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
+        private void PastAdquirienteFormToHistorial(FormCollection formCollection, Enajenacion enajenacion)
+        {
+
+            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            var percentagesCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            List<float> percentagesParce = PercentagesToListAdquiriente(percentages);
+
+            for (int i = 0; i < ruts.Length; i++)
+            {
+                var historico = new Historial();
+
+                historico.IdEnajenacion = enajenacion.Id;
+                historico.Comuna = enajenacion.Comuna;
+                historico.Manzana = enajenacion.Manzana;
+                historico.Predio = enajenacion.Predio;
+                historico.Fojas = enajenacion.Fojas;
+                historico.FechaInscripcion = enajenacion.FechaInscripcion;
+                historico.IdInscripcion = enajenacion.IdInscripcion;
+                string rut = ruts[i];
+                historico.Rut = rut;
+                historico.Porcentaje = percentagesParce[i];
+                historico.CNE = enajenacion.CNE;
+                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
+                historico.Participante = "adquiriente";
+
+                db.Historial.Add(historico);
+            }
+        }
+
         private List<Adquiriente> PastFormToEnajenanteModel(FormCollection formCollection, Enajenacion enajenacion)
         {
             List<Adquiriente> enajenantes = new List<Adquiriente>();
 
-            var ruts = formCollection["Adquirientes[0].RutEnajenante"].Split(',');
-            var percentagesCheck = formCollection["Adquirientes[0].PorcentajeEnajenante"].Split(',');
+            var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
             List<float> percentagesParce = PercentagesToListEnajenante(percentages);
 
@@ -508,6 +542,36 @@ namespace UAndes.ICC5103._202301.Controllers
             }
 
             return enajenantes;
+        }
+
+        private void PastEnajenanteFormToHistorial(FormCollection formCollection, Enajenacion enajenacion)
+        {
+
+            var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            List<float> percentagesParce = PercentagesToListEnajenante(percentages);
+
+            for (int i = 0; i < ruts.Length; i++)
+            {
+                var historico = new Historial();
+
+                historico.IdEnajenacion = enajenacion.Id;
+                historico.Comuna = enajenacion.Comuna;
+                historico.Manzana = enajenacion.Manzana;
+                historico.Predio = enajenacion.Predio;
+                historico.Fojas = enajenacion.Fojas;
+                historico.FechaInscripcion = enajenacion.FechaInscripcion;
+                historico.IdInscripcion = enajenacion.IdInscripcion;
+                string rut = ruts[i];
+                historico.Rut = rut;
+                historico.Porcentaje = percentagesParce[i];
+                historico.CNE = enajenacion.CNE;
+                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
+                historico.Participante = "enajenante";
+
+                db.Historial.Add(historico);
+            }
         }
 
         private List<Adquiriente> UpdateEnajenatePercentageTotalTransfer(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)

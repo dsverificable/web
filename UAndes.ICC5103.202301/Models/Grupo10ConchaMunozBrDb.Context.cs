@@ -31,6 +31,7 @@ namespace UAndes.ICC5103._202301.Models
         public virtual DbSet<ComunaOptions> ComunaOptions { get; set; }
         public virtual DbSet<Enajenacion> Enajenacion { get; set; }
         public virtual DbSet<Enajenante> Enajenante { get; set; }
+        public virtual DbSet<Historial> Historial { get; set; }
     }
     public class EnajenacionViewModel
     {

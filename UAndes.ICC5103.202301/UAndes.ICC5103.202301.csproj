@@ -164,6 +164,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Grupo10ConchaMunozBrDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Historial.cs">
+      <DependentUpon>Grupo10ConchaMunozBrDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

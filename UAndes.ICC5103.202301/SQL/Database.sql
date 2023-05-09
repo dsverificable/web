@@ -63,6 +63,30 @@ CREATE TABLE [dbo].[Adquiriente](
 );
 GO
 
+CREATE TABLE [dbo].[Historial](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdEnajenacion] [int] NOT NULL,
+	[Comuna] [int] NOT NULL,
+	[Manzana] [int] NOT NULL,
+	[Predio] [int] NOT NULL,
+	[Fojas] [int] NOT NULL,
+	[FechaInscripcion] [date] NOT NULL,
+	[IdInscripcion] [int] NOT NULL,
+	[Rut] nvarchar(10) NOT NULL,
+	[Porcentaje] [float] NOT NULL,
+	[CNE] [int] NOT NULL,
+	[Check] [bit] NOT NULL,
+	[Participante] nvarchar(11) NOT NULL,
+	CONSTRAINT [PK_Historial] PRIMARY KEY CLUSTERED(
+		[Id] ASC
+	),
+	CONSTRAINT [FK_Historial_Enajenacion] FOREIGN KEY([IdEnajenacion])
+	REFERENCES [dbo].Enajenacion
+);
+GO
+
+
+
 SET IDENTITY_INSERT [dbo].[CNEOptions] ON;
 GO
 INSERT [dbo].[CNEOptions] ([Valor], [Descripcion]) VALUES (0, 'Compraventa');
@@ -71,9 +95,10 @@ GO
 SET IDENTITY_INSERT [dbo].[CNEOptions] OFF;
 GO
 
+
+
 SET IDENTITY_INSERT [dbo].[ComunaOptions] ON;
 GO
-
 INSERT INTO [dbo].[ComunaOptions] ([Valor], [Comuna])
 VALUES (0, 'Algarrobo'),
        (1, 'Alhué'),
@@ -421,22 +446,5 @@ VALUES (0, 'Algarrobo'),
 		(343, 'Yumbel'),
 		(344, 'Yungay'),
 		(345, 'Zapallar');
-
 GO
 SET IDENTITY_INSERT [dbo].[ComunaOptions] OFF;
-
-
-SET IDENTITY_INSERT [dbo].[Enajenacion] ON; 
-GO
-INSERT [dbo].[Enajenacion] ([Id], [CNE], [Comuna], [Manzana], [Predio], [Fojas], [FechaInscripcion], [IdInscripcion]) VALUES (1, 1, 128, 12345, 123, 62145, CAST(N'2022-03-18' AS Date), 1)
-GO
-SET IDENTITY_INSERT [dbo].[Enajenacion] OFF;
-GO
-
-
-SET IDENTITY_INSERT [dbo].[Adquiriente] ON;
-GO
-INSERT [dbo].[Adquiriente] ([Id], [RutAdquiriente], [PorcentajeAdquiriente], [CheckAdquiriente], [IdEnajenacion]) VALUES (1, N'19876543-2', 30, 1, 1)
-GO
-SET IDENTITY_INSERT [dbo].[Adquiriente] OFF;
-GO

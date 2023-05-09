@@ -19,6 +19,7 @@ namespace UAndes.ICC5103._202301.Models
         {
             this.Adquiriente = new HashSet<Adquiriente>();
             this.Enajenante = new HashSet<Enajenante>();
+            this.Historial = new HashSet<Historial>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace UAndes.ICC5103._202301.Models
         public virtual ComunaOptions ComunaOptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enajenante> Enajenante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Historial> Historial { get; set; }
     }
 }

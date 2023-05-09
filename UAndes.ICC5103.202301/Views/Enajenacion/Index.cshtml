@@ -49,7 +49,7 @@
         @foreach (var item in Model.Enajenacions)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => Model.Descripcion[0])</td>
+                <td>@Html.DisplayFor(modelItem => Model.Descripcion[item.CNE])</td>
                 <td>@Html.DisplayFor(modelItem => Model.Comuna[item.Comuna])</td>
                 <td>@Html.DisplayFor(modelItem => item.Manzana)</td>
                 <td>@Html.DisplayFor(modelItem => item.Predio)</td>

@@ -52,6 +52,24 @@
           <Property Name="CheckEnajenante" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEnajenacion" Type="int" Nullable="false" />
+          <Property Name="Comuna" Type="int" Nullable="false" />
+          <Property Name="Manzana" Type="int" Nullable="false" />
+          <Property Name="Predio" Type="int" Nullable="false" />
+          <Property Name="Fojas" Type="int" Nullable="false" />
+          <Property Name="FechaInscripcion" Type="date" Nullable="false" />
+          <Property Name="IdInscripcion" Type="int" Nullable="false" />
+          <Property Name="Rut" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Porcentaje" Type="float" Nullable="false" />
+          <Property Name="CNE" Type="int" Nullable="false" />
+          <Property Name="Check" Type="bit" Nullable="false" />
+          <Property Name="Participante" Type="nvarchar" MaxLength="11" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Adquiriente_Enajenacion">
           <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="1" />
           <End Role="Adquiriente" Type="Self.Adquiriente" Multiplicity="*" />
@@ -100,12 +118,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Historial_Enajenacion">
+          <End Role="Enajenacion" Type="Self.Enajenacion" Multiplicity="1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InscripcionesBrDbModelStoreContainer">
           <EntitySet Name="Adquiriente" EntityType="Self.Adquiriente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CNEOptions" EntityType="Self.CNEOptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComunaOptions" EntityType="Self.ComunaOptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enajenacion" EntityType="Self.Enajenacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enajenante" EntityType="Self.Enajenante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historial" EntityType="Self.Historial" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Adquiriente_Enajenacion" Association="Self.FK_Adquiriente_Enajenacion">
             <End Role="Enajenacion" EntitySet="Enajenacion" />
             <End Role="Adquiriente" EntitySet="Adquiriente" />
@@ -121,6 +152,10 @@
           <AssociationSet Name="FK_Enajenante_Enajenacion" Association="Self.FK_Enajenante_Enajenacion">
             <End Role="Enajenacion" EntitySet="Enajenacion" />
             <End Role="Enajenante" EntitySet="Enajenante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historial_Enajenacion" Association="Self.FK_Historial_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Historial" EntitySet="Historial" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -148,6 +183,11 @@
           <AssociationSet Name="FK_Enajenante_Enajenacion" Association="InscripcionesBrDbModel.FK_Enajenante_Enajenacion">
             <End Role="Enajenacion" EntitySet="Enajenacion" />
             <End Role="Enajenante" EntitySet="Enajenante" />
+          </AssociationSet>
+          <EntitySet Name="Historial" EntityType="InscripcionesBrDbModel.Historial" />
+          <AssociationSet Name="FK_Historial_Enajenacion" Association="InscripcionesBrDbModel.FK_Historial_Enajenacion">
+            <End Role="Enajenacion" EntitySet="Enajenacion" />
+            <End Role="Historial" EntitySet="Historial" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Adquiriente">
@@ -193,6 +233,7 @@
           <NavigationProperty Name="CNEOptions" Relationship="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions" FromRole="Enajenacion" ToRole="CNEOptions" />
           <NavigationProperty Name="ComunaOptions" Relationship="InscripcionesBrDbModel.FK_Enajenacion_ComunaOptions" FromRole="Enajenacion" ToRole="ComunaOptions" />
           <NavigationProperty Name="Enajenante" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenacion" ToRole="Enajenante" />
+          <NavigationProperty Name="Historial" Relationship="InscripcionesBrDbModel.FK_Historial_Enajenacion" FromRole="Enajenacion" ToRole="Historial" />
         </EntityType>
         <EntityType Name="Enajenante">
           <Key>
@@ -249,6 +290,37 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Enajenante">
+              <PropertyRef Name="IdEnajenacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
+          <Property Name="Comuna" Type="Int32" Nullable="false" />
+          <Property Name="Manzana" Type="Int32" Nullable="false" />
+          <Property Name="Predio" Type="Int32" Nullable="false" />
+          <Property Name="Fojas" Type="Int32" Nullable="false" />
+          <Property Name="FechaInscripcion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="Rut" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Porcentaje" Type="Double" Nullable="false" />
+          <Property Name="CNE" Type="Int32" Nullable="false" />
+          <Property Name="Check" Type="Boolean" Nullable="false" />
+          <Property Name="Participante" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Historial_Enajenacion" FromRole="Historial" ToRole="Enajenacion" />
+        </EntityType>
+        <Association Name="FK_Historial_Enajenacion">
+          <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="1" />
+          <End Type="InscripcionesBrDbModel.Historial" Role="Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enajenacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Historial">
               <PropertyRef Name="IdEnajenacion" />
             </Dependent>
           </ReferentialConstraint>
@@ -311,6 +383,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Historial">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.Historial">
+              <MappingFragment StoreEntitySet="Historial">
+                <ScalarProperty Name="Participante" ColumnName="Participante" />
+                <ScalarProperty Name="Check" ColumnName="Check" />
+                <ScalarProperty Name="CNE" ColumnName="CNE" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="Fojas" ColumnName="Fojas" />
+                <ScalarProperty Name="Predio" ColumnName="Predio" />
+                <ScalarProperty Name="Manzana" ColumnName="Manzana" />
+                <ScalarProperty Name="Comuna" ColumnName="Comuna" />
+                <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -333,7 +424,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="c32ce243f8634340a0329b173bfe63ce" Name="Diagram1" ZoomLevel="98">
+      <Diagram DiagramId="c32ce243f8634340a0329b173bfe63ce" Name="Diagram1" ZoomLevel="116">
         <EntityTypeShape EntityType="InscripcionesBrDbModel.Adquiriente" Width="1.5" PointX="5.25" PointY="4.875" />
         <EntityTypeShape EntityType="InscripcionesBrDbModel.CNEOptions" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="InscripcionesBrDbModel.ComunaOptions" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -343,6 +434,8 @@
         <AssociationConnector Association="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions" />
         <AssociationConnector Association="InscripcionesBrDbModel.FK_Enajenacion_ComunaOptions" />
         <AssociationConnector Association="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Historial" Width="1.5" PointX="5.25" PointY="8.75" />
+        <AssociationConnector Association="InscripcionesBrDbModel.FK_Historial_Enajenacion" />
       </Diagram>
     </Diagrams>
   </Designer>
