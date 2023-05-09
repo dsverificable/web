@@ -350,44 +350,49 @@
             }
         }
 
-        negativeValue = 0;
-        overValue = 0;
-        noneValue = 0;
-        totalPercentage = 0;
-        percentageEnajenantes = document.getElementsByClassName("porcentajeEnajenantes");
+        let inputValue = document.getElementById("form-editor");
+        let value = inputValue.value;
 
-        for (var i = 0; i < percentageEnajenantes.length; i++) 
-        {
-            if (percentageEnajenantes[i].value == ''){
-                noneValue = 1;
+        if (value != 1) {
+            negativeValue = 0;
+            overValue = 0;
+            noneValue = 0;
+            totalPercentage = 0;
+            percentageEnajenantes = document.getElementsByClassName("porcentajeEnajenantes");
+
+            for (var i = 0; i < percentageEnajenantes.length; i++) 
+            {
+                if (percentageEnajenantes[i].value == ''){
+                    noneValue = 1;
+                }
+                if (parseFloat(percentageEnajenantes[i].value) <= 0){
+                    negativeValue = 1;
+                }
+                if (parseFloat(percentageEnajenantes[i].value) > 100){
+                    overValue = 1;
+                }
+                totalPercentage += parseFloat(percentageEnajenantes[i].value);
             }
-            if (parseFloat(percentageEnajenantes[i].value) <= 0){
-                negativeValue = 1;
-            }
-            if (parseFloat(percentageEnajenantes[i].value) > 100){
-                overValue = 1;
-            }
-            totalPercentage += parseFloat(percentageEnajenantes[i].value);
-        }
-        if (noneValue == 1) {
-            alert("Hay un valor de porcentaje en enajenante/s que esta vacio, esto no es posible.");
-            event.preventDefault();
-        }
-        else {
-            if (overValue == 1) {
-                alert("Hay un porcentaje de enajenante/s que es mayor a 100, esto no es posible.");
+            if (noneValue == 1) {
+                alert("Hay un valor de porcentaje en enajenante/s que esta vacio, esto no es posible.");
                 event.preventDefault();
             }
-            else
-            {
-                if (negativeValue == 1) {
-                    alert("Hay un porcentajes de enajenante/s que es negativo o es igual a 0, esto no es posible.");
+            else {
+                if (overValue == 1) {
+                    alert("Hay un porcentaje de enajenante/s que es mayor a 100, esto no es posible.");
                     event.preventDefault();
                 }
-                else {
-                    if (totalPercentage > 100) {
-                        alert("La suma de porcentajes de enajenantes entre los usuarios acreditados es mayor al 100%.");
+                else
+                {
+                    if (negativeValue == 1) {
+                        alert("Hay un porcentajes de enajenante/s que es negativo o es igual a 0, esto no es posible.");
                         event.preventDefault();
+                    }
+                    else {
+                        if (totalPercentage > 100) {
+                            alert("La suma de porcentajes de enajenantes entre los usuarios acreditados es mayor al 100%.");
+                            event.preventDefault();
+                        }
                     }
                 }
             }

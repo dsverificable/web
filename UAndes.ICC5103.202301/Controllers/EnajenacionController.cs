@@ -105,7 +105,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     AddAdquirientesToDb(newEnajenatesOfEnajenacion);
                 }
 
-                UpdateHistoricalInformation(enajenacion);
+                //UpdateHistoricalInformation(enajenacion);
 
                 //db.Enajenacion.Add(enajenacion); discomment when all the code is ready
                 await db.SaveChangesAsync();
