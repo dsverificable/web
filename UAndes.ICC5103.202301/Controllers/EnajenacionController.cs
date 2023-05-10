@@ -95,7 +95,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 if (isRdp(enajenacion.CNE))
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
-                    AddAdquirientesToHistory(adquirientes, enajenacion);
+                    AddAdquirientesToHistory(formCollection, enajenacion);
                     AddAdquirientesToDb(adquirientes);
                 }
                 else
@@ -104,11 +104,11 @@ namespace UAndes.ICC5103._202301.Controllers
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
                     List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
                     AddAdquirientesToDb(newEnajenatesOfEnajenacion);
-                    AddAdquirientesToHistory(adquirientes, enajenacion);
-                    AddEnajenantesToHistory(enajenantes, enajenacion);
+                    AddAdquirientesToHistory(formCollection, enajenacion);
+                    AddEnajenantesToHistory(formCollection, enajenacion);
                 }
 
-                //UpdateHistoricalInformation(enajenacion);
+                UpdateHistoricalInformation(enajenacion);
                 db.Enajenacion.Add(enajenacion);
                 await db.SaveChangesAsync();
 
@@ -161,102 +161,6 @@ namespace UAndes.ICC5103._202301.Controllers
                 model.Enajenacion = enajenacion;
 
                 return View(model);
-            }
-        }
-
-        // GET: Enajenacion/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (!isId(id))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            if (!isEnajenacion(enajenacion))
-            {
-                return HttpNotFound();
-            }
-
-            return View(enajenacion);
-        }
-
-        // POST: Enajenacion/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, RutEnajenante, PorcentajeEnajenante, CheckEnajenante, RutAdquiriente, PorcentajeAdquiriente, CheckAdquiriente, Fojas, FechaInscripcion, IdInscripcion.")] Enajenacion enajenacion)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(enajenacion).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-
-            return View(enajenacion);
-        }
-
-        // GET: Enajenacion/Delete/5
-        public async Task<ActionResult> Delete(int? id, char option = 'a', int insideId = 0)
-        {
-            if (option == 'a')
-            {
-                if (!isId(id))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (!isEnajenacion(enajenacion))
-                {
-                    return HttpNotFound();
-                }
-                return View(enajenacion);
-            }
-            else
-            {
-                if (!isId(id))
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                if (!isEnajenacion(enajenacion))
-                {
-                    return HttpNotFound();
-                }
-
-                Enajenante enajenante = await db.Enajenante.FindAsync(insideId);
-                if (enajenante == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(enajenacion);
-            }
-        }
-
-        // POST: Enajenacion/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id, char option, int insideId)
-        {
-            if (option == 'a')
-            {
-                Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-                db.Enajenacion.Remove(enajenacion);
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                Enajenante enajenante = await db.Enajenante.FindAsync(insideId);
-                db.Enajenante.Remove(enajenante);
-                await db.SaveChangesAsync();
-
-                return RedirectToAction("Details/" + id.ToString());
             }
         }
         #endregion
@@ -488,10 +392,14 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private void AddAdquirientesToHistory(List<Adquiriente> adquirientes, Enajenacion enajenacion)
+        private void AddAdquirientesToHistory(FormCollection formCollection, Enajenacion enajenacion)
         {
+            var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
+            var percentagesCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+            List<float> percentagesParce = PercentagesToListAdquiriente(percentages);
 
-            for (int i = 0; i < adquirientes.Count; i++)
+            for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
 
@@ -502,10 +410,11 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                historico.Rut = adquirientes[i].RutAdquiriente;
-                historico.Porcentaje = adquirientes[i].PorcentajeAdquiriente;
+                string rut = ruts[i];
+                historico.Rut = rut;
+                historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
-                historico.Check = adquirientes[i].CheckAdquiriente;
+                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
                 historico.Participante = "adquiriente";
 
                 db.Historial.Add(historico);
@@ -536,10 +445,14 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private void AddEnajenantesToHistory(List<Adquiriente> enajenanates, Enajenacion enajenacion)
+        private void AddEnajenantesToHistory(FormCollection formCollection, Enajenacion enajenacion)
         {
+            var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
+            var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            List<float> percentagesParce = PercentagesToListEnajenante(percentages);
 
-            for (int i = 0; i < enajenanates.Count; i++)
+            for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
 
@@ -550,10 +463,11 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                historico.Rut = enajenanates[i].RutAdquiriente;
-                historico.Porcentaje = enajenanates[i].PorcentajeAdquiriente;
+                string rut = ruts[i];
+                historico.Rut = rut;
+                historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
-                historico.Check = enajenanates[i].CheckAdquiriente;
+                historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
                 historico.Participante = "enajenante";
 
                 db.Historial.Add(historico);
