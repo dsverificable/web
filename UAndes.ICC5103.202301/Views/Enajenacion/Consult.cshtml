@@ -103,7 +103,7 @@
                     <td>@Model.Enajenacion.FechaInscripcion.Year</td>
                 }
 
-                <td>@Model.Enajenacion.FechaInscripcion</td>
+                <td class="inscriptionDate">@Model.Enajenacion.FechaInscripcion</td>
             </tr>
         }
 
@@ -162,6 +162,13 @@
     for (let i in percentages) {
         if (percentages[i].textContent != undefined) {
             percentages[i].textContent = setTwoDecimals(percentages[i].textContent);
+        }
+    }
+
+    let inscriptionDate = document.getElementsByClassName("inscriptionDate");
+    for (let i in inscriptionDate) {
+        if (inscriptionDate[i].textContent != undefined) {
+            inscriptionDate[i].textContent = (inscriptionDate[i].textContent).split(' ')[0];
         }
     }
 
