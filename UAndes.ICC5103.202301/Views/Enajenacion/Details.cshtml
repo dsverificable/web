@@ -91,10 +91,36 @@
          {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.RutAdquiriente)</td>
-                <td>@Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)</td>
+                <td class="percentages">@Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)</td>
                 <td>@Html.DisplayFor(modelItem => item.CheckAdquiriente)</td>
             </tr>
          }
 
     </table>
 }
+
+<script>
+
+    function setTwoDecimals(numero) {
+        const parts = numero.toString().split(',');
+
+        if (parts.length === 1) {
+            return parts[0];
+        } else {
+            let decimals = parts[1].substring(0, 2);
+            if (decimals.length == 2 && parts[1][2] != undefined) {
+                if (parseInt(parts[1][2]) >= 5) {
+                    decimals = parseInt(decimals) + 1;
+                }
+            }
+            return `${parts[0]},${decimals}`;
+        }
+    }
+
+    let percentages = document.getElementsByClassName("percentages");
+    for (let i in percentages) {
+        if (percentages[i].textContent != undefined) {
+            percentages[i].textContent = setTwoDecimals(percentages[i].textContent);
+        }
+    }
+</script>
