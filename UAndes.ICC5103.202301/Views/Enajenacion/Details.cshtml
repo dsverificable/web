@@ -43,39 +43,8 @@
         <dd>
             @Model.Enajenacion.Predio
         </dd>
-
-        <dt>
-            Fojas
-        </dt>
-
-        <dd>
-            @Model.Enajenacion.Fojas
-        </dd>
-
     </dl>
 </div>
-
-@if (Model.Enajenantes.Count != 0)
-{
-    <table class="table">
-            
-        <tr>
-            <th>Rut Enajenante</th>
-            <th>Porcentaje Enajenante</th>
-            <th>Check Enajenante</th>
-        </tr>
-
-        @foreach (var item in Model.Enajenantes)
-         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.RutEnajenante)</td>
-                <td>@Html.DisplayFor(modelItem => item.PorcentajeEnajenante)</td>
-                <td>@Html.DisplayFor(modelItem => item.CheckEnajenante)</td>
-            </tr>
-         }
-
-    </table>
- }
 
 @if (Model.Adquirientes.Count != 0)
 {
@@ -85,6 +54,7 @@
             <th>Rut Adquiriente</th>
             <th>Porcentaje Adquiriente</th>
             <th>Check Adquiriente</th>
+            <th>Fojas Adquiriente</th>
         </tr>
 
         @foreach (var item in Model.Adquirientes)
@@ -93,6 +63,7 @@
                 <td>@Html.DisplayFor(modelItem => item.RutAdquiriente)</td>
                 <td class="percentages">@Html.DisplayFor(modelItem => item.PorcentajeAdquiriente)</td>
                 <td>@Html.DisplayFor(modelItem => item.CheckAdquiriente)</td>
+                <td>@Html.DisplayFor(modelItem => item.Fojas)</td>
             </tr>
          }
 
