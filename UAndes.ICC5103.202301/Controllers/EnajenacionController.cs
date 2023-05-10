@@ -104,9 +104,9 @@ namespace UAndes.ICC5103._202301.Controllers
                     PastAdquirienteFormToHistorial(formCollection, enajenacion);
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
                     PastEnajenanteFormToHistorial(formCollection, enajenacion);
+                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
+                    AddAdquirientesToDb(newEnajenatesOfEnajenacion);
                     db.Enajenacion.Add(enajenacion); // delete when compraventa works correctly
-                    //List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
-                    //AddAdquirientesToDb(newEnajenatesOfEnajenacion);
                 }
 
                 //UpdateHistoricalInformation(enajenacion);
@@ -673,7 +673,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
             return combinedList;
         }
-
+        
         private List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
         {
             List<Adquiriente> newEnajenates = enajenantes
@@ -682,14 +682,28 @@ namespace UAndes.ICC5103._202301.Controllers
 
             return newEnajenates;
         }
-
-        private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion last_enajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        
+        private List<Adquiriente> GetCurrentAdquirientes(Enajenacion enajenacion)
         {
-            float totalPercentagesEnajenantes;    
-            
-            List<Adquiriente> currentEnajenantes = db.Adquiriente
-                            .Where(a => a.IdEnajenacion == last_enajenacion.Id)
-                            .ToList();
+            List<Adquiriente> currentEnajenantes = new List<Adquiriente>();
+
+            if (isEnajenacion(enajenacion))
+            {
+                return currentEnajenantes = db.Adquiriente
+                           .Where(a => a.IdEnajenacion == enajenacion.Id)
+                           .ToList();
+            }
+            else
+            {
+                return currentEnajenantes;
+            }
+        }
+        
+        private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        {
+            float totalPercentagesEnajenantes;
+
+            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion);
             List<Adquiriente> enajenantesNotInForm = EnjanenatesNotInTheForm(currentEnajenantes, adquirientes, enajenantes);
 
             if (isSumAdquirienteEqual100(adquirientes))
