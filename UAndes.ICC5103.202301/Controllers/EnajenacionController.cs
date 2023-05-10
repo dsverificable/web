@@ -671,15 +671,19 @@ namespace UAndes.ICC5103._202301.Controllers
             return newEnajenates;
         }
         
-        private List<Adquiriente> GetCurrentAdquirientes(Enajenacion enajenacion)
+        private List<Adquiriente> GetCurrentAdquirientes(Enajenacion enajenacion, int idEnajenacion)
         {
             List<Adquiriente> currentEnajenantes = new List<Adquiriente>();
 
             if (isEnajenacion(enajenacion))
             {
-                return currentEnajenantes = db.Adquiriente
+                currentEnajenantes = db.Adquiriente
                            .Where(a => a.IdEnajenacion == enajenacion.Id)
                            .ToList();
+
+                currentEnajenantes.ForEach(a => a.IdEnajenacion = idEnajenacion);
+
+                return currentEnajenantes;  
             }
             else
             {
@@ -691,7 +695,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             float totalPercentagesEnajenantes;
 
-            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion);
+            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion, enajenacion.Id); 
             List<Adquiriente> enajenantesNotInForm = EnjanenatesNotInTheForm(currentEnajenantes, adquirientes, enajenantes);
 
             if (isSumAdquirienteEqual100(adquirientes))
