@@ -674,11 +674,20 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (isEnajenacion(enajenacion))
             {
-                currentEnajenantes = db.Adquiriente
+                List<Adquiriente> currentEnajenantesFromDataBase = db.Adquiriente
                            .Where(a => a.IdEnajenacion == enajenacion.Id)
                            .ToList();
 
-                currentEnajenantes.ForEach(a => a.IdEnajenacion = idEnajenacion);
+                foreach (var enajenante in currentEnajenantesFromDataBase)
+                {
+                    var adquiriente = new Adquiriente();
+                    adquiriente.RutAdquiriente = enajenante.RutAdquiriente;
+                    adquiriente.IdEnajenacion = idEnajenacion;
+                    adquiriente.PorcentajeAdquiriente = enajenante.PorcentajeAdquiriente;
+                    adquiriente.CheckAdquiriente = enajenante.CheckAdquiriente;
+
+                    currentEnajenantes.Add(adquiriente);
+                }
 
                 return currentEnajenantes;  
             }
