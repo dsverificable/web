@@ -14,6 +14,7 @@
           <Property Name="PorcentajeAdquiriente" Type="float" Nullable="false" />
           <Property Name="CheckAdquiriente" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
+          <Property Name="Fojas" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CNEOptions">
           <Key>
@@ -51,6 +52,7 @@
           <Property Name="PorcentajeEnajenante" Type="float" Nullable="false" />
           <Property Name="CheckEnajenante" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
+          <Property Name="Fojas" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Historial">
           <Key>
@@ -200,6 +202,7 @@
           <Property Name="CheckAdquiriente" Type="Boolean" Nullable="false" />
           <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" FromRole="Adquiriente" ToRole="Enajenacion" />
+          <Property Name="Fojas" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="CNEOptions">
           <Key>
@@ -245,6 +248,7 @@
           <Property Name="CheckEnajenante" Type="Boolean" Nullable="false" />
           <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enajenacion" Relationship="InscripcionesBrDbModel.FK_Enajenante_Enajenacion" FromRole="Enajenante" ToRole="Enajenacion" />
+          <Property Name="Fojas" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Adquiriente_Enajenacion">
           <End Type="InscripcionesBrDbModel.Enajenacion" Role="Enajenacion" Multiplicity="1" />
@@ -334,6 +338,7 @@
           <EntitySetMapping Name="Adquiriente">
             <EntityTypeMapping TypeName="InscripcionesBrDbModel.Adquiriente">
               <MappingFragment StoreEntitySet="Adquiriente">
+                <ScalarProperty Name="Fojas" ColumnName="Fojas" />
                 <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
                 <ScalarProperty Name="CheckAdquiriente" ColumnName="CheckAdquiriente" />
                 <ScalarProperty Name="PorcentajeAdquiriente" ColumnName="PorcentajeAdquiriente" />
@@ -375,6 +380,7 @@
           <EntitySetMapping Name="Enajenante">
             <EntityTypeMapping TypeName="InscripcionesBrDbModel.Enajenante">
               <MappingFragment StoreEntitySet="Enajenante">
+                <ScalarProperty Name="Fojas" ColumnName="Fojas" />
                 <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
                 <ScalarProperty Name="CheckEnajenante" ColumnName="CheckEnajenante" />
                 <ScalarProperty Name="PorcentajeEnajenante" ColumnName="PorcentajeEnajenante" />

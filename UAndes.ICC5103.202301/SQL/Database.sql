@@ -41,6 +41,7 @@ CREATE TABLE [dbo].[Enajenante](
 	[PorcentajeEnajenante] [float] NOT NULL,
 	[CheckEnajenante] [bit] NOT NULL,
 	[IdEnajenacion] [int] NOT NULL,
+	[Fojas] [int] NOT NULL,
 	CONSTRAINT [PK_Enajenante] PRIMARY KEY CLUSTERED(
 		[Id] ASC
 	),
@@ -55,6 +56,7 @@ CREATE TABLE [dbo].[Adquiriente](
 	[PorcentajeAdquiriente] [float] NOT NULL,
 	[CheckAdquiriente] [bit] NOT NULL,
 	[IdEnajenacion] [int] NOT NULL,
+	[Fojas] [int] NOT NULL,
 	CONSTRAINT [PK_Adquiriente] PRIMARY KEY CLUSTERED(
 		[Id] ASC
 	),

@@ -19,7 +19,7 @@ namespace UAndes.ICC5103._202301.Models
         public double PorcentajeEnajenante { get; set; }
         public bool CheckEnajenante { get; set; }
         public int IdEnajenacion { get; set; }
-    
+        public int Fojas { get; set; }
         public virtual Enajenacion Enajenacion { get; set; }
     }
 }
