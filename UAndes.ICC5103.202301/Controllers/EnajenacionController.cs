@@ -643,7 +643,8 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenantesNotInTheForm = currentEnajenantes
-                            .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
+                            .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente)
+                            || !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
                             .ToList();
     
             return enajenantesNotInTheForm;
