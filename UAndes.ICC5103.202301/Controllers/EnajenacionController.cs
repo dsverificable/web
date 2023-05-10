@@ -84,7 +84,6 @@ namespace UAndes.ICC5103._202301.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
         {
-            removeFromAdquirientes(1);
             var model = new EnajenacionViewModel();
             model.Enajenacion = enajenacion;
             model.CNEOptions = db.CNEOptions.ToList();
@@ -653,7 +652,7 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenantesNotInTheForm = currentEnajenantes
-                            .Where(e => !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
+                            .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
                             .ToList();
     
             return enajenantesNotInTheForm;
@@ -726,7 +725,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 enajenantes = UpdateEnajenatePercentageByDomain(currentEnajenantes, enajenantes);
             }
 
-            List<Adquiriente> newEnajenatesOfEnajenacion = CombineListsForNewData(currentEnajenantes, adquirientes, enajenantes);
+            List<Adquiriente> newEnajenatesOfEnajenacion = CombineListsForNewData(enajenantesNotInForm, adquirientes, enajenantes);
             newEnajenatesOfEnajenacion = ParceNegativePercentage(newEnajenatesOfEnajenacion);
             float totalSumPercentege = TotalSumFormPercentage(newEnajenatesOfEnajenacion);
 
