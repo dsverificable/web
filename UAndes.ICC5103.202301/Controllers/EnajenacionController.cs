@@ -589,7 +589,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
                     {
                         float ratioPercentage = RatioPercentage((float)enajenante.PorcentajeAdquiriente, (float)currentEnajenante.PorcentajeAdquiriente);
-                        enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - ratioPercentage;
+                        enajenante.PorcentajeAdquiriente = currentEnajenante.PorcentajeAdquiriente - ratioPercentage;
                     }
                 }
             }
@@ -605,7 +605,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
                     {
-                        enajenante.PorcentajeAdquiriente = (float)currentEnajenante.PorcentajeAdquiriente - enajenante.PorcentajeAdquiriente;
+                        enajenante.PorcentajeAdquiriente = currentEnajenante.PorcentajeAdquiriente - enajenante.PorcentajeAdquiriente;
                     }
                 }
             }
@@ -645,8 +645,7 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenantesNotInTheForm = currentEnajenantes
-                            .Where(e => !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente)
-                                        && !enajenantes.Any(en => en.RutAdquiriente == e.RutAdquiriente))
+                            .Where(e => !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
                             .ToList();
     
             return enajenantesNotInTheForm;
