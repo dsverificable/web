@@ -382,6 +382,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 var adquiriente = new Adquiriente();
                 string rut = ruts[i];
                 adquiriente.RutAdquiriente = rut;
+                adquiriente.Fojas = enajenacion.Fojas;
                 adquiriente.IdEnajenacion = enajenacion.Id;
                 adquiriente.PorcentajeAdquiriente = percentagesParce[i];
                 adquiriente.CheckAdquiriente = CheckValue(float.Parse(percentagesCheck[i]));
@@ -436,6 +437,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 string rut = ruts[i];
                 adquiriente.RutAdquiriente = rut;
                 adquiriente.IdEnajenacion = enajenacion.Id;
+                adquiriente.Fojas = enajenacion.Fojas;
                 adquiriente.PorcentajeAdquiriente = percentagesParce[i];
                 adquiriente.CheckAdquiriente = CheckValue(float.Parse(percentagesCheck[i]));
 
@@ -591,7 +593,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return newEnajenates;
         }
         
-        private List<Adquiriente> GetCurrentAdquirientes(Enajenacion enajenacion, int idEnajenacion)
+        private List<Adquiriente> GetCurrentAdquirientes(Enajenacion enajenacion, int idEnajenacion, int fojasEnajenacion)
         {
             List<Adquiriente> currentEnajenantes = new List<Adquiriente>();
 
@@ -606,6 +608,7 @@ namespace UAndes.ICC5103._202301.Controllers
                     var adquiriente = new Adquiriente();
                     adquiriente.RutAdquiriente = enajenante.RutAdquiriente;
                     adquiriente.IdEnajenacion = idEnajenacion;
+                    adquiriente.Fojas = fojasEnajenacion;
                     adquiriente.PorcentajeAdquiriente = enajenante.PorcentajeAdquiriente;
                     adquiriente.CheckAdquiriente = enajenante.CheckAdquiriente;
 
@@ -624,7 +627,7 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             float totalPercentagesEnajenantes;
 
-            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion, enajenacion.Id);
+            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion, enajenacion.Id, enajenacion.Fojas);
             List<Adquiriente> newcurrentEnajenantes = EnjanenatesNotInTheForm(currentEnajenantes, enajenantes);
             List<Adquiriente> enajenantesNotInForm = AdquirientesNotInTheForm(newcurrentEnajenantes, adquirientes);
 
@@ -744,6 +747,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 var adquiriente = new Adquiriente();
                 adquiriente.RutAdquiriente = hist.Rut;
                 adquiriente.IdEnajenacion = hist.IdEnajenacion;
+                adquiriente.Fojas = hist.Fojas;
                 adquiriente.PorcentajeAdquiriente = hist.Porcentaje;
                 adquiriente.CheckAdquiriente = hist.Check;
 
@@ -765,6 +769,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 var adquiriente = new Adquiriente();
                 adquiriente.RutAdquiriente = hist.Rut;
                 adquiriente.IdEnajenacion = hist.IdEnajenacion;
+                adquiriente.Fojas = hist.Fojas;
                 adquiriente.PorcentajeAdquiriente = hist.Porcentaje;
                 adquiriente.CheckAdquiriente = hist.Check;
 
