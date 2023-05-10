@@ -62,6 +62,13 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
+
+        private async void removeFromAdquirientes(int idEnajenacion)
+        {
+            List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == idEnajenacion).ToListAsync();
+            db.Adquiriente.RemoveRange(adquirientes);
+        }
+
         // GET: Enajenacion/Create
         public ActionResult Create()
         {
@@ -77,6 +84,7 @@ namespace UAndes.ICC5103._202301.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id, CNE, Comuna, Manzana, Predio, Fojas, FechaInscripcion, IdInscripcion")] Enajenacion enajenacion)
         {
+            removeFromAdquirientes(1);
             var model = new EnajenacionViewModel();
             model.Enajenacion = enajenacion;
             model.CNEOptions = db.CNEOptions.ToList();
