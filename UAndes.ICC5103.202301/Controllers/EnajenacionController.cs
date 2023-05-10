@@ -640,14 +640,22 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenantesNotInTheForm = currentEnajenantes
-                            .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente)
-                            || !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
+                            .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
                             .ToList();
     
             return enajenantesNotInTheForm;
+        }
+
+        private List<Adquiriente> AdquirientesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes)
+        {
+            List<Adquiriente> adquirientesNotInTheForm = currentEnajenantes
+                            .Where(e => !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
+                            .ToList();
+
+            return adquirientesNotInTheForm;
         }
 
         private List<Adquiriente> CombineListsForNewData(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
@@ -702,8 +710,9 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             float totalPercentagesEnajenantes;
 
-            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion, enajenacion.Id); 
-            List<Adquiriente> enajenantesNotInForm = EnjanenatesNotInTheForm(currentEnajenantes, adquirientes, enajenantes);
+            List<Adquiriente> currentEnajenantes = GetCurrentAdquirientes(lastEnajenacion, enajenacion.Id);
+            List<Adquiriente> newcurrentEnajenantes = EnjanenatesNotInTheForm(currentEnajenantes, enajenantes);
+            List<Adquiriente> enajenantesNotInForm = AdquirientesNotInTheForm(newcurrentEnajenantes, adquirientes);
 
             if (isSumAdquirienteEqual100(adquirientes))
             {
