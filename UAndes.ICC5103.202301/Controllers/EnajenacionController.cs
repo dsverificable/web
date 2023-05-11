@@ -790,9 +790,15 @@ namespace UAndes.ICC5103._202301.Controllers
             List<Historial> historiales = GetLogsOfEnajenacionAfter(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, enajenacion.FechaInscripcion);
             List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales); 
 
+           
+               // borrar adquirientes
+               // borrar enajenacaion
+            
+            // falta la que acado de crear
             foreach (var date in datesAfterHistory)
             {
                 List<Historial> filterHistorial = FilterLogsOfEnajenacionByDate(date, historiales);
+                // lasta enacenacion, cambiar nombre y hacer logica con el hitorial.
                 Enajenacion lastEnajenacion = FilterEnajenacion(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, date);
                 int operation = GetOperation(historiales);
 
