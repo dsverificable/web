@@ -82,8 +82,6 @@ CREATE TABLE [dbo].[Historial](
 	CONSTRAINT [PK_Historial] PRIMARY KEY CLUSTERED(
 		[Id] ASC
 	),
-	CONSTRAINT [FK_Historial_Enajenacion] FOREIGN KEY([IdEnajenacion])
-	REFERENCES [dbo].Enajenacion
 );
 GO
 

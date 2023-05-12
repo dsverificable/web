@@ -9,6 +9,7 @@ using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using UAndes.ICC5103._202301.Models;
@@ -73,6 +74,8 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
+        ManualResetEvent resetEvent = new ManualResetEvent(false);
+
         // POST: Enajenacion/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -91,6 +94,8 @@ namespace UAndes.ICC5103._202301.Controllers
             if (ModelState.IsValid)
             {
                 FormCollection formCollection = new FormCollection(Request.Form);
+                List<Historial> historiales = GetLogsOfEnajenacionAfter(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, enajenacion.FechaInscripcion);
+                List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales);
 
                 if (isRdp(enajenacion.CNE))
                 {
@@ -102,13 +107,41 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
-                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
-                    AddAdquirientesToDb(newEnajenatesOfEnajenacion);
-                    AddAdquirientesToHistory(formCollection, enajenacion);
-                    AddEnajenantesToHistory(formCollection, enajenacion);
+
+                    if (datesAfterHistory.Count() == 0)
+                    {
+                        List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
+                        AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                        db.Enajenacion.Add(enajenacion);
+                        AddAdquirientesToHistory(formCollection, enajenacion);
+                        AddEnajenantesToHistory(formCollection, enajenacion);
+                        await db.SaveChangesAsync();
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        await Task.Run(() =>
+                        {
+                            RemoveHistoricalInformation(enajenacion);
+                        });
+                        resetEvent.WaitOne();
+                        enajenaciones = await db.Enajenacion
+                       .Where(e => e.Manzana == enajenacion.Manzana && e.Predio == enajenacion.Predio && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year && e.Comuna == enajenacion.Comuna)
+                       .ToListAsync();
+                        last_enajenacion = GetLastUpdateOfAndSpecificEnajenacion(enajenaciones);
+                        List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
+                        AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                        db.Enajenacion.Add(enajenacion);
+                        AddAdquirientesToHistory(formCollection, enajenacion);
+                        AddEnajenantesToHistory(formCollection, enajenacion);
+                        await db.SaveChangesAsync();
+                        //UpdateHistoricalInformation(enajenacion);
+                        return RedirectToAction("Index");
+                    }
+                    
                 }
 
-                UpdateHistoricalInformation(enajenacion);
                 db.Enajenacion.Add(enajenacion);
                 await db.SaveChangesAsync();
 
@@ -602,6 +635,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 List<Adquiriente> currentEnajenantesFromDataBase = db.Adquiriente
                            .Where(a => a.IdEnajenacion == enajenacion.Id)
                            .ToList();
+                // EN LO SIGUIENTE SE CAE
 
                 foreach (var enajenante in currentEnajenantesFromDataBase)
                 {
@@ -779,43 +813,94 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private async void RemoveFromAdquirientes(int idEnajenacion)
+        private Enajenacion PastLogsToEnajenacionModel(List<Historial> historiales)
+        {
+            Historial filterHistoriales = historiales
+                   .Where(l => l.Participante == "adquiriente")
+                   .First();
+
+            var enajenacion = new Enajenacion();
+            enajenacion.CNE = filterHistoriales.CNE;
+            enajenacion.Comuna = filterHistoriales.Comuna;
+            enajenacion.Manzana = filterHistoriales.Manzana;
+            enajenacion.Predio = filterHistoriales.Predio;
+            enajenacion.Fojas = filterHistoriales.Fojas;
+            enajenacion.FechaInscripcion = filterHistoriales.FechaInscripcion;
+            enajenacion.IdInscripcion = filterHistoriales.IdInscripcion;
+
+            return enajenacion;
+        }
+
+        private async void RemoveFromAdquirientes(int idEnajenacion, System.Action callback)
         {
             List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == idEnajenacion).ToListAsync();
             db.Adquiriente.RemoveRange(adquirientes);
+            callback?.Invoke();
         }
 
-        private void UpdateHistoricalInformation(Enajenacion enajenacion)
+        private async void RemoveFromEnajenacion(int idEnajenacion, System.Action callback)
+        {
+            List<Enajenacion> enajenantes = await db.Enajenacion.Where(e => e.Id == idEnajenacion).ToListAsync();
+            db.Enajenacion.RemoveRange(enajenantes);
+            callback?.Invoke();
+        }
+
+        public async void RemoveHistoricalInformation(Enajenacion enajenacion)
         {
             List<Historial> historiales = GetLogsOfEnajenacionAfter(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, enajenacion.FechaInscripcion);
-            List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales); 
+            List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales);
+            int i = 0;
+            foreach (var date in datesAfterHistory)
+            {
+                Enajenacion lastEnajenacion = FilterEnajenacion(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, date);
 
-           
-               // borrar adquirientes
-               // borrar enajenacaion
-            
-            // falta la que acado de crear
+                // Este código se ejecutará una vez que se complete RemoveHistoricalInformation
+                RemoveFromAdquirientes(lastEnajenacion.Id, () =>
+                {
+                    RemoveFromEnajenacion(lastEnajenacion.Id, async () =>
+                    {
+                        i += 1;
+                        if (i == datesAfterHistory.Count())
+                        {
+                            await db.SaveChangesAsync();
+                            resetEvent.Set();
+                        }
+                    });
+                });
+
+            }
+        }
+        private async void UpdateHistoricalInformation(Enajenacion enajenacion)
+        {
+            List<Historial> historiales = GetLogsOfEnajenacionAfter(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, enajenacion.FechaInscripcion);
+            List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales);
+
             foreach (var date in datesAfterHistory)
             {
                 List<Historial> filterHistorial = FilterLogsOfEnajenacionByDate(date, historiales);
-                // lasta enacenacion, cambiar nombre y hacer logica con el hitorial.
-                Enajenacion lastEnajenacion = FilterEnajenacion(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, date);
+                // Actualmente solo funciona cuando hay uno para futuro, ya que para la segunda iteracion debiese considerar el primer elemento de historiales, hablando de la fecha de incripccion
+                Enajenacion lastEnajenacion = FilterEnajenacion(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, enajenacion.FechaInscripcion);
                 int operation = GetOperation(historiales);
 
+                Enajenacion historicEnajenacion = PastLogsToEnajenacionModel(filterHistorial);
+                db.Enajenacion.Add(historicEnajenacion);
                 if (isRdp(operation)) 
                 {
                     List<Adquiriente> adquirientes = PastLogsToAdquirientesModel(filterHistorial);
-                    RemoveFromAdquirientes(lastEnajenacion.Id);
                     AddAdquirientesToDb(adquirientes);
                 }
                 else
                 {
-                    List<Adquiriente> adquirientes = PastLogsToAdquirientesModel(filterHistorial);
-                    List<Adquiriente> enajenantes = PastLogsToEnajenanteModel(filterHistorial);
-                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, lastEnajenacion, adquirientes, enajenantes);
-                    RemoveFromAdquirientes(lastEnajenacion.Id);
+                    var filteredAdquirientes = Task.Run(() => PastLogsToAdquirientesModel(filterHistorial));
+                    List<Adquiriente> adquirientes = await filteredAdquirientes;
+                    var filteredEnajenantes = Task.Run(() => PastLogsToEnajenanteModel(filterHistorial));
+                    List<Adquiriente> enajenantes = await filteredEnajenantes;
+                    var filteredNewEnajenatesOfEnajenacion = Task.Run(() => CompraventaCases(historicEnajenacion, lastEnajenacion, adquirientes, enajenantes));
+                    List<Adquiriente> newEnajenatesOfEnajenacion = await filteredNewEnajenatesOfEnajenacion;
                     AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                    var a = 1;
                 }
+                await db.SaveChangesAsync();
             }
         }
         #endregion

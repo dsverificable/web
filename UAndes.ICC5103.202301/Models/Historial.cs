@@ -27,7 +27,5 @@ namespace UAndes.ICC5103._202301.Models
         public int CNE { get; set; }
         public bool Check { get; set; }
         public string Participante { get; set; }
-    
-        public virtual Enajenacion Enajenacion { get; set; }
     }
 }
