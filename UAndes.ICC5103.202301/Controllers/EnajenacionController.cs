@@ -532,6 +532,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     if (enajenante.RutAdquiriente == currentEnajenante.RutAdquiriente)
                     {
+                        enajenante.Fojas = currentEnajenante.Fojas;
                         enajenante.PorcentajeAdquiriente = currentEnajenante.PorcentajeAdquiriente - enajenante.PorcentajeAdquiriente;
                     }
                 }
