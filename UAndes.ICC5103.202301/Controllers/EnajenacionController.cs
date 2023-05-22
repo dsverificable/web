@@ -17,18 +17,20 @@ namespace UAndes.ICC5103._202301.Controllers
 {
     public class EnajenacionController : Controller
     {
-        #region Contansts
+        #region Constants
         private Grupo10ConchaMunozBrDbEntities db = new Grupo10ConchaMunozBrDbEntities();
 
-        Dictionary<string, int> myDictionary = new Dictionary<string, int>()
+        Dictionary<string, string> peopleCategories = new Dictionary<string, string>()
             {
-                {"key1", 1},
-                {"key2", 2},
-                {"key3", 3}
+                {"adquiriente", "adquiriente"},
+                {"enajenante" , "enajenante"}
             };
 
-
-
+        Dictionary<string, int> cneId = new Dictionary<string, int>()
+            {
+                {"Compraventa", 0},
+                {"Regularizacion De Patrimonio" , 1}
+            };
         #endregion
 
         #region Public Methods
@@ -188,8 +190,7 @@ namespace UAndes.ICC5103._202301.Controllers
         #region Private Methods
         private bool isRdp(int cne)
         {
-            //  1 = Regularizacion De Patrimonio
-            if (cne == 1)
+            if (cne == cneId["Regularizacion De Patrimonio"])
             {
                 return true;
             }
@@ -425,7 +426,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
                 historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
-                historico.Participante = "adquiriente";
+                historico.Participante = peopleCategories["adquiriente"];
 
                 db.Historial.Add(historico);
             }
@@ -479,7 +480,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
                 historico.Check = CheckValue(float.Parse(percentagesCheck[i]));
-                historico.Participante = "enajenante";
+                historico.Participante = peopleCategories["enajenante"];
 
                 db.Historial.Add(historico);
             }
@@ -631,20 +632,11 @@ namespace UAndes.ICC5103._202301.Controllers
                 return currentEnajenantes;
             }
         }
-        private List<Adquiriente> UpdateFojasState(List<Adquiriente> adquirientes, Enajenacion enajenacion)
-        {
-            foreach (var adquiriente in adquirientes)
-            {
-                adquiriente.Fojas = enajenacion.Fojas;
-            }
-
-            return adquirientes;
-        }
 
         private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             float totalPercentagesEnajenantes;
-            // view fojas 
+            
             List<Adquiriente> currentEnajenantes = GetCurrentOwners(lastEnajenacion, enajenacion.Id);
             List<Adquiriente> newcurrentEnajenantes = EnjanenatesNotInTheForm(currentEnajenantes, enajenantes);
             List<Adquiriente> enajenantesNotInForm = AdquirientesNotInTheForm(newcurrentEnajenantes, adquirientes); 
@@ -670,9 +662,6 @@ namespace UAndes.ICC5103._202301.Controllers
                 enajenantes = UpdateEnajenatePercentageByDomain(currentEnajenantes, enajenantes);
             }
 
-            adquirientes = UpdateFojasState(adquirientes, enajenacion);
-            enajenantes = UpdateFojasState(enajenantes, enajenacion);
-
             List<Adquiriente> newEnajenatesOfEnajenacion = CombineListsForNewData(enajenantesNotInForm, adquirientes, enajenantes);
             newEnajenatesOfEnajenacion = ParceNegativePercentage(newEnajenatesOfEnajenacion);
             float totalSumPercentege = TotalSumFormPercentage(newEnajenatesOfEnajenacion);
@@ -681,6 +670,8 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 newEnajenatesOfEnajenacion.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalSumPercentege));
             }
+
+            newEnajenatesOfEnajenacion = DeleteEnajenanteWithoutPercentage(newEnajenatesOfEnajenacion);
 
             return newEnajenatesOfEnajenacion;
         }
