@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.EnterpriseServices.CompensatingResourceManager;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -365,7 +366,8 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<float> PercentagesToListAdquiriente(string[] percentages)
         {
             float differencePercentage = DifferencePercentage(percentages);
-            var floatPercentages = percentages.Select(p => float.Parse(p)).ToList();
+            var culture = new CultureInfo("en-US");
+            var floatPercentages = percentages.Select(p => float.Parse(p, culture)).ToList();
             var newPercentages = floatPercentages.Select(p => PercentageValue(p, differencePercentage)).ToList();
 
             return newPercentages;
@@ -373,7 +375,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private List<float> PercentagesToListEnajenante(string[] percentages)
         {
-            var floatPercentages = percentages.Select(p => float.Parse(p)).ToList();
+            var culture = new CultureInfo("en-US");
+            var floatPercentages = percentages.Select(p => float.Parse(p, culture)).ToList();
 
             return floatPercentages;
         }
