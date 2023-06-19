@@ -236,6 +236,11 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantesFantasmas.Count > 0;
         }
 
+        private bool isEnajenateFantasmaEqualToEnajenantes(List<Adquiriente> enajenantesFantasmas, List<Adquiriente> enajenantes)
+        {
+            return enajenantesFantasmas.Count == enajenantes.Count;
+        }
+
 
         private bool isSumAdquirienteEqual100(List<Adquiriente> adquirientes)
         {
@@ -651,7 +656,7 @@ namespace UAndes.ICC5103._202301.Controllers
         public EnajenantesAndAdquirientes CaseSumAdquirienteEqual100(List<Adquiriente> currentEnajenantes, 
             List<Adquiriente> enajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas)
         {
-            if (!isEnajenateFantasma(enajenantesFantasmas))
+            if (!isEnajenateFantasmaEqualToEnajenantes(enajenantesFantasmas, enajenantes))
             {
                 float totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
                 adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
