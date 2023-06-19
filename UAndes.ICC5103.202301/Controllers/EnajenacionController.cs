@@ -256,7 +256,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool isOnlyOneAquirerAndAlienating(List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        private bool isOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             if(adquirientes.Count == 1 && enajenantes.Count == 1)
             {
@@ -607,7 +607,37 @@ namespace UAndes.ICC5103._202301.Controllers
 
             return combinedList;
         }
-        
+
+        private List<Adquiriente> AddEnajenantesFantasmasToCurrentEnajenantes(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        {
+            List<Adquiriente> combinedList = currentEnajenantes
+                                       .Concat(enajenantes
+                                           .Select(e => new Adquiriente
+                                           {
+                                               RutAdquiriente = e.RutAdquiriente,
+                                               Fojas = e.Fojas,
+                                               IdEnajenacion = e.IdEnajenacion,
+                                               PorcentajeAdquiriente = e.PorcentajeAdquiriente,
+                                               CheckAdquiriente = e.CheckAdquiriente
+                                           }))
+                                       .ToList();
+
+            return combinedList;
+        }
+
+        private List<Adquiriente> CurrentEnajenteIsFantasmaChangePercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantesFantasmas)
+        {
+            foreach (var enajenante in currentEnajenantes)
+            {
+                if (enajenantesFantasmas.Any(e => e.RutAdquiriente == enajenante.RutAdquiriente))
+                {
+                    enajenante.PorcentajeAdquiriente = 100;
+                }
+            }
+
+            return currentEnajenantes;
+        }
+
         private List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
         {
             List<Adquiriente> newEnajenates = enajenantes
@@ -662,6 +692,7 @@ namespace UAndes.ICC5103._202301.Controllers
                 adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
                 adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);  
             }
+
             enajenantes = UpdateEnajenatePercentageTotalTransfer(enajenantes);
             enajenantes = DeleteEnajenanteWithoutPercentage(enajenantes);
 
@@ -672,11 +703,32 @@ namespace UAndes.ICC5103._202301.Controllers
             };
         }
 
+        public EnajenantesAndAdquirientes CaseOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> currentEnajenantes,
+            List<Adquiriente> enajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas)
+        {
+
+            if (isEnajenateFantasma(enajenantesFantasmas))
+            {
+                currentEnajenantes = AddEnajenantesFantasmasToCurrentEnajenantes(currentEnajenantes, enajenantes);
+                currentEnajenantes = CurrentEnajenteIsFantasmaChangePercentage(currentEnajenantes, enajenantesFantasmas);
+            }
+
+            float totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
+            adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
+            adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
+            enajenantes = UpdateEnajenatePercentageByRights(currentEnajenantes, enajenantes);
+
+
+            return new EnajenantesAndAdquirientes
+            {
+                Enajenantes = enajenantes,
+                Adquirientes = adquirientes
+            };
+        }
+
 
         private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
-        {
-            float totalPercentagesEnajenantes;
-            
+        {  
             List<Adquiriente> currentEnajenantes = GetCurrentOwners(lastEnajenacion, enajenacion.Id);
             List<Adquiriente> newcurrentEnajenantes = EnjanenatesNotInTheForm(currentEnajenantes, enajenantes);
             List<Adquiriente> enajenantesNotInForm = AdquirientesNotInTheForm(newcurrentEnajenantes, adquirientes); 
@@ -688,12 +740,11 @@ namespace UAndes.ICC5103._202301.Controllers
                 enajenantes = result.Enajenantes;
                 adquirientes = result.Adquirientes;
             }
-            else if (isOnlyOneAquirerAndAlienating(adquirientes, enajenantes))
+            else if (isOnlyOneAdquirienteAndOneEnajenante(adquirientes, enajenantes))
             {
-                totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
-                adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
-                adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
-                enajenantes = UpdateEnajenatePercentageByRights(currentEnajenantes, enajenantes);
+                var result = CaseOnlyOneAdquirienteAndOneEnajenante(currentEnajenantes, enajenantes, adquirientes, enajenantesFantasmas);
+                enajenantes = result.Enajenantes;
+                adquirientes = result.Adquirientes;
             }
             else
             {
@@ -707,7 +758,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (!isSumEqualTo100(totalSumPercentege))
             {
-                newEnajenatesOfEnajenacion.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalSumPercentege));
+                newEnajenatesOfEnajenacion.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalSumPercentege)); // if sum percentage is 20 this pass 4 see this case
             }
 
             newEnajenatesOfEnajenacion = DeleteEnajenanteWithoutPercentage(newEnajenatesOfEnajenacion);
