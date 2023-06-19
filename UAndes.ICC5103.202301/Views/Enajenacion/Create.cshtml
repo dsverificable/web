@@ -302,13 +302,15 @@
 
         var validatorsInput = document.getElementsByClassName("rutValidator")
         for (var i = 0; i < validatorsInput.length; i++) {
-            console.log(validatorsInput[i].parentNode.children[0].children[0].value)
-            console.log(verificarValor(validatorsInput[i].parentNode.children[0].children[0].value))
-            if (verificarValor(validatorsInput[i].parentNode.children[0].children[0].value) == false) {
-                validatorsInput[i].style.display = "block";
-                event.preventDefault();
-            } else {
-                validatorsInput[i].style.display = "none";
+            var rutInput = validatorsInput[i].parentNode.children[0].children[0].value;
+            if (rutInput != "") {
+                console.log(rutInput, verificarValor(rutInput))
+                if (verificarValor(rutInput) == false) {
+                    validatorsInput[i].style.display = "block";
+                    event.preventDefault();
+                } else {
+                    validatorsInput[i].style.display = "none";
+                }
             }
         }
 
