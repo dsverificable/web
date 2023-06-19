@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.DropDownListFor(model => model.Enajenacion.Comuna, new SelectList(@Model.ComunaOptions, "Valor", "Comuna"), "Selecione la comuna", new { @class = "form-control form-control-input", @id = "form-editor" })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.Comuna, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style = "margin-top: 5px;" })
                             </div>
                         </div>
                         <div class="col-md-4" id="card-body-col">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.EditorFor(model => model.Enajenacion.Manzana, new { htmlAttributes = new { @class = "form-control form-control-input", @id = "form-editor", placeholder = "Manzana" } })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.Manzana, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style = "margin-top: 5px;" })
                             </div>
                         </div>
                         <div class="col-md-4" id="card-body-col">
@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.EditorFor(model => model.Enajenacion.Predio, new { htmlAttributes = new { @class = "form-control form-control-input", @id = "form-editor", placeholder = "Predio" } })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.Predio, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style = "margin-top: 5px;" })
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.EditorFor(model => model.Enajenacion.Fojas, new { htmlAttributes = new { @class = "form-control form-control-input", @id = "form-editor", placeholder = "Ingrese Fojas" } })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.Fojas, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style= "margin-top: 5px; margin-bottom: 10px;" })
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.EditorFor(model => model.Enajenacion.IdInscripcion, new { htmlAttributes = new { @class = "form-control form-control-input", @id = "form-editor", placeholder = "Ingrese Número" } })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.IdInscripcion, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style = "margin-top: 5px;" })
                             </div>
                         </div>
                         <div class="col-md-6" id="card-body-col">
@@ -160,7 +160,8 @@
                             </div>
                             <div class="col-md-8" id="card-body-col">
                                 @Html.EditorFor(model => model.Enajenacion.FechaInscripcion, new { htmlAttributes = new { @class = "form-control form-control-input", @type = "date" } })
-                                @Html.ValidationMessageFor(model => model.Enajenacion.FechaInscripcion, "*Campo obligatorio*", new { @class = "text-danger text-padding" })
+                                @Html.ValidationMessageFor(model => model.Enajenacion.FechaInscripcion, "*Campo obligatorio*", new { @class = "text-danger text-padding", @style = "margin-top: 5px;" })
+                                <span class="fechaValidator" style="display:none; font-size: 13px; color: rgb(169, 68, 66);">*Fecha no valida*</span>
                             </div>
                         </div>
                     </div>
@@ -226,7 +227,7 @@
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
 
-        cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+        cell1.innerHTML = "<div><div>" + '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].RutEnajenante, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())' + "</div><span class=" + '"' + "rutValidator" + '"' + " style=" + '"' + "display:none; font-size: 13px; color: rgb(169, 68, 66);" + '"' +">*Utilizar formato correcto*</span></div>";
         cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Enajenantes[0].PorcentajeEnajenante, new { htmlAttributes = new { @class = "form-control porcentajeEnajenantes"  } }).ToHtmlString())';
 
         cell2.value = "0";
@@ -249,7 +250,7 @@
 
         cell2.style.paddingRight = "150px";
 
-        cell1.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].RutAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())';
+        cell1.innerHTML = "<div><div>" + '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].RutAdquiriente, new { htmlAttributes = new { @class = "form-control" } }).ToHtmlString())' + "</div><span class=" + '"' + "rutValidator" + '"' +" style=" + '"' + "display:none; font-size: 13px; color: rgb(169, 68, 66);" + '"' + ">*Utilizar formato correcto*</span></div>";
         cell2.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].CheckAdquiriente, new { htmlAttributes = new { @class = "form-control checkAdquirientes", @onclick = "display(this)" } }).ToHtmlString())';
         cell3.innerHTML = '@Html.Raw(Html.EditorFor(model => model.Adquirientes[0].PorcentajeAdquiriente, new { htmlAttributes = new { @class = "form-control porcentajeAdquirientes", @style = "visibility: hidden"  } }).ToHtmlString())';
 
@@ -284,11 +285,50 @@
         }
     }
 
-    
+     function verificarValor(input) {
+         var regex = /^\d+-[0-9k]$/;
+
+         if (regex.test(input)) {
+             return true
+         } else {
+             return false
+         }
+     }
+
     var btnSave = document.getElementById("btn-primaryy");
 
     btnSave.addEventListener("click", function (event)
     {
+
+        var validatorsInput = document.getElementsByClassName("rutValidator")
+        for (var i = 0; i < validatorsInput.length; i++) {
+            console.log(validatorsInput[i].parentNode.children[0].children[0].value)
+            console.log(verificarValor(validatorsInput[i].parentNode.children[0].children[0].value))
+            if (verificarValor(validatorsInput[i].parentNode.children[0].children[0].value) == false) {
+                validatorsInput[i].style.display = "block";
+            } else {
+                validatorsInput[i].style.display = "none";
+            }
+        }
+
+        var fechaActual = new Date()
+        var fechaValidator = document.getElementsByClassName("fechaValidator")
+        for (var i = 0; i < fechaValidator.length; i++) {
+            var fecha = fechaValidator[i].parentNode.children[0].value;
+            if (fecha == "") {
+                event.preventDefault();
+            } else {
+                var fechaComparar = new Date(fecha)
+                console.log(fechaComparar, fechaActual)
+                if (fechaComparar > fechaActual) {
+                    fechaValidator[i].style.display = "block";
+                    event.preventDefault();
+                } else {
+                    fechaValidator[i].style.display = "none";
+                }
+            }
+        }
+
         var elementsInput = document.getElementsByClassName("form-control-input")
         for (var i = 0; i < elementsInput.length; i++) {
             if (elementsInput[i].value.length == 0) {
