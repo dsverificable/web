@@ -299,11 +299,12 @@
 
     btnSave.addEventListener("click", function (event)
     {
-
+        var CNEInput = document.getElementById("form-editor").value
         var validatorsInput = document.getElementsByClassName("rutValidator")
-        for (var i = 0; i < validatorsInput.length; i++) {
+        for (var i = CNEInput; i < validatorsInput.length; i++) {
             var rutInput = validatorsInput[i].parentNode.children[0].children[0].value;
             if (rutInput != "") {
+                validatorsInput[i].innerHTML = "*Utilizar formato correcto*"
                 console.log(rutInput, verificarValor(rutInput))
                 if (verificarValor(rutInput) == false) {
                     validatorsInput[i].style.display = "block";
@@ -311,6 +312,10 @@
                 } else {
                     validatorsInput[i].style.display = "none";
                 }
+            } else {
+                validatorsInput[i].innerHTML = "*Campo obligatorio*"
+                validatorsInput[i].style.display = "block";
+                event.preventDefault();
             }
         }
 
