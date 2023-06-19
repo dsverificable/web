@@ -92,6 +92,40 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
+        // GET: Enajenacion/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
+            return View(enajenacion);
+        }
+
+        // POST: Enajenacion/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
+
+            if (enajenacion != null)
+            {
+                // Eliminar los registros relacionados en la tabla Adquiriente
+                var adquirientesRelacionados = db.Adquiriente.Where(a => a.IdEnajenacion == id);
+                db.Adquiriente.RemoveRange(adquirientesRelacionados);
+
+                // Eliminar la entidad Enajenacion
+                db.Enajenacion.Remove(enajenacion);
+
+                // Guardar los cambios en la base de datos
+                await db.SaveChangesAsync();
+
+                // Redirigir a la página principal o a donde corresponda
+                return RedirectToAction("Index");
+            }
+
+            // Si no se encuentra la entidad Enajenacion, manejar el error o retornar una vista de error
+            return HttpNotFound();
+        }
+
         // POST: Enajenacion/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

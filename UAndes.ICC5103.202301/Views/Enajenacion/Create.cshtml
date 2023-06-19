@@ -306,6 +306,7 @@
             console.log(verificarValor(validatorsInput[i].parentNode.children[0].children[0].value))
             if (verificarValor(validatorsInput[i].parentNode.children[0].children[0].value) == false) {
                 validatorsInput[i].style.display = "block";
+                event.preventDefault();
             } else {
                 validatorsInput[i].style.display = "none";
             }
