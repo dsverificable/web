@@ -778,7 +778,6 @@ namespace UAndes.ICC5103._202301.Controllers
         private EnajenantesAndAdquirientes CaseDefault(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
             List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas, List<Adquiriente> enajenantesNotInForm)
         {
-
             adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
             enajenantes = UpdateEnajenatePercentageByDomain(currentEnajenantes, enajenantes);
 
@@ -806,7 +805,6 @@ namespace UAndes.ICC5103._202301.Controllers
                 Adquirientes = adquirientes
             };
         }
-
 
         private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {  
