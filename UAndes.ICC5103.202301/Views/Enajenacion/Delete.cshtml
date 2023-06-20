@@ -1,4 +1,4 @@
-﻿@model UAndes.ICC5103._202301.Models.Enajenacion
+﻿@model UAndes.ICC5103._202301.Models.EnajenacionViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -10,59 +10,59 @@
 <div>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CNE)
+            CNE
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CNE)
+            @Model.SelectDescripcion
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Comuna)
+            Comuna
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Comuna)
+            @Model.SelectComuna
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Manzana)
+            Manzana
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Manzana)
+            @Model.Enajenacion.Manzana
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Predio)
+            Predio
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Predio)
+            @Model.Enajenacion.Predio
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Fojas)
+            Fojas
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Fojas)
+            @Model.Enajenacion.Fojas
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FechaInscripcion)
+            Fecha de Inscripcion
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FechaInscripcion)
+            @Model.Enajenacion.FechaInscripcion
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IdInscripcion)
+            Numero de Inscripcion
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdInscripcion)
+            @Model.Enajenacion.IdInscripcion
         </dd>
 
     </dl>

@@ -95,8 +95,24 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
+
+
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
-            return View(enajenacion);
+
+            List<Enajenante> enajenantes = await db.Enajenante.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
+            List<Adquiriente> adquirientes = await db.Adquiriente.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
+
+            EnajenacionViewModel model = new EnajenacionViewModel();
+            model.Adquirientes = adquirientes;
+            model.Enajenacion = enajenacion;
+            model.Enajenantes = enajenantes;
+            model.Descripcion = db.CNEOptions.Select(c => c.Descripcion).ToList();
+            model.Comuna = db.ComunaOptions.Select(c => c.Comuna).ToList();
+            model.SelectDescripcion = model.Descripcion[enajenacion.CNE];
+            model.SelectComuna = model.Comuna[enajenacion.Comuna];
+
+            return View(model);
+
         }
 
         // POST: Enajenacion/Delete/5
