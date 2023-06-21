@@ -127,21 +127,25 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (enajenacion != null)
             {
-                // Eliminar los registros relacionados en la tabla Adquiriente
+                List<Historial> test = await db.Historial
+                                            .Where(a => a.IdEnajenacion == id)
+                                            .ToListAsync();
+                foreach (var item in test)
+                {
+                    item.Eliminado = true; 
+                    db.Entry(item).State = EntityState.Modified;
+                }
+
                 var adquirientesRelacionados = db.Adquiriente.Where(a => a.IdEnajenacion == id);
                 db.Adquiriente.RemoveRange(adquirientesRelacionados);
 
-                // Eliminar la entidad Enajenacion
                 db.Enajenacion.Remove(enajenacion);
 
-                // Guardar los cambios en la base de datos
                 await db.SaveChangesAsync();
 
-                // Redirigir a la página principal o a donde corresponda
                 return RedirectToAction("Index");
             }
 
-            // Si no se encuentra la entidad Enajenacion, manejar el error o retornar una vista de error
             return HttpNotFound();
         }
 
@@ -171,8 +175,8 @@ namespace UAndes.ICC5103._202301.Controllers
                 if (isRdp(enajenacion.CNE))
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
-                    AddAdquirientesToHistory(formCollection, enajenacion);
                     AddAdquirientesToDb(adquirientes);
+                    AddAdquirientesToHistory(formCollection, enajenacion);
                 }
                 else
                 {
@@ -516,13 +520,22 @@ namespace UAndes.ICC5103._202301.Controllers
             var percentagesCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
             var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
             List<float> percentagesParce = PercentagesToListAdquiriente(percentages);
-
+            int intId;
+            var lastId = db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault();
+            if (lastId == null)
+            {
+                intId = 1;
+            }
+            else
+            {
+                intId = lastId.Id + 1;
+            }
             for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
 
                 historico.Eliminado = false;
-                historico.IdEnajenacion = enajenacion.Id;
+                historico.IdEnajenacion = intId;
                 historico.Comuna = enajenacion.Comuna;
                 historico.Manzana = enajenacion.Manzana;
                 historico.Predio = enajenacion.Predio;
@@ -571,13 +584,23 @@ namespace UAndes.ICC5103._202301.Controllers
             var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
             List<float> percentagesParce = PercentagesToListEnajenante(percentages);
+            int intId;
+            var lastId = db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault();
+            if (lastId == null)
+            {
+                intId = 1;
+            }
+            else
+            {
+                intId = lastId.Id + 1;
+            }
 
             for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
 
                 historico.Eliminado = false;
-                historico.IdEnajenacion = enajenacion.Id;
+                historico.IdEnajenacion = intId;
                 historico.Comuna = enajenacion.Comuna;
                 historico.Manzana = enajenacion.Manzana;
                 historico.Predio = enajenacion.Predio;
