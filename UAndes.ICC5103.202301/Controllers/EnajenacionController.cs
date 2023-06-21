@@ -125,6 +125,22 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (enajenacion != null)
             {
+                if (enajenacion.Vigente == true)
+                {
+                    Enajenacion nuevaEnajenacionVigente = await db.Enajenacion
+                    .Where(e => e.Manzana == enajenacion.Manzana
+                                && e.Predio == enajenacion.Predio
+                                && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year
+                                && e.Comuna == enajenacion.Comuna
+                                && e.IdInscripcion == enajenacion.IdInscripcion
+                                && e.Id != id)
+                    .OrderByDescending(e => e.Id)
+                    .FirstOrDefaultAsync();
+                    nuevaEnajenacionVigente.Vigente = true;
+                    db.Entry(nuevaEnajenacionVigente).State = EntityState.Modified;
+                }
+
+
                 List<Historial> test = await db.Historial.Where(a => a.IdEnajenacion == id)
                                                          .ToListAsync();
                 foreach (var item in test)
