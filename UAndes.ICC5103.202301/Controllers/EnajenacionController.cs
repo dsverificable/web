@@ -33,6 +33,9 @@ namespace UAndes.ICC5103._202301.Controllers
                 {"Regularizacion De Patrimonio" , 1}
             };
 
+        bool vigencia = true;
+        bool noVigencia = false;
+
         public class EnajenantesAndAdquirientes
         {
             public List<Adquiriente> Enajenantes { get; set; }
@@ -151,6 +154,7 @@ namespace UAndes.ICC5103._202301.Controllers
             model.Enajenacion = enajenacion;
             model.CNEOptions = db.CNEOptions.ToList();
             model.ComunaOptions = db.ComunaOptions.ToList();
+            enajenacion.Vigente = vigencia;
 
             List<Enajenacion> enajenaciones = await db.Enajenacion
                    .Where(e => e.Manzana == enajenacion.Manzana 
@@ -163,11 +167,6 @@ namespace UAndes.ICC5103._202301.Controllers
             if (ModelState.IsValid)
             {
                 FormCollection formCollection = new FormCollection(Request.Form);
-
-                if(IsInscripcionAlreadyExists(enajenacion))
-                {
-                    // here I need to add if is vigente or no vigente
-                }
 
                 if (isRdp(enajenacion.CNE))
                 {
@@ -185,8 +184,14 @@ namespace UAndes.ICC5103._202301.Controllers
                     AddEnajenantesToHistory(formCollection, enajenacion);
                 }
 
+                
                 db.Enajenacion.Add(enajenacion);
                 await db.SaveChangesAsync();
+
+                if (isInscripcionIsDuplicate(enajenacion))
+                {
+                    await ChangeVigenciaEnajenacion(enajenacion);
+                }
 
                 return RedirectToAction("Index");
             }
@@ -277,10 +282,10 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private bool IsInscripcionAlreadyExists(Enajenacion enajenacion)
+        private bool isInscripcionIsDuplicate(Enajenacion enajenacion)
         {
-            bool exists = db.Enajenacion.Any(i => i.FechaInscripcion.Year == enajenacion.FechaInscripcion.Year 
-                                               && i.IdInscripcion == enajenacion.IdInscripcion);
+            bool exists = db.Enajenacion.Count(i => i.FechaInscripcion.Year == enajenacion.FechaInscripcion.Year
+                                                 && i.IdInscripcion == enajenacion.IdInscripcion) > 1;
 
             return exists;
         }
@@ -486,6 +491,23 @@ namespace UAndes.ICC5103._202301.Controllers
             }
 
             return adquirientes;
+        }
+
+        private async Task ChangeVigenciaEnajenacion(Enajenacion enajenacion)
+        {
+            var matchingRecords = db.Enajenacion
+                                    .Where(i => i.FechaInscripcion.Year == enajenacion.FechaInscripcion.Year
+                                             && i.IdInscripcion == enajenacion.IdInscripcion)
+                                    .OrderByDescending(i => i.Id)
+                                    .ToList();
+
+            for (int i = 0; i < matchingRecords.Count; i++)
+            {
+                var record = matchingRecords[i];
+                record.Vigente = (i == 0) ? vigencia : noVigencia;
+            }
+
+            await db.SaveChangesAsync();
         }
 
         private void AddAdquirientesToHistory(FormCollection formCollection, Enajenacion enajenacion)
