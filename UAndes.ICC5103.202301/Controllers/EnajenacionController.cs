@@ -762,7 +762,6 @@ namespace UAndes.ICC5103._202301.Controllers
         private EnajenantesAndAdquirientes CaseOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
             List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas)
         {
-
             if (isEnajenateFantasma(enajenantesFantasmas))
             {
                 currentEnajenantes = AddEnajenantesFantasmasToCurrentEnajenantes(currentEnajenantes, enajenantes);
@@ -812,7 +811,8 @@ namespace UAndes.ICC5103._202301.Controllers
             };
         }
 
-        private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        private List<Adquiriente> CompraventaCases(Enajenacion enajenacion, Enajenacion lastEnajenacion, 
+            List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {  
             List<Adquiriente> currentEnajenantes = GetCurrentOwners(lastEnajenacion, enajenacion.Id);
             List<Adquiriente> newcurrentEnajenantes = EnjanenatesNotInTheForm(currentEnajenantes, enajenantes);
