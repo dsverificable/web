@@ -484,6 +484,7 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 var historico = new Historial();
 
+                historico.Eliminado = false;
                 historico.IdEnajenacion = enajenacion.Id;
                 historico.Comuna = enajenacion.Comuna;
                 historico.Manzana = enajenacion.Manzana;
@@ -538,6 +539,7 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 var historico = new Historial();
 
+                historico.Eliminado = false;
                 historico.IdEnajenacion = enajenacion.Id;
                 historico.Comuna = enajenacion.Comuna;
                 historico.Manzana = enajenacion.Manzana;

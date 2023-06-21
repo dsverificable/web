@@ -67,6 +67,7 @@ GO
 
 CREATE TABLE [dbo].[Historial](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Eliminado] [bit] NOT NULL,
 	[IdEnajenacion] [int] NOT NULL,
 	[Comuna] [int] NOT NULL,
 	[Manzana] [int] NOT NULL,
