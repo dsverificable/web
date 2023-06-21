@@ -140,6 +140,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
                 await db.SaveChangesAsync();
 
+                UpdateHistoricalInformation(enajenacion);
+
                 return RedirectToAction("Index");
             }
 
@@ -163,7 +165,7 @@ namespace UAndes.ICC5103._202301.Controllers
                             && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year 
                             && e.Comuna == enajenacion.Comuna)
                    .ToListAsync();
-            Enajenacion last_enajenacion = GetLastUpdateOfAndSpecificEnajenacion(enajenaciones);
+            Enajenacion lastEnajenacion = GetLastUpdateOfAndSpecificEnajenacion(enajenaciones);
 
             if (ModelState.IsValid)
             {
@@ -179,12 +181,11 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     List<Adquiriente> adquirientes = PastFormToAdquirienteModel(formCollection, enajenacion);
                     List<Adquiriente> enajenantes = PastFormToEnajenanteModel(formCollection, enajenacion);
-                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, last_enajenacion, adquirientes, enajenantes);
+                    List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(enajenacion, lastEnajenacion, adquirientes, enajenantes);
                     AddAdquirientesToDb(newEnajenatesOfEnajenacion);
                     AddAdquirientesToHistory(formCollection, enajenacion);
                     AddEnajenantesToHistory(formCollection, enajenacion);
                 }
-
                 
                 db.Enajenacion.Add(enajenacion);
                 await db.SaveChangesAsync();
@@ -193,6 +194,8 @@ namespace UAndes.ICC5103._202301.Controllers
                 {
                     await ChangeVigenciaEnajenacion(enajenacion);
                 }
+
+                UpdateHistoricalInformation(enajenacion);
 
                 return RedirectToAction("Index");
             }
@@ -309,6 +312,11 @@ namespace UAndes.ICC5103._202301.Controllers
         private bool isSumEqualTo100(float totalSumPercenteges)
         {
             return totalSumPercenteges == 100; 
+        }
+
+        private bool isLastEnajenacionEqualToCurrentEnajenacion(Enajenacion currentEnajenacion, Enajenacion lastEnajenacion)
+        {
+            return currentEnajenacion == lastEnajenacion;
         }
 
         private bool CheckValue(float percentage)
@@ -454,6 +462,8 @@ namespace UAndes.ICC5103._202301.Controllers
             }
 
             await db.SaveChangesAsync();
+
+            UpdateHistoricalInformation(enajenacion); 
         }
 
         private void AddAdquirientesToHistory(FormCollection formCollection, Enajenacion enajenacion)
@@ -760,12 +770,15 @@ namespace UAndes.ICC5103._202301.Controllers
         }
 
         private EnajenantesAndAdquirientes CaseOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
-            List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas)
+            List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas, Enajenacion lastEnajenacion)
         {
             if (isEnajenateFantasma(enajenantesFantasmas))
             {
-                currentEnajenantes = AddEnajenantesFantasmasToCurrentEnajenantes(currentEnajenantes, enajenantes);
-                currentEnajenantes = CurrentEnajenteIsFantasmaChangePercentage(currentEnajenantes, enajenantesFantasmas);
+                if(lastEnajenacion == null)
+                {
+                    currentEnajenantes = AddEnajenantesFantasmasToCurrentEnajenantes(currentEnajenantes, enajenantes);
+                    currentEnajenantes = CurrentEnajenteIsFantasmaChangePercentage(currentEnajenantes, enajenantesFantasmas);
+                }
             }
 
             float totalPercentagesEnajenantes = TotalPercentageEnajenantes(enajenantes, currentEnajenantes);
@@ -827,7 +840,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
             else if (isOnlyOneAdquirienteAndOneEnajenante(adquirientes, enajenantes))
             {
-                var result = CaseOnlyOneAdquirienteAndOneEnajenante(currentEnajenantes, enajenantes, adquirientes, enajenantesFantasmas);
+                var result = CaseOnlyOneAdquirienteAndOneEnajenante(currentEnajenantes, enajenantes, adquirientes, enajenantesFantasmas, lastEnajenacion);
                 enajenantes = result.Enajenantes;
                 adquirientes = result.Adquirientes;
             }
@@ -861,7 +874,8 @@ namespace UAndes.ICC5103._202301.Controllers
             else
             {
                 int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
-                enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
+                enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear 
+                                                      && e.Vigente == vigencia).ToList();
 
                 if (enajenaciones.Count == 1)
                 {
@@ -870,13 +884,15 @@ namespace UAndes.ICC5103._202301.Controllers
                 else
                 {
                     int maxIdInscripcion = enajenaciones.Max(e => e.IdInscripcion);
-                    enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion).ToList();
+                    enajenaciones = enajenaciones.Where(e => e.IdInscripcion == maxIdInscripcion 
+                                                          && e.Vigente == vigencia).ToList();
 
                     return enajenaciones.LastOrDefault();
                 }
-            }   
+            }
         }
-        
+
+
         public List<DateTime> GetDistinctEnajenacionDates(List<Historial> historiales) 
         {
             var distinctDates = historiales
@@ -888,6 +904,144 @@ namespace UAndes.ICC5103._202301.Controllers
             return distinctDates;
         }
 
+        private List<Historial> GetLogsOfEnajenacionAfter(int manzana, int predio, int comuna, DateTime fechaInscripcion) 
+        {
+            List<Historial> historiales = db.Historial
+                   .Where(l => l.Manzana == manzana 
+                            && l.Predio == predio 
+                            && l.FechaInscripcion.Year >= fechaInscripcion.Year
+                            && l.Comuna == comuna
+                            && l.Eliminado == false)
+                   .ToList();
+
+            return historiales;
+        }
+
+        private List<Historial> FilterLogsOfEnajenacionByDate(DateTime fechaInscripcion, List<Historial> historiales) 
+        {
+            List<Historial> filterHistoriales = historiales
+                   .Where(l => l.FechaInscripcion == fechaInscripcion)
+                   .ToList();
+
+            return filterHistoriales;
+        }
+
+        private Enajenacion FilterEnajenacion(int manzana, int predio, int comuna, DateTime fechaInscripcion)
+        {
+            Enajenacion enajenacion = db.Enajenacion
+               .FirstOrDefault(e => e.Manzana == manzana 
+                                 && e.Predio == predio 
+                                 && e.FechaInscripcion == fechaInscripcion 
+                                 && e.Comuna == comuna);
+
+            return enajenacion;
+        }
+
+        private int GetOperation(List<Historial> historiales)
+        {
+            int operation = historiales.FirstOrDefault().CNE;
+
+            return operation;
+        }
+        
+        private List<Adquiriente> PastLogsToEnajenanteModel(List<Historial> historiales)
+        {
+            List<Historial> filterHistoriales = historiales
+                   .Where(l => l.Participante == peopleCategories["enajenante"])
+                   .ToList();
+            List<Adquiriente> enajenantes = new List<Adquiriente>();
+
+            foreach (var hist in filterHistoriales)
+            {
+                var adquiriente = new Adquiriente();
+                adquiriente.RutAdquiriente = hist.Rut;
+                adquiriente.IdEnajenacion = hist.IdEnajenacion;
+                adquiriente.PorcentajeAdquiriente = hist.Porcentaje;
+                adquiriente.CheckAdquiriente = hist.Check;
+
+                enajenantes.Add(adquiriente);
+            }
+
+            return enajenantes;
+        }
+
+        private List<Adquiriente> PastLogsToAdquirientesModel(List<Historial> historiales)
+        {
+            List<Historial> filterHistoriales = historiales
+                   .Where(l => l.Participante == peopleCategories["adquiriente"])
+                   .ToList();
+            List<Adquiriente> adquirientes = new List<Adquiriente>();
+
+            foreach (var hist in filterHistoriales)
+            {
+                var adquiriente = new Adquiriente();
+                adquiriente.RutAdquiriente = hist.Rut;
+                adquiriente.IdEnajenacion = hist.IdEnajenacion;
+                adquiriente.PorcentajeAdquiriente = hist.Porcentaje;
+                adquiriente.CheckAdquiriente = hist.Check;
+
+                adquirientes.Add(adquiriente);
+            }
+
+            return adquirientes;
+        }
+
+        private void RemoveFromAdquirientes(int idEnajenacion)
+        {
+            using (var db = new Grupo10ConchaMunozBrDbEntities())
+            {
+                List<Adquiriente> adquirientes = db.Adquiriente.Where(e => e.IdEnajenacion == idEnajenacion)
+                                  .ToList();
+                db.Adquiriente.RemoveRange(adquirientes);
+                db.SaveChanges();
+            }
+        }
+
+        private void UpdateHistoricalInformation(Enajenacion enajenacion)
+        {
+            List<Historial> historiales = GetLogsOfEnajenacionAfter(enajenacion.Manzana, enajenacion.Predio, 
+                enajenacion.Comuna, enajenacion.FechaInscripcion); 
+            List<DateTime> datesAfterHistory = GetDistinctEnajenacionDates(historiales); 
+
+            foreach (var date in datesAfterHistory)
+            {
+                List<Historial> filterHistorial = FilterLogsOfEnajenacionByDate(date, historiales);
+                Enajenacion currentEnajenacion = FilterEnajenacion(enajenacion.Manzana, enajenacion.Predio, enajenacion.Comuna, date); 
+
+                if (currentEnajenacion.Vigente == vigencia)
+                {
+                    List<Enajenacion> enajenaciones = db.Enajenacion
+                       .Where(e => e.Manzana == enajenacion.Manzana
+                                && e.Predio == enajenacion.Predio
+                                && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year
+                                && e.Comuna == enajenacion.Comuna)
+                       .ToList();
+                    Enajenacion lastEnajenacion = GetLastUpdateOfAndSpecificEnajenacion(enajenaciones); 
+
+                    if (isLastEnajenacionEqualToCurrentEnajenacion(currentEnajenacion, lastEnajenacion))
+                    {
+                        lastEnajenacion = null;
+                    }
+
+                    int operation = GetOperation(filterHistorial);
+                    RemoveFromAdquirientes(currentEnajenacion.Id);
+
+                    if (isRdp(operation))
+                    {
+                        List<Adquiriente> adquirientes = PastLogsToAdquirientesModel(filterHistorial);
+                        AddAdquirientesToDb(adquirientes);
+                    }
+                    else
+                    {
+                        List<Adquiriente> adquirientes = PastLogsToAdquirientesModel(filterHistorial);
+                        List<Adquiriente> enajenantes = PastLogsToEnajenanteModel(filterHistorial);
+                        List<Adquiriente> newEnajenatesOfEnajenacion = CompraventaCases(currentEnajenacion, lastEnajenacion, adquirientes, enajenantes);
+                        AddAdquirientesToDb(newEnajenatesOfEnajenacion);
+                    }
+                    db.SaveChanges();
+                }
+            }
+        }
         #endregion
     }
 }
