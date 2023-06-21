@@ -43,6 +43,14 @@
         <dd>
             @Model.Enajenacion.Predio
         </dd>
+
+        <dt>
+            Vigencia
+        </dt>
+
+        <dd>
+            <input type="checkbox" name="vigente" value="@Model.Enajenacion.Vigente" @(Model.Enajenacion.Vigente ? "checked" : "") disabled>
+        </dd>
     </dl>
 </div>
 

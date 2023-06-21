@@ -40,7 +40,11 @@
             </th>
 
             <th>
-                Id
+                Id de Inscripcion
+            </th>
+
+            <th>
+                Vigencia
             </th>
 
             <th></th>
@@ -56,9 +60,10 @@
                 <td>@Html.DisplayFor(modelItem => item.Fojas)</td>
                 <td class="inscriptionDate">@Html.DisplayFor(modelItem => item.FechaInscripcion)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdInscripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Vigente)</td>
                 <td>
                     @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id})
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }
