@@ -15,6 +15,7 @@ namespace UAndes.ICC5103._202301.Models
     public partial class Historial
     {
         public int Id { get; set; }
+        public bool Eliminado { get; set; }
         public int IdEnajenacion { get; set; }
         public int Comuna { get; set; }
         public int Manzana { get; set; }

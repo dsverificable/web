@@ -22,6 +22,7 @@ namespace UAndes.ICC5103._202301.Models
         }
     
         public int Id { get; set; }
+        public bool Vigente { get; set; }
         public int CNE { get; set; }
         public int Comuna { get; set; }
         public int Manzana { get; set; }

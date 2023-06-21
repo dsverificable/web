@@ -35,6 +35,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vigente" Type="bit" Nullable="false" />
           <Property Name="CNE" Type="int" Nullable="false" />
           <Property Name="Comuna" Type="int" Nullable="false" />
           <Property Name="Manzana" Type="int" Nullable="false" />
@@ -59,6 +60,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Eliminado" Type="bit" Nullable="false" />
           <Property Name="IdEnajenacion" Type="int" Nullable="false" />
           <Property Name="Comuna" Type="int" Nullable="false" />
           <Property Name="Manzana" Type="int" Nullable="false" />
@@ -205,6 +207,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vigente" Type="Boolean" Nullable="false" />
           <Property Name="CNE" Type="Int32" Nullable="false" />
           <Property Name="Comuna" Type="Int32" Nullable="false" />
           <Property Name="Manzana" Type="Int32" Nullable="false" />
@@ -234,6 +237,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Eliminado" Type="Boolean" Nullable="false" />
           <Property Name="IdEnajenacion" Type="Int32" Nullable="false" />
           <Property Name="Comuna" Type="Int32" Nullable="false" />
           <Property Name="Manzana" Type="Int32" Nullable="false" />
@@ -339,6 +343,7 @@
                 <ScalarProperty Name="Manzana" ColumnName="Manzana" />
                 <ScalarProperty Name="Comuna" ColumnName="Comuna" />
                 <ScalarProperty Name="CNE" ColumnName="CNE" />
+                <ScalarProperty Name="Vigente" ColumnName="Vigente" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -370,6 +375,7 @@
                 <ScalarProperty Name="Manzana" ColumnName="Manzana" />
                 <ScalarProperty Name="Comuna" ColumnName="Comuna" />
                 <ScalarProperty Name="IdEnajenacion" ColumnName="IdEnajenacion" />
+                <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -397,11 +403,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram DiagramId="c32ce243f8634340a0329b173bfe63ce" Name="Diagram1" ZoomLevel="116">
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.Adquiriente" Width="1.5" PointX="5.25" PointY="4.875" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.CNEOptions" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.ComunaOptions" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenacion" Width="1.5" PointX="3" PointY="2.875" />
-        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenante" Width="1.5" PointX="5.25" PointY="1.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Adquiriente" Width="1.5" PointX="5.25" PointY="1.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.CNEOptions" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.ComunaOptions" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenacion" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="InscripcionesBrDbModel.Enajenante" Width="1.5" PointX="5.25" PointY="4.875" />
         <EntityTypeShape EntityType="InscripcionesBrDbModel.Historial" Width="1.5" PointX="0.75" PointY="7.5" />
         <AssociationConnector Association="InscripcionesBrDbModel.FK_Adquiriente_Enajenacion" />
         <AssociationConnector Association="InscripcionesBrDbModel.FK_Enajenacion_CNEOptions" />

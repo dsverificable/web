@@ -57,7 +57,7 @@
                 <td class="inscriptionDate">@Html.DisplayFor(modelItem => item.FechaInscripcion)</td>
                 <td>@Html.DisplayFor(modelItem => item.IdInscripcion)</td>
                 <td>
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id })
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Borrar", "Delete", new { id = item.Id})
                 </td>
             </tr>
