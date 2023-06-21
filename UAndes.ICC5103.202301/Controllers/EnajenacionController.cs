@@ -153,13 +153,21 @@ namespace UAndes.ICC5103._202301.Controllers
             model.ComunaOptions = db.ComunaOptions.ToList();
 
             List<Enajenacion> enajenaciones = await db.Enajenacion
-                   .Where(e => e.Manzana == enajenacion.Manzana && e.Predio == enajenacion.Predio && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year && e.Comuna == enajenacion.Comuna)
+                   .Where(e => e.Manzana == enajenacion.Manzana 
+                            && e.Predio == enajenacion.Predio 
+                            && e.FechaInscripcion.Year <= enajenacion.FechaInscripcion.Year 
+                            && e.Comuna == enajenacion.Comuna)
                    .ToListAsync();
             Enajenacion last_enajenacion = GetLastUpdateOfAndSpecificEnajenacion(enajenaciones);
 
             if (ModelState.IsValid)
             {
                 FormCollection formCollection = new FormCollection(Request.Form);
+
+                if(IsInscripcionAlreadyExists(enajenacion))
+                {
+                    // here I need to add if is vigente or no vigente
+                }
 
                 if (isRdp(enajenacion.CNE))
                 {
@@ -269,6 +277,14 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
+        private bool IsInscripcionAlreadyExists(Enajenacion enajenacion)
+        {
+            bool exists = db.Enajenacion.Any(i => i.FechaInscripcion.Year == enajenacion.FechaInscripcion.Year 
+                                               && i.IdInscripcion == enajenacion.IdInscripcion);
+
+            return exists;
+        }
+
         private bool isEnajenacion(Enajenacion enajenacion)
         {
             if (enajenacion != null)
@@ -290,7 +306,6 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             return enajenantesFantasmas.Count == enajenantes.Count;
         }
-
 
         private bool isSumAdquirienteEqual100(List<Adquiriente> adquirientes)
         {
