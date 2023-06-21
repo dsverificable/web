@@ -36,6 +36,8 @@ namespace UAndes.ICC5103._202301.Controllers
         bool vigencia = true;
         bool noVigencia = false;
 
+        string cultureInfo = "en-US";
+
         public class EnajenantesAndAdquirientes
         {
             public List<Adquiriente> Enajenantes { get; set; }
@@ -84,7 +86,6 @@ namespace UAndes.ICC5103._202301.Controllers
             return View(model);
         }
 
-
         // GET: Enajenacion/Create
         public ActionResult Create()
         {
@@ -98,8 +99,6 @@ namespace UAndes.ICC5103._202301.Controllers
         // GET: Enajenacion/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-
-
             Enajenacion enajenacion = await db.Enajenacion.FindAsync(id);
 
             List<Enajenante> enajenantes = await db.Enajenante.Where(e => e.IdEnajenacion == enajenacion.Id).ToListAsync();
@@ -115,7 +114,6 @@ namespace UAndes.ICC5103._202301.Controllers
             model.SelectComuna = model.Comuna[enajenacion.Comuna];
 
             return View(model);
-
         }
 
         // POST: Enajenacion/Delete/5
@@ -127,9 +125,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
             if (enajenacion != null)
             {
-                List<Historial> test = await db.Historial
-                                            .Where(a => a.IdEnajenacion == id)
-                                            .ToListAsync();
+                List<Historial> test = await db.Historial.Where(a => a.IdEnajenacion == id)
+                                                         .ToListAsync();
                 foreach (var item in test)
                 {
                     item.Eliminado = true; 
@@ -228,7 +225,9 @@ namespace UAndes.ICC5103._202301.Controllers
             int year = viewModel.Year;
 
             List<Enajenacion> enajenaciones = await db.Enajenacion
-                   .Where(e => e.Manzana == manzana && e.Predio == predio && e.FechaInscripcion.Year <= year && e.ComunaOptions.Valor == comunaId)
+                   .Where(e => e.Manzana == manzana && e.Predio == predio 
+                            && e.FechaInscripcion.Year <= year 
+                            && e.ComunaOptions.Valor == comunaId)
                    .ToListAsync();
 
             if (enajenaciones.Count == 0)
@@ -264,26 +263,12 @@ namespace UAndes.ICC5103._202301.Controllers
         #region Private Methods
         private bool isRdp(int cne)
         {
-            if (cne == cneId["Regularizacion De Patrimonio"])
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return cne == cneId["Regularizacion De Patrimonio"];
         }
 
         private bool isId(int? id)
         {
-            if (id != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return id != null;
         }
 
         private bool isInscripcionIsDuplicate(Enajenacion enajenacion)
@@ -296,14 +281,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private bool isEnajenacion(Enajenacion enajenacion)
         {
-            if (enajenacion != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return enajenacion != null;
         }
 
         private bool isEnajenateFantasma(List<Adquiriente> enajenantesFantasmas)
@@ -320,51 +298,22 @@ namespace UAndes.ICC5103._202301.Controllers
         {
             float sumPercentage = (float)adquirientes.Sum(a => a.PorcentajeAdquiriente);
 
-            if (sumPercentage == 100)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return sumPercentage == 100;
         }
 
         private bool isOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
-            if(adquirientes.Count == 1 && enajenantes.Count == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return adquirientes.Count == 1 && enajenantes.Count == 1;
         }
 
         private bool isSumEqualTo100(float totalSumPercenteges)
         {
-            if(totalSumPercenteges == 100)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-           
+            return totalSumPercenteges == 100; 
         }
 
         private bool CheckValue(float percentage)
         {
-            if (percentage == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return percentage == 0;
         }
 
         private void AddAdquirientesToDb(List<Adquiriente> adquirientes)
@@ -428,14 +377,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private float PercentageValue(float percentage, float differencePercentage)
         {
-            if (percentage > 0)
-            {
-                return percentage;
-            }
-            else
-            {
-                return differencePercentage;
-            }
+            return percentage > 0 ? percentage : differencePercentage;
         }
 
         private float RatioPercentage(float userPercentage, float totalPercentage)
@@ -457,7 +399,7 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<float> PercentagesToListAdquiriente(string[] percentages)
         {
             float differencePercentage = DifferencePercentage(percentages);
-            var culture = new CultureInfo("en-US");
+            var culture = new CultureInfo(cultureInfo);
             var floatPercentages = percentages.Select(p => float.Parse(p, culture)).ToList();
             var newPercentages = floatPercentages.Select(p => PercentageValue(p, differencePercentage)).ToList();
 
@@ -466,7 +408,7 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private List<float> PercentagesToListEnajenante(string[] percentages)
         {
-            var culture = new CultureInfo("en-US");
+            var culture = new CultureInfo(cultureInfo);
             var floatPercentages = percentages.Select(p => float.Parse(p, culture)).ToList();
 
             return floatPercentages;
@@ -519,20 +461,14 @@ namespace UAndes.ICC5103._202301.Controllers
             var ruts = formCollection["Adquirientes[0].RutAdquiriente"].Split(',');
             var percentagesCheck = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
             var percentages = formCollection["Adquirientes[0].PorcentajeAdquiriente"].Split(',');
+
             List<float> percentagesParce = PercentagesToListAdquiriente(percentages);
-            int intId;
-            var lastId = db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault();
-            if (lastId == null)
-            {
-                intId = 1;
-            }
-            else
-            {
-                intId = lastId.Id + 1;
-            }
+            int intId = (db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault()?.Id + 1) ?? 1;
+
             for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
+                string rut = ruts[i];
 
                 historico.Eliminado = false;
                 historico.IdEnajenacion = intId;
@@ -542,7 +478,6 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                string rut = ruts[i];
                 historico.Rut = rut;
                 historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
@@ -583,21 +518,15 @@ namespace UAndes.ICC5103._202301.Controllers
             var ruts = formCollection["Enajenantes[0].RutEnajenante"].Split(',');
             var percentagesCheck = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
             var percentages = formCollection["Enajenantes[0].PorcentajeEnajenante"].Split(',');
+            
             List<float> percentagesParce = PercentagesToListEnajenante(percentages);
-            int intId;
-            var lastId = db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault();
-            if (lastId == null)
-            {
-                intId = 1;
-            }
-            else
-            {
-                intId = lastId.Id + 1;
-            }
+            int intId = (db.Enajenacion.OrderByDescending(e => e.Id).FirstOrDefault()?.Id + 1) ?? 1;
+
 
             for (int i = 0; i < ruts.Length; i++)
             {
                 var historico = new Historial();
+                string rut = ruts[i];
 
                 historico.Eliminado = false;
                 historico.IdEnajenacion = intId;
@@ -607,7 +536,6 @@ namespace UAndes.ICC5103._202301.Controllers
                 historico.Fojas = enajenacion.Fojas;
                 historico.FechaInscripcion = enajenacion.FechaInscripcion;
                 historico.IdInscripcion = enajenacion.IdInscripcion;
-                string rut = ruts[i];
                 historico.Rut = rut;
                 historico.Porcentaje = percentagesParce[i];
                 historico.CNE = enajenacion.CNE;
@@ -728,9 +656,9 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> CombineListsForNewData(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> combinedList = currentEnajenantes
-                          .Concat(adquirientes)
-                          .Concat(enajenantes)
-                          .ToList();
+                                              .Concat(adquirientes)
+                                              .Concat(enajenantes)
+                                              .ToList();
 
             return combinedList;
         }
@@ -738,16 +666,16 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> AddEnajenantesFantasmasToCurrentEnajenantes(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> combinedList = currentEnajenantes
-                                       .Concat(enajenantes
-                                           .Select(e => new Adquiriente
-                                           {
-                                               RutAdquiriente = e.RutAdquiriente,
-                                               Fojas = e.Fojas,
-                                               IdEnajenacion = e.IdEnajenacion,
-                                               PorcentajeAdquiriente = e.PorcentajeAdquiriente,
-                                               CheckAdquiriente = e.CheckAdquiriente
-                                           }))
-                                       .ToList();
+                                               .Concat(enajenantes
+                                                   .Select(e => new Adquiriente
+                                                   {
+                                                       RutAdquiriente = e.RutAdquiriente,
+                                                       Fojas = e.Fojas,
+                                                       IdEnajenacion = e.IdEnajenacion,
+                                                       PorcentajeAdquiriente = e.PorcentajeAdquiriente,
+                                                       CheckAdquiriente = e.CheckAdquiriente
+                                                   }))
+                                               .ToList();
 
             return combinedList;
         }
@@ -768,8 +696,8 @@ namespace UAndes.ICC5103._202301.Controllers
         private List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
         {
             List<Adquiriente> newEnajenates = enajenantes
-                            .Where(e => e.PorcentajeAdquiriente > 0)
-                            .ToList();
+                                                .Where(e => e.PorcentajeAdquiriente > 0)
+                                                .ToList();
 
             return newEnajenates;
         }
@@ -806,7 +734,8 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private List<Adquiriente> GetEnajenatesFantasmas(List<Adquiriente> currentEnajenates, List<Adquiriente> enajenantes)
         {
-            List<Adquiriente> enajenatesFantasmas = enajenantes.Where(e => !currentEnajenates.Any(c => c.RutAdquiriente == e.RutAdquiriente)).ToList();
+            List<Adquiriente> enajenatesFantasmas = enajenantes.Where(e => !currentEnajenates.Any(c => c.RutAdquiriente == e.RutAdquiriente))
+                                                               .ToList();
             return enajenatesFantasmas;
         }
 
@@ -844,7 +773,6 @@ namespace UAndes.ICC5103._202301.Controllers
             adquirientes.ForEach(a => a.PorcentajeAdquiriente = RatioPercentage((float)a.PorcentajeAdquiriente, totalPercentagesEnajenantes));
             adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
             enajenantes = UpdateEnajenatePercentageByRights(currentEnajenantes, enajenantes);
-
 
             return new EnajenantesAndAdquirientes
             {
@@ -926,7 +854,6 @@ namespace UAndes.ICC5103._202301.Controllers
 
         private Enajenacion GetLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones)
         {
-
             if (enajenaciones.Count == 0)
             {
                 return null;
@@ -935,7 +862,6 @@ namespace UAndes.ICC5103._202301.Controllers
             {
                 int maxYear = enajenaciones.Max(e => e.FechaInscripcion.Year);
                 enajenaciones = enajenaciones.Where(e => e.FechaInscripcion.Year == maxYear).ToList();
-
 
                 if (enajenaciones.Count == 1)
                 {
