@@ -18,6 +18,7 @@ GO
 
 CREATE TABLE [dbo].[Enajenacion](
     [Id] [int] IDENTITY(1,1) NOT NULL,
+	[Vigente] [bit] NOT NULL,
     [CNE] [int] NOT NULL,
     [Comuna] [int] NOT NULL,
     [Manzana] [int] NOT NULL,
