@@ -280,13 +280,13 @@ namespace UAndes.ICC5103._202301.Controllers
         }
         #endregion
 
-        #region Private Methods
-        private bool isRdp(int cne)
+        #region Private and Public Methods that use the controllers of the views
+        public bool isRdp(int cne)
         {
             return cne == cneId["Regularizacion De Patrimonio"];
         }
 
-        private bool isId(int? id)
+        public bool isId(int? id)
         {
             return id != null;
         }
@@ -299,44 +299,44 @@ namespace UAndes.ICC5103._202301.Controllers
             return exists;
         }
 
-        private bool isEnajenacion(Enajenacion enajenacion)
+        public bool isEnajenacion(Enajenacion enajenacion)
         {
             return enajenacion != null;
         }
 
-        private bool isEnajenateFantasma(List<Adquiriente> enajenantesFantasmas)
+        public bool isEnajenateFantasma(List<Adquiriente> enajenantesFantasmas)
         {
             return enajenantesFantasmas.Count > 0;
         }
 
-        private bool isEnajenateFantasmaEqualToEnajenantes(List<Adquiriente> enajenantesFantasmas, List<Adquiriente> enajenantes)
+        public bool isEnajenateFantasmaEqualToEnajenantes(List<Adquiriente> enajenantesFantasmas, List<Adquiriente> enajenantes)
         {
             return enajenantesFantasmas.Count == enajenantes.Count;
         }
 
-        private bool isSumAdquirienteEqual100(List<Adquiriente> adquirientes)
+        public bool isSumAdquirienteEqual100(List<Adquiriente> adquirientes)
         {
             float sumPercentage = (float)adquirientes.Sum(a => a.PorcentajeAdquiriente);
 
             return sumPercentage == 100;
         }
 
-        private bool isOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        public bool isOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             return adquirientes.Count == 1 && enajenantes.Count == 1;
         }
 
-        private bool isSumEqualTo100(float totalSumPercenteges)
+        public bool isSumEqualTo100(float totalSumPercenteges)
         {
             return totalSumPercenteges == 100; 
         }
 
-        private bool isLastEnajenacionEqualToCurrentEnajenacion(Enajenacion currentEnajenacion, Enajenacion lastEnajenacion)
+        public bool isLastEnajenacionEqualToCurrentEnajenacion(Enajenacion currentEnajenacion, Enajenacion lastEnajenacion)
         {
             return currentEnajenacion == lastEnajenacion;
         }
 
-        private bool CheckValue(float percentage)
+        public bool CheckValue(float percentage)
         {
             return percentage == 0;
         }
@@ -349,14 +349,14 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private float TotalSumFormPercentage(List<Adquiriente> enajenantes)
+        public float TotalSumFormPercentage(List<Adquiriente> enajenantes)
         {
             float totalSum = (float)enajenantes.Sum(a => a.PorcentajeAdquiriente);
           
             return totalSum;
         }
 
-        private float TotalPercentageEnajenantes(List<Adquiriente> enajenantes, List<Adquiriente> currentEnajenantes)
+        public float TotalPercentageEnajenantes(List<Adquiriente> enajenantes, List<Adquiriente> currentEnajenantes)
         {
             float totalPercentage = 0;
 
@@ -375,7 +375,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return totalPercentage;
         }
 
-        private float DifferencePercentage(string[] percentages)
+        public float DifferencePercentage(string[] percentages)
         {
             int peopleWithoutPorcentage = 0;
             float percentageSum = 0;
@@ -400,12 +400,12 @@ namespace UAndes.ICC5103._202301.Controllers
             return difference;
         }
 
-        private float PercentageValue(float percentage, float differencePercentage)
+        public float PercentageValue(float percentage, float differencePercentage)
         {
             return percentage > 0 ? percentage : differencePercentage;
         }
 
-        private float RatioPercentage(float userPercentage, float totalPercentage)
+        public float RatioPercentage(float userPercentage, float totalPercentage)
         {
             float percentage;
 
@@ -421,7 +421,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return percentage;
         }
 
-        private List<float> PercentagesToListAdquiriente(string[] percentages)
+        public List<float> PercentagesToListAdquiriente(string[] percentages)
         {
             float differencePercentage = DifferencePercentage(percentages);
             var culture = new CultureInfo(cultureInfo);
@@ -431,7 +431,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return newPercentages;
         }
 
-        private List<float> PercentagesToListEnajenante(string[] percentages)
+        public List<float> PercentagesToListEnajenante(string[] percentages)
         {
             var culture = new CultureInfo(cultureInfo);
             var floatPercentages = percentages.Select(p => float.Parse(p, culture)).ToList();
@@ -573,7 +573,7 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private List<Adquiriente> UpdateEnajenatePercentageTotalTransfer(List<Adquiriente> enajenantes)
+        public List<Adquiriente> UpdateEnajenatePercentageTotalTransfer(List<Adquiriente> enajenantes)
         {
             float transferValue = 0;
             foreach (var enajenante in enajenantes)
@@ -584,7 +584,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> UpdateEnajenatePercentageByRights(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        public List<Adquiriente> UpdateEnajenatePercentageByRights(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             foreach (var enajenante in enajenantes)
             {
@@ -601,7 +601,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> UpdateEnajenatePercentageByDomain(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        public List<Adquiriente> UpdateEnajenatePercentageByDomain(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             foreach (var enajenante in enajenantes)
             {
@@ -618,7 +618,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> UpdateAdquirientesPercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes)
+        public List<Adquiriente> UpdateAdquirientesPercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes)
         {
             foreach (var adquiriente in adquirientes)
             {
@@ -634,7 +634,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private List<Adquiriente> UpdatePercentageForEnajenantesFantasmas(List<Adquiriente> enajenantes, List<Adquiriente> enajenantesFantasmas)
+        public List<Adquiriente> UpdatePercentageForEnajenantesFantasmas(List<Adquiriente> enajenantes, List<Adquiriente> enajenantesFantasmas)
         {
             foreach (var enajenante in enajenantes)
             {
@@ -649,7 +649,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> ParceNegativePercentage(List<Adquiriente> adquirientes)
+        public List<Adquiriente> ParceNegativePercentage(List<Adquiriente> adquirientes)
         {
             foreach (var adquiriente in adquirientes)
             {
@@ -662,7 +662,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientes;
         }
 
-        private List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        public List<Adquiriente> EnjanenatesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenantesNotInTheForm = currentEnajenantes
                             .Where(e => !enajenantes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
@@ -671,7 +671,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantesNotInTheForm;
         }
 
-        private List<Adquiriente> AdquirientesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes)
+        public List<Adquiriente> AdquirientesNotInTheForm(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes)
         {
             List<Adquiriente> adquirientesNotInTheForm = currentEnajenantes
                             .Where(e => !adquirientes.Any(a => a.RutAdquiriente == e.RutAdquiriente))
@@ -680,7 +680,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return adquirientesNotInTheForm;
         }
 
-        private List<Adquiriente> CombineListsForNewData(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
+        public List<Adquiriente> CombineListsForNewData(List<Adquiriente> currentEnajenantes, List<Adquiriente> adquirientes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> combinedList = currentEnajenantes
                                               .Concat(adquirientes)
@@ -690,7 +690,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return combinedList;
         }
 
-        private List<Adquiriente> AddEnajenantesFantasmasToCurrentEnajenantes(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
+        public List<Adquiriente> AddEnajenantesFantasmasToCurrentEnajenantes(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> combinedList = currentEnajenantes
                                                .Concat(enajenantes
@@ -707,7 +707,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return combinedList;
         }
 
-        private List<Adquiriente> CurrentEnajenteIsFantasmaChangePercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantesFantasmas)
+        public List<Adquiriente> CurrentEnajenteIsFantasmaChangePercentage(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantesFantasmas)
         {
             foreach (var enajenante in currentEnajenantes)
             {
@@ -720,7 +720,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return currentEnajenantes;
         }
 
-        private List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
+        public List<Adquiriente> DeleteEnajenanteWithoutPercentage(List<Adquiriente> enajenantes)
         {
             List<Adquiriente> newEnajenates = enajenantes
                                                 .Where(e => e.PorcentajeAdquiriente > 0)
@@ -759,14 +759,14 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-        private List<Adquiriente> GetEnajenatesFantasmas(List<Adquiriente> currentEnajenates, List<Adquiriente> enajenantes)
+        public List<Adquiriente> GetEnajenatesFantasmas(List<Adquiriente> currentEnajenates, List<Adquiriente> enajenantes)
         {
             List<Adquiriente> enajenatesFantasmas = enajenantes.Where(e => !currentEnajenates.Any(c => c.RutAdquiriente == e.RutAdquiriente))
                                                                .ToList();
             return enajenatesFantasmas;
         }
 
-        private EnajenantesAndAdquirientes CaseSumAdquirienteEqual100(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
+        public EnajenantesAndAdquirientes CaseSumAdquirienteEqual100(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
             List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas)
         {
             if (!isEnajenateFantasmaEqualToEnajenantes(enajenantesFantasmas, enajenantes))
@@ -786,7 +786,7 @@ namespace UAndes.ICC5103._202301.Controllers
             };
         }
 
-        private EnajenantesAndAdquirientes CaseOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
+        public EnajenantesAndAdquirientes CaseOnlyOneAdquirienteAndOneEnajenante(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
             List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas, Enajenacion lastEnajenacion)
         {
             if (isEnajenateFantasma(enajenantesFantasmas))
@@ -810,7 +810,7 @@ namespace UAndes.ICC5103._202301.Controllers
             };
         }
 
-        private EnajenantesAndAdquirientes CaseDefault(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
+        public EnajenantesAndAdquirientes CaseDefault(List<Adquiriente> currentEnajenantes, List<Adquiriente> enajenantes, 
             List<Adquiriente> adquirientes, List<Adquiriente> enajenantesFantasmas, List<Adquiriente> enajenantesNotInForm)
         {
             adquirientes = UpdateAdquirientesPercentage(currentEnajenantes, adquirientes);
@@ -882,7 +882,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return newEnajenatesOfEnajenacion;
         }
 
-        private Enajenacion GetLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones)
+        public Enajenacion GetLastUpdateOfAndSpecificEnajenacion(List<Enajenacion> enajenaciones)
         {
             if (enajenaciones.Count == 0)
             {
@@ -909,7 +909,6 @@ namespace UAndes.ICC5103._202301.Controllers
             }
         }
 
-
         public List<DateTime> GetDistinctEnajenacionDates(List<Historial> historiales) 
         {
             var distinctDates = historiales
@@ -934,7 +933,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return historiales;
         }
 
-        private List<Historial> FilterLogsOfEnajenacionByDate(DateTime fechaInscripcion, List<Historial> historiales) 
+        public List<Historial> FilterLogsOfEnajenacionByDate(DateTime fechaInscripcion, List<Historial> historiales) 
         {
             List<Historial> filterHistoriales = historiales
                    .Where(l => l.FechaInscripcion == fechaInscripcion)
@@ -954,14 +953,14 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenacion;
         }
 
-        private int GetOperation(List<Historial> historiales)
+        public int GetOperation(List<Historial> historiales)
         {
             int operation = historiales.FirstOrDefault().CNE;
 
             return operation;
         }
         
-        private List<Adquiriente> PastLogsToEnajenanteModel(List<Historial> historiales)
+        public List<Adquiriente> PastLogsToEnajenanteModel(List<Historial> historiales)
         {
             List<Historial> filterHistoriales = historiales
                    .Where(l => l.Participante == peopleCategories["enajenante"])
@@ -982,7 +981,7 @@ namespace UAndes.ICC5103._202301.Controllers
             return enajenantes;
         }
 
-        private List<Adquiriente> PastLogsToAdquirientesModel(List<Historial> historiales)
+        public List<Adquiriente> PastLogsToAdquirientesModel(List<Historial> historiales)
         {
             List<Historial> filterHistoriales = historiales
                    .Where(l => l.Participante == peopleCategories["adquiriente"])
