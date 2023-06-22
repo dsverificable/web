@@ -136,8 +136,11 @@ namespace UAndes.ICC5103._202301.Controllers
                                 && e.Id != id)
                     .OrderByDescending(e => e.Id)
                     .FirstOrDefaultAsync();
-                    nuevaEnajenacionVigente.Vigente = true;
-                    db.Entry(nuevaEnajenacionVigente).State = EntityState.Modified;
+                    if (nuevaEnajenacionVigente != null)
+                    {
+                        nuevaEnajenacionVigente.Vigente = true;
+                        db.Entry(nuevaEnajenacionVigente).State = EntityState.Modified;
+                    }
                 }
 
 
