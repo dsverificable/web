@@ -211,8 +211,6 @@ namespace UAndes.ICC5103._202301.Controllers
                     await ChangeVigenciaEnajenacion(enajenacion);
                 }
 
-                UpdateHistoricalInformation(enajenacion);
-
                 return RedirectToAction("Index");
             }
             else
